@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Midnight Sun — Navigation Chart · Stockholm Archipelago 2026</title>
+  <link rel="stylesheet" href="leaflet.css" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+    :root {
+      --navy:   #08192e;
+      --navy2:  #0e2540;
+      --navy3:  #142f50;
+      --gold:   #f0b429;
+      --gold2:  #c88e00;
+      --teal:   #0097a7;
+      --red:    #c62828;
+      --green:  #1b5e20;
+      --text:   #eceff1;
+      --muted:  #78909c;
+      --border: rgba(255,255,255,0.09);
+      --row-hover: rgba(255,255,255,0.06);
+      --tab-active: rgba(255,255,255,0.12);
+    }
+
+    html,body{height:100%;overflow:hidden;font-family:'Georgia',serif;background:var(--navy)}
+
+    /* ────────── Layout ────────── */
+    .app{display:flex;height:100vh}
+
+    /* ────────── Sidebar ────────── */
+    .sidebar{
+      width:370px;flex-shrink:0;
+      background:var(--navy);
+      display:flex;flex-direction:column;
+      border-right:1px solid var(--border);
+      z-index:400;
+    }
+
+    /* ── Header ── */
+    .s-hdr{
+      padding:1.2rem 1.3rem 0.9rem;
+      background:linear-gradient(170deg,#0a1e35 0%,#0e2a48 100%);
+      border-bottom:1px solid var(--border);
+      flex-shrink:0;
+    }
+    .s-hdr-top{display:flex;align-items:flex-start;justify-content:space-between}
+    .trip-name{font-size:1.5rem;font-weight:normal;letter-spacing:.07em;color:var(--gold);line-height:1.1}
+    .trip-sub{margin-top:.15rem;font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+    .compass-badge{
+      width:38px;height:38px;flex-shrink:0;
+      background:var(--navy3);border:1px solid var(--border);
+      border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-size:1.2rem;
+    }
+    .trip-dates{
+      margin-top:.7rem;display:flex;align-items:center;gap:.8rem;
+      font-size:.8rem;color:rgba(255,255,255,.65);
+    }
+    .date-chip{
+      padding:.2rem .6rem;border-radius:99px;
+      background:rgba(255,255,255,.08);font-size:.72rem;letter-spacing:.04em;
+    }
+
+    /* ── Stats ── */
+    .stats{display:flex;flex-shrink:0;border-bottom:1px solid var(--border)}
+    .stat{flex:1;padding:.7rem .3rem;text-align:center;border-right:1px solid var(--border)}
+    .stat:last-child{border-right:none}
+    .stat-v{font-size:1.35rem;color:var(--gold);line-height:1}
+    .stat-l{margin-top:.15rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+    /* ── Tabs ── */
+    .tabs{display:flex;flex-shrink:0;border-bottom:1px solid var(--border)}
+    .tab{
+      flex:1;padding:.6rem .3rem;text-align:center;
+      font-size:.71rem;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--muted);cursor:pointer;border:none;background:transparent;
+      font-family:inherit;border-bottom:2px solid transparent;transition:all .2s;
+    }
+    .tab:hover{color:var(--text)}
+    .tab.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(240,180,41,.05)}
+
+    /* ── Tab content ── */
+    .tab-content{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.12) transparent}
+    .tab-pane{display:none;padding:.6rem 0}
+    .tab-pane.active{display:block}
+
+    /* ── Route tab ── */
+    .route-wrap{padding:0 .8rem}
+
+    .day-card{
+      display:flex;align-items:center;gap:.6rem;
+      padding:.62rem .7rem;margin-bottom:.3rem;
+      border:1px solid var(--border);border-radius:.55rem;
+      background:rgba(255,255,255,.04);
+      cursor:pointer;transition:background .18s,border-color .18s,opacity .18s;
+    }
+    .day-card:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2)}
+    .day-card.off{opacity:.32}
+
+    .dc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .dc-body{flex:1;min-width:0}
+    .dc-label{font-size:.8rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .dc-meta{font-size:.63rem;color:var(--muted);margin-top:.1rem}
+    .dc-right{text-align:right;flex-shrink:0}
+    .dc-nm{font-size:.78rem;color:var(--text)}
+    .dc-brg{font-size:.62rem;color:var(--muted);margin-top:.1rem}
+
+    .route-ctrls{display:flex;gap:.4rem;padding:.5rem .8rem .2rem}
+    .rc-btn{
+      flex:1;padding:.42rem .2rem;
+      border:1px solid var(--border);border-radius:.35rem;
+      background:transparent;color:var(--muted);
+      font-family:inherit;font-size:.67rem;letter-spacing:.05em;cursor:pointer;
+      transition:background .18s,color .18s;
+    }
+    .rc-btn:hover{background:rgba(255,255,255,.08);color:var(--text)}
+
+    /* ── Waypoints tab ── */
+    .wp-table-wrap{overflow-x:auto}
+    table.wptable{
+      width:100%;border-collapse:collapse;font-size:.72rem;
+    }
+    table.wptable th{
+      padding:.45rem .55rem;text-align:left;
+      font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--muted);font-weight:normal;
+      border-bottom:1px solid var(--border);
+      white-space:nowrap;position:sticky;top:0;background:var(--navy);z-index:2;
+    }
+    table.wptable td{
+      padding:.48rem .55rem;border-bottom:1px solid rgba(255,255,255,.05);
+      vertical-align:middle;white-space:nowrap;
+    }
+    table.wptable tr:hover td{background:var(--row-hover);cursor:pointer}
+    table.wptable tr.wp-active td{background:rgba(240,180,41,.12)}
+
+    .wp-num{
+      width:24px;height:24px;border-radius:50%;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-size:.65rem;font-weight:bold;
+      border:1.5px solid currentColor;
+    }
+    .wp-name{color:var(--text);font-size:.78rem}
+    .wp-coord{color:#80cbc4;font-size:.66rem;line-height:1.6}
+    .wp-brg{color:var(--gold);font-size:.75rem;font-variant-numeric:tabular-nums}
+    .wp-dist{color:var(--text);font-size:.75rem;font-variant-numeric:tabular-nums}
+    .wp-eta{color:var(--muted);font-size:.66rem}
+    td.center{text-align:center}
+
+    /* ── ETA tab ── */
+    .eta-wrap{padding:.4rem 1rem}
+    .eta-section{margin-bottom:1.2rem}
+    .eta-label{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+    .speed-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem}
+    .speed-input{
+      width:70px;padding:.4rem .6rem;
+      background:var(--navy3);border:1px solid var(--border);
+      border-radius:.4rem;color:var(--text);font-family:inherit;font-size:.95rem;
+      text-align:center;outline:none;
+    }
+    .speed-input:focus{border-color:var(--gold)}
+    .speed-unit{font-size:.78rem;color:var(--muted)}
+
+    .eta-table{width:100%;border-collapse:collapse;font-size:.72rem}
+    .eta-table th{
+      padding:.35rem .45rem;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--muted);font-weight:normal;border-bottom:1px solid var(--border);text-align:left;
+    }
+    .eta-table td{padding:.42rem .45rem;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text)}
+    .eta-table td.time{color:var(--gold);font-variant-numeric:tabular-nums}
+    .eta-note{
+      margin-top:.8rem;padding:.6rem .8rem;
+      background:rgba(240,180,41,.08);border-left:2px solid var(--gold);
+      border-radius:0 .4rem .4rem 0;font-size:.72rem;color:rgba(255,255,255,.6);
+      line-height:1.6;
+    }
+
+    /* ── Map ── */
+    #map{flex:1;height:100vh}
+
+    /* ── Leaflet popup ── */
+    .leaflet-popup-content-wrapper{
+      border-radius:.7rem;box-shadow:0 8px 32px rgba(0,0,0,.35);
+      border:none;overflow:hidden;
+    }
+    .leaflet-popup-content{margin:0}
+    .leaflet-popup-tip{background:#fff}
+
+    .pop{min-width:230px;font-family:'Georgia',serif}
+    .pop-hdr{
+      padding:.8rem 1rem .7rem;
+      background:linear-gradient(135deg,#0e2540,#1a3a60);
+    }
+    .pop-name{font-size:1rem;color:var(--gold);line-height:1.15}
+    .pop-date{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:.15rem}
+    .pop-body{padding:.75rem 1rem .9rem;background:#fff}
+    .pop-row{display:flex;gap:.4rem;margin-bottom:.4rem;font-size:.77rem}
+    .pop-icon{color:#546e7a;flex-shrink:0;width:14px}
+    .pop-val{color:#37474f}
+    .pop-coords{
+      margin-bottom:.55rem;padding:.4rem .6rem;
+      background:#f5f8fc;border-radius:.35rem;
+      font-family:'Courier New',monospace;font-size:.7rem;color:#1565c0;
+      line-height:1.7;
+    }
+    .pop-nav{
+      margin-top:.55rem;padding:.4rem .6rem;
+      background:#e8f5e9;border-radius:.35rem;
+      font-size:.7rem;color:#2e7d32;
+      display:flex;gap:1rem;
+    }
+    .pop-nav span{font-variant-numeric:tabular-nums}
+
+    /* ── Map legend ── */
+    .map-legend{
+      background:rgba(8,25,46,.88);backdrop-filter:blur(6px);
+      border:1px solid var(--border);border-radius:.5rem;
+      padding:.55rem .75rem;font-family:'Georgia',serif;
+    }
+    .legend-title{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+    .legend-row{display:flex;align-items:center;gap:.45rem;margin-bottom:.2rem;font-size:.68rem;color:rgba(255,255,255,.7)}
+    .legend-line{height:3px;width:22px;border-radius:2px}
+
+    .ref-link{
+      display:block;padding:.45rem .7rem;
+      border:1px solid var(--border);border-radius:.4rem;
+      background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);
+      font-family:'Georgia',serif;font-size:.74rem;text-decoration:none;
+      transition:background .18s,color .18s;
+    }
+    .ref-link:hover{background:rgba(255,255,255,.1);color:var(--gold)}
+
+    .place-card {
+  margin: 0 .8rem .5rem;
+  padding: .7rem .8rem;
+  border: 1px solid var(--border);
+  border-radius: .55rem;
+  background: rgba(255,255,255,.04);
+}
+.place-card-name { font-size:.85rem; color:var(--gold); margin-bottom:.2rem; }
+.place-card-meta { font-size:.7rem; color:var(--muted); line-height:1.6; }
+.place-card-anchor {
+  margin-top:.4rem; padding:.35rem .5rem;
+  background:rgba(0,150,136,.12); border-left:2px solid #00897B;
+  border-radius:0 .3rem .3rem 0; font-size:.68rem; color:#80cbc4; line-height:1.6;
+}
+.anch-row {
+  display:flex; align-items:flex-start; gap:.55rem;
+  padding:.45rem .5rem; margin:.3rem .8rem;
+  border:1px solid var(--border); border-radius:.45rem;
+  background:rgba(255,255,255,.03); cursor:pointer;
+}
+.anch-row:hover { background:rgba(255,255,255,.07); }
+.anch-icon {
+  width:26px; height:26px; border-radius:50%;
+  border:2px solid #00897B; background:rgba(0,137,123,.2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; color:#80cbc4; flex-shrink:0; margin-top:.1rem;
+}
+.anch-info { flex:1; }
+.anch-name { font-size:.78rem; color:var(--text); }
+.anch-depth { font-size:.66rem; color:var(--muted); margin-top:.1rem; }
+
+    @media(max-width:700px){
+      .app{flex-direction:column}
+      .sidebar{width:100%;height:45vh}
+      #map{height:55vh}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
+
+    <div class="s-hdr">
+      <div class="s-hdr-top">
+        <div>
+          <div class="trip-name">Midnight Sun</div>
+          <div class="trip-sub">Navigation Chart · Stockholm Archipelago</div>
+        </div>
+        <div class="compass-badge">🧭</div>
+      </div>
+      <div class="trip-dates">
+        <span class="date-chip">⛵ Aug 8 – 15, 2026</span>
+        <span class="date-chip">☀️ 18 hrs daylight</span>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-v">7</div><div class="stat-l">Days</div></div>
+      <div class="stat"><div class="stat-v" id="totalNm">—</div><div class="stat-l">Nm Total</div></div>
+      <div class="stat"><div class="stat-v">7</div><div class="stat-l">Stops</div></div>
+      <div class="stat"><div class="stat-v" id="avgNm">—</div><div class="stat-l">Nm / Day</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="route">Route</button>
+      <button class="tab" data-tab="waypoints">Waypoints</button>
+      <button class="tab" data-tab="eta">ETA Calc</button>
+      <button class="tab" data-tab="places">Places &amp; Anchors</button>
+    </div>
+
+    <div class="tab-content">
+
+      <!-- ── Route tab ── -->
+      <div class="tab-pane active" id="tab-route">
+        <div class="route-ctrls">
+          <button class="rc-btn" onclick="showAll()">Show All</button>
+          <button class="rc-btn" onclick="hideAll()">Hide All</button>
+          <button class="rc-btn" onclick="fitAll()">Fit Map</button>
+        </div>
+        <div class="route-wrap" id="dayCards"></div>
+      </div>
+
+      <!-- ── Waypoints tab ── -->
+      <div class="tab-pane" id="tab-waypoints">
+        <div class="wp-table-wrap">
+          <table class="wptable" id="wpTable">
+            <thead>
+              <tr>
+                <th>WP</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Brg °T</th>
+                <th>Dist nm</th>
+                <th>Cumul.</th>
+              </tr>
+            </thead>
+            <tbody id="wpBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── ETA tab ── -->
+      <div class="tab-pane" id="tab-eta">
+        <div class="eta-wrap">
+          <div class="eta-section">
+            <div class="eta-label">Average boat speed</div>
+            <div class="speed-row">
+              <input class="speed-input" type="number" id="speedInput" value="6" min="1" max="20" />
+              <span class="speed-unit">knots</span>
+            </div>
+            <div class="eta-label">Daily sailing hours</div>
+            <div class="speed-row">
+              <input class="speed-input" type="number" id="hoursInput" value="8" min="1" max="20" />
+              <span class="speed-unit">hrs / day</span>
+            </div>
+          </div>
+          <div class="eta-label">Leg estimates</div>
+          <table class="eta-table" id="etaTable">
+            <thead>
+              <tr>
+                <th>Day</th><th>Leg</th><th>Dist</th><th>Sail time</th><th>Depart</th>
+              </tr>
+            </thead>
+            <tbody id="etaBody"></tbody>
+          </table>
+          <div class="eta-note">
+            In Stockholm Aug 8-15, civil twilight ends ~22:00, returns ~03:30.
+            Ideal for early-morning departures with long sailing windows.
+          </div>
+          <div class="sec-title" style="padding:1rem 0 .5rem">Chart References</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem;padding-bottom:1rem">
+            <a href="https://webapp.navionics.com/#boating@9&key=gzshJymhV" target="_blank" class="ref-link">
+              &#128506; Open in Navionics Boating
+            </a>
+            <a href="https://www.c-map.com/boating/products/c-map-boating-app/" target="_blank" class="ref-link">
+              &#128506; Open C-MAP Boating
+            </a>
+            <a href="https://www.sjofartsverket.se/sv/sjofart/sjokartor/" target="_blank" class="ref-link">
+              &#128506; Sjofartsverket (SE official charts)
+            </a>
+          </div>
+          <div class="eta-note" style="font-size:.67rem">
+            Routes follow approximate fairways through Vaxholmsleden, Kanholmsfjarder,
+            Mysingen and Horsfjarder. Always verify with official Navionics / C-MAP charts
+            and current Notices to Mariners before sailing.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Places & Anchors tab ── -->
+      <div class="tab-pane" id="tab-places"></div>
+
+    </div>
+  </aside>
+
+  <!-- ══ MAP ══ -->
+  <div id="map"></div>
+</div>
+
+<script src="leaflet.js"></script>
+<script>
+// ── Navigation math ──────────────────────────────────────────────
+
+function toRad(d){ return d * Math.PI / 180 }
+function toDeg(r){ return r * 180 / Math.PI }
+
+function haversineNm(lat1,lon1,lat2,lon2){
+  const R = 3440.065, dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function trueBearing(lat1,lon1,lat2,lon2){
+  const dLon=toRad(lon2-lon1);
+  const y=Math.sin(dLon)*Math.cos(toRad(lat2));
+  const x=Math.cos(toRad(lat1))*Math.sin(toRad(lat2))-Math.sin(toRad(lat1))*Math.cos(toRad(lat2))*Math.cos(dLon);
+  return (toDeg(Math.atan2(y,x))+360)%360;
+}
+
+function toDM(deg,isLat){
+  const d=Math.floor(Math.abs(deg)), m=((Math.abs(deg)-d)*60).toFixed(3);
+  const dir=isLat?(deg>=0?'N':'S'):(deg>=0?'E':'W');
+  return d+'deg '+m.padStart(6,'0')+"' "+dir;
+}
+
+function routeNm(wps){
+  var t=0;
+  for(var i=0;i<wps.length-1;i++) t+=haversineNm(wps[i][0],wps[i][1],wps[i+1][0],wps[i+1][1]);
+  return Math.round(t*10)/10;
+}
+
+// ── Trip data ────────────────────────────────────────────────────
+
+var STOPS = [
+  { id:0, name:'Stockholm', emoji:'A', coords:[59.3310,18.0790], date:'Aug 8 - Departure',  marina:'Strandvagen / Nybrokajen',           notes:'Trip start. Fuel at Wasahamnen. Provision before departing.' },
+  { id:1, name:'Vaxholm',   emoji:'1', coords:[59.4021,18.3305], date:'Aug 8 - Night 1',    marina:'Vaxholm Gasthamn',                   notes:'Historic fortress town. Restaurants, chandlery, fuel. Easy first day.' },
+  { id:2, name:'Finnhamn',  emoji:'2', coords:[59.4670,18.7330], date:'Aug 9 - Night 2',    marina:'Finnhamns Gasthamn',                 notes:'Car-free island. Cafe, forest walks. Anchor or marina.' },
+  { id:3, name:'Sandhamn',  emoji:'3', coords:[59.2885,18.9154], date:'Aug 10 - Night 3',   marina:'KSSS Sandhamns Segelsallskap',        notes:'Classic sailing village. Sandy beaches, book berth in advance.' },
+  { id:4, name:'Naemdo',    emoji:'4', coords:[59.1150,18.7350], date:'Aug 11 - Night 4',   marina:'Naemdo Brygga',                      notes:'Nature reserve. Hiking with sweeping panoramas. Calm anchorage.' },
+  { id:5, name:'Uto',       emoji:'5', coords:[58.9790,17.9250], date:'Aug 12 - Night 5',   marina:'Uto Marina Gruvbryggan',             notes:'Southernmost inhabited island. Famous bakery, bike rentals, iron mines.' },
+  { id:6, name:'Dalaro',    emoji:'6', coords:[59.1330,18.4044], date:'Aug 13 - Night 6',   marina:'Dalaro Gasthamn',                    notes:'Charming village with 17th-century customs house. Fuel available.' },
+  { id:7, name:'Stockholm', emoji:'B', coords:[59.3310,18.0790], date:'Aug 14-15 - Return', marina:'Strandvagen / Nybrokajen',           notes:'Home port. 7 days, full clockwise archipelago loop complete.' }
+];
+
+var STOP_NAMES = ['Stockholm','Vaxholm','Finnhamn','Sandhamn','Naemdo','Uto','Dalaro','Stockholm'];
+var DAY_COLORS = ['#1976D2','#388E3C','#E64A19','#7B1FA2','#C62828','#00838F','#F57C00'];
+var DAY_DATES  = ['Aug 8','Aug 9','Aug 10','Aug 11','Aug 12','Aug 13','Aug 14'];
+
+// Realistic sailing routes following main archipelago fairways
+// Based on Sjöfartsverket (Swedish Maritime Administration) chart channels
+// Cross-reference: Navionics Boating / C-MAP for precise depth-cleared routes
+var ROUTES = [
+  // Day 1: Stockholm -> Vaxholm via Fjaderholmarna, Lidingofjarder, Vaxholmsleden
+  [[59.3310,18.0790],[59.3420,18.1120],[59.3580,18.1650],[59.3730,18.2300],[59.3920,18.2880],[59.4021,18.3305]],
+  // Day 2: Vaxholm -> Finnhamn via Fredriksborg Fortress, Archipelago Sauna
+  [[59.4021,18.3305],[59.4050,18.3820],[59.4004,18.4426],[59.4020,18.4900],[59.4100,18.5500],[59.3989,18.6755],[59.4100,18.6980],[59.4400,18.7100],[59.4670,18.7330]],
+  // Day 3: Finnhamn -> Sandhamn via outer archipelago SE
+  [[59.4670,18.7330],[59.4380,18.7250],[59.4080,18.7600],[59.3680,18.8020],[59.3280,18.8580],[59.2885,18.9154]],
+  // Day 4: Sandhamn -> Naemdo via Baggensfjarder south, Mysingen approach
+  [[59.2885,18.9154],[59.2640,18.8720],[59.2280,18.8350],[59.1920,18.7980],[59.1530,18.7620],[59.1150,18.7350]],
+  // Day 5: Naemdo -> Uto via Mysingen, outer SW archipelago passage
+  [[59.1150,18.7350],[59.0760,18.6650],[59.0420,18.5280],[59.0220,18.3780],[59.0050,18.2080],[58.9900,18.0520],[58.9790,17.9250]],
+  // Day 6: Uto -> Dalaro via Horsfjarder, inner archipelago N
+  [[58.9790,17.9250],[59.0020,17.9860],[59.0320,18.0920],[59.0660,18.2020],[59.0960,18.3080],[59.1180,18.3680],[59.1330,18.4044]],
+  // Day 7: Dalaro -> Stockholm via Baggensfjarder, Saltsjon
+  [[59.1330,18.4044],[59.1720,18.3520],[59.2120,18.3020],[59.2560,18.2420],[59.2920,18.1830],[59.3160,18.1380],[59.3310,18.0790]]
+];
+
+var LEGS = ROUTES.map(function(wps,i){
+  var nm  = routeNm(wps);
+  var brg = Math.round(trueBearing(wps[0][0],wps[0][1],wps[wps.length-1][0],wps[wps.length-1][1]));
+  return {
+    day: i+1, from: i, to: i+1,
+    waypoints: wps, nm: nm, brg: brg,
+    color: DAY_COLORS[i],
+    date: DAY_DATES[i],
+    label: STOP_NAMES[i]+' to '+STOP_NAMES[i+1]
+  };
+});
+
+// Two special POIs to visit (Day 2)
+var POIS = [
+  {
+    id: 'fortress',
+    name: 'Fredriksborg Fortress',
+    coords: [59.4004, 18.4426],
+    day: 2,
+    notes: 'Historic 1735 fortress at Oxdjupet on Rindo island. Guided tours available in summer.',
+    url: 'https://visitvarmdo.com/utbud/fredriksborgs-fortress/',
+    anchor: { coords:[59.4050,18.4440], depth:'4-7 m', bottom:'Mud/Clay', note:'Sheltered bay N of fortress. Stern-to-rock mooring possible. Calm in NW winds.' }
+  },
+  {
+    id: 'sauna',
+    name: 'Archipelago Sauna',
+    coords: [59.3989, 18.6755],
+    day: 2,
+    notes: 'Floating wood-fired sauna in a nature reserve. Book in advance. Boat access only.',
+    url: 'https://archipelagosauna.com',
+    anchor: { coords:[59.4010,18.6730], depth:'4-6 m', bottom:'Mud', note:'Sheltered cove NW of sauna raft. Good holding. Gallno guest dock 1.8-2 m (call ahead).' }
+  }
+];
+
+// Overnight anchoring/mooring for every night
+var ANCHORS = [
+  { night:1, name:'Vaxholm Gasthamn',    type:'marina',  coords:[59.4021,18.3305], depth:'2.5-4 m', bottom:'Sand',     note:'Full marina. Electricity, showers, fuel. Pre-book in peak season.' },
+  { night:2, name:'Gallno / Sauna cove', type:'anchor',  coords:[59.4010,18.6730], depth:'4-6 m',   bottom:'Mud',      note:'Anchor in cove NW of sauna. Gallno guest dock option (1.8 m only). Calm, sheltered.' },
+  { night:3, name:'Finnhamn Gasthamn',   type:'marina',  coords:[59.4670,18.7330], depth:'2-4 m',   bottom:'Sand/Rock',note:'Guest marina on car-free island. Cafe, hostel. Also anchor in E bay 4-6 m.' },
+  { night:4, name:'Sandhamn KSSS',       type:'marina',  coords:[59.2885,18.9154], depth:'2-6 m',   bottom:'Sand',     note:'KSSS marina. Anchor off SE beach 3-5 m. Very busy in Aug -- book ahead.' },
+  { night:5, name:'Naemdo Brygga',       type:'anchor',  coords:[59.1150,18.7350], depth:'3-6 m',   bottom:'Mud/Sand', note:'Sheltered natural harbour. No facilities. Nature reserve -- respect quiet zone.' },
+  { night:6, name:'Uto Marina',          type:'marina',  coords:[58.9790,17.9250], depth:'2-4 m',   bottom:'Sand',     note:'Gruvbryggan harbour. Restaurant, shop. Famous bakery opens 07:00.' },
+  { night:7, name:'Dalaro Gasthamn',     type:'marina',  coords:[59.1330,18.4044], depth:'2.5-4 m', bottom:'Sand/Rock',note:'Guest harbour, fuel, showers. Historic 17th-century customs house nearby.' }
+];
+
+var totalNm = Math.round(LEGS.reduce(function(s,l){ return s+l.nm; },0)*10)/10;
+var avgNm   = Math.round(totalNm/7*10)/10;
+
+document.getElementById('totalNm').textContent = totalNm;
+document.getElementById('avgNm').textContent   = avgNm;
+
+// ── Route tab: day cards ──
+var dayCardsEl = document.getElementById('dayCards');
+var legState   = {};
+LEGS.forEach(function(leg){
+  legState[leg.day] = { visible:true, line:null, arrowMark:null };
+  var el = document.createElement('div');
+  el.className = 'day-card';
+  el.dataset.day = leg.day;
+  el.innerHTML =
+    '<div class="dc-dot" style="background:'+leg.color+'"></div>'
+    +'<div class="dc-body">'
+    +'<div class="dc-label">'+leg.label+'</div>'
+    +'<div class="dc-meta">Day '+leg.day+' &middot; '+leg.date+'</div>'
+    +'</div>'
+    +'<div class="dc-right">'
+    +'<div class="dc-nm">'+leg.nm+' nm</div>'
+    +'<div class="dc-brg">'+leg.brg+'&deg;T</div>'
+    +'</div>';
+  (function(d,l){
+    el.addEventListener('click', function(){
+      legState[l.day].visible = !legState[l.day].visible;
+      el.classList.toggle('off', !legState[l.day].visible);
+      render();
+    });
+  })(el, leg);
+  dayCardsEl.appendChild(el);
+});
+
+// ── Waypoints tab ──
+var wpBodyEl = document.getElementById('wpBody');
+var cumNm = 0;
+STOPS.forEach(function(stop,i){
+  var arrLeg = LEGS.filter(function(l){ return l.to===i; })[0];
+  var clr    = i===0 ? LEGS[0].color : (arrLeg ? arrLeg.color : LEGS[LEGS.length-1].color);
+  if(arrLeg) cumNm = Math.round((cumNm+arrLeg.nm)*10)/10;
+  var tr = document.createElement('tr');
+  var idStr = i < 10 ? '0'+i : ''+i;
+  tr.innerHTML =
+    '<td style="text-align:center"><span class="wp-num" style="color:'+clr+';border-color:'+clr+'">'+idStr+'</span></td>'
+    +'<td class="wp-name">'+stop.name+'</td>'
+    +'<td class="wp-coord">'+toDM(stop.coords[0],true)+'<br>'+toDM(stop.coords[1],false)+'</td>'
+    +'<td class="wp-brg" style="text-align:center">'+(arrLeg ? arrLeg.brg+'&deg;' : '&mdash;')+'</td>'
+    +'<td class="wp-dist" style="text-align:center">'+(arrLeg ? arrLeg.nm : '&mdash;')+'</td>'
+    +'<td class="wp-dist" style="text-align:center">'+(arrLeg ? cumNm : '0.0')+'</td>';
+  (function(s,idx){
+    tr.addEventListener('click', function(){
+      document.querySelectorAll('.wptable tr.wp-active').forEach(function(r){ r.classList.remove('wp-active'); });
+      tr.classList.add('wp-active');
+      if(map){ map.flyTo(s.coords,12,{duration:1.2}); setTimeout(function(){ if(markerObj[idx]) markerObj[idx].openPopup(); },1300); }
+    });
+  })(stop, i);
+  wpBodyEl.appendChild(tr);
+});
+
+// ── ETA tab ──
+function buildETA(){
+  var kts  = parseFloat(document.getElementById('speedInput').value)||6;
+  var hrs  = parseFloat(document.getElementById('hoursInput').value)||8;
+  var body = document.getElementById('etaBody');
+  body.innerHTML = '';
+  LEGS.forEach(function(leg){
+    var sh=leg.nm/kts, hh=Math.floor(sh), mm=Math.round((sh-hh)*60);
+    var ah=8+sh, ahh=Math.floor(ah), amm=Math.round((ah-Math.floor(ah))*60);
+    var ok = sh<=hrs ? '&#10003;' : '&#9888;';
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="color:'+leg.color+'">Day '+leg.day+'</td>'
+      +'<td style="font-size:.66rem">'+leg.label+'</td>'
+      +'<td>'+leg.nm+' nm</td>'
+      +'<td class="time">'+hh+'h '+(mm<10?'0':'')+mm+'m</td>'
+      +'<td class="time">'+(ahh<10?'0':'')+ahh+':'+(amm<10?'0':'')+amm+' '+ok+'</td>';
+    body.appendChild(tr);
+  });
+}
+buildETA();
+document.getElementById('speedInput').addEventListener('input', buildETA);
+document.getElementById('hoursInput').addEventListener('input', buildETA);
+
+// ── Places & Anchors tab ──
+var placesTabEl = document.getElementById('tab-places');
+var plHtml = '<div class="sec-title" style="padding:.9rem 1.3rem .5rem">Daytime Visits</div>';
+POIS.forEach(function(poi){
+  plHtml += '<div class="place-card">'
+    +'<div class="place-card-name">&#9733; '+poi.name+'</div>'
+    +'<div class="place-card-meta">Day '+poi.day+' stop &middot; '+toDM(poi.coords[0],true)+' &nbsp; '+toDM(poi.coords[1],false)+'<br>'+poi.notes+'<br><a href="'+poi.url+'" target="_blank" style="color:#80cbc4;font-size:.66rem">More info &#8599;</a></div>'
+    +'<div class="place-card-anchor">&#9875; Anchor nearby: '+poi.anchor.depth+' &nbsp; Bottom: '+poi.anchor.bottom+'<br>'+poi.anchor.note+'</div>'
+    +'</div>';
+});
+plHtml += '<div class="sec-title" style="padding:.9rem 1.3rem .5rem">Overnight Anchors &amp; Marinas</div>';
+placesTabEl.innerHTML = plHtml;
+
+ANCHORS.forEach(function(anch){
+  var row = document.createElement('div');
+  row.className = 'anch-row';
+  var typeIcon = anch.type === 'marina' ? 'M' : 'A';
+  var typeColor = anch.type === 'marina' ? '#1976D2' : '#00897B';
+  row.innerHTML = '<div class="anch-icon" style="border-color:'+typeColor+';color:'+typeColor+'">'+typeIcon+'</div>'
+    +'<div class="anch-info">'
+    +'<div class="anch-name">Night '+anch.night+' &middot; '+anch.name+'</div>'
+    +'<div class="anch-depth">Depth: <b>'+anch.depth+'</b> &middot; Bottom: '+anch.bottom+'<br>'+anch.note+'</div>'
+    +'</div>';
+  (function(a){ row.addEventListener('click', function(){ if(map){ map.flyTo(a.coords,13,{duration:1.2}); } }); })(anch);
+  placesTabEl.appendChild(row);
+});
+
+// ── Tab switching ──
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ══ Map (Leaflet-dependent — isolated so sidebar works even if map fails) ══
+
+var map = null;
+var markerObj = {};
+
+function stopColor(id){
+  if(id===0) return LEGS[0].color;
+  var l = LEGS.filter(function(l){ return l.to===id; })[0];
+  return l ? l.color : LEGS[LEGS.length-1].color;
+}
+
+function render(){
+  if(!map) return;
+  map._routeGrp.clearLayers(); map._arrowGrp.clearLayers(); map._markerGrp.clearLayers();
+  var vis = {};
+  LEGS.forEach(function(leg){
+    var s = legState[leg.day];
+    if(s.visible){
+      if(s.line) map._routeGrp.addLayer(s.line);
+      if(s.arrowMark) map._arrowGrp.addLayer(s.arrowMark);
+      vis[leg.from] = true; vis[leg.to] = true;
+    }
+  });
+  STOPS.forEach(function(s,i){ if(vis[i] && markerObj[i]) map._markerGrp.addLayer(markerObj[i]); });
+}
+
+function showAll(){
+  LEGS.forEach(function(l){ legState[l.day].visible=true; });
+  document.querySelectorAll('.day-card').forEach(function(c){ c.classList.remove('off'); });
+  render();
+}
+function hideAll(){
+  LEGS.forEach(function(l){ legState[l.day].visible=false; });
+  document.querySelectorAll('.day-card').forEach(function(c){ c.classList.add('off'); });
+  render();
+}
+function fitAll(){
+  if(map) map.fitBounds(L.latLngBounds(STOPS.map(function(s){ return s.coords; })),{padding:[50,50]});
+}
+
+try {
+  map = L.map('map', { center:[59.20,18.42], zoom:9 });
+
+  // ESRI World Ocean Base — depth tints, soundings, rocks, reefs (free, no key needed)
+  var esriOcean = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
+    { attribution:'Tiles &copy; Esri &mdash; GEBCO, NOAA, CHS, National Geographic, DeLorme', maxZoom:13, minZoom:2 }
+  ).addTo(map);
+
+  // ESRI Ocean Reference — adds place names and labels on top
+  var esriRef = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
+    { attribution:'', maxZoom:13, opacity:0.85 }
+  ).addTo(map);
+
+  // OSM fallback (zooms > 13 where ESRI has no tiles)
+  var osmLayer = L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', minZoom:14, maxZoom:19 }
+  ).addTo(map);
+
+  // OpenSeaMap buoys, depth marks, hazards overlay
+  var seaLayer = L.tileLayer(
+    'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
+    { attribution:'&copy; <a href="https://www.openseamap.org">OpenSeaMap</a>', opacity:0.85, maxZoom:18 }
+  ).addTo(map);
+
+  map._routeGrp  = L.layerGroup().addTo(map);
+  map._arrowGrp  = L.layerGroup().addTo(map);
+  map._markerGrp = L.layerGroup().addTo(map);
+  map._poiGrp    = L.layerGroup().addTo(map);
+  map._anchGrp   = L.layerGroup().addTo(map);
+
+  L.control.layers(
+    { 'ESRI Ocean (nautical)': esriOcean, 'OpenStreetMap': osmLayer },
+    { 'Chart marks (OpenSeaMap)': seaLayer, 'Ocean labels (ESRI)': esriRef, 'POI visits': map._poiGrp, 'Overnight anchors': map._anchGrp },
+    { position:'topright' }
+  ).addTo(map);
+
+  // Legend
+  var LegCtrl = L.Control.extend({
+    options:{ position:'bottomright' },
+    onAdd: function(){
+      var d = L.DomUtil.create('div','map-legend');
+      var rows = LEGS.map(function(l){
+        return '<div class="legend-row"><div class="legend-line" style="background:'+l.color+'"></div><span>Day '+l.day+' &middot; '+l.date+'</span></div>';
+      }).join('');
+      d.innerHTML = '<div class="legend-title">Route</div>'+rows;
+      return d;
+    }
+  });
+  new LegCtrl().addTo(map);
+
+  // Build multi-point route lines + direction arrows
+  LEGS.forEach(function(leg){
+    legState[leg.day].line = L.polyline(leg.waypoints, {
+      color: leg.color, weight: 4, opacity: 0.90,
+      dashArray: '10 5', lineJoin: 'round', lineCap: 'round'
+    });
+    // Arrow at middle waypoint, bearing along that segment
+    var mi = Math.floor(leg.waypoints.length / 2);
+    var mp = leg.waypoints[mi];
+    var mb = Math.round(trueBearing(leg.waypoints[mi-1][0],leg.waypoints[mi-1][1],mp[0],mp[1]));
+    legState[leg.day].arrowMark = L.marker(mp, {
+      icon: L.divIcon({
+        className:'',
+        html:'<svg width="22" height="22" viewBox="0 0 22 22" style="transform:rotate('+mb+'deg);filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))"><polygon points="11,1 20,20 11,14 2,20" fill="'+leg.color+'" stroke="white" stroke-width="1.5"/></svg>',
+        iconSize:[22,22], iconAnchor:[11,11]
+      }),
+      interactive:false, zIndexOffset:-100
+    });
+  });
+
+  // Stop markers with nav info popups
+  STOPS.forEach(function(stop,i){
+    var clr    = stopColor(i);
+    var arrLeg = LEGS.filter(function(l){ return l.to===i; })[0];
+    var navHtml = arrLeg
+      ? '<div class="pop-nav"><span>Brg <b>'+arrLeg.brg+'&deg;T</b></span><span><b>'+arrLeg.nm+' nm</b></span></div>'
+      : '';
+    var coords = toDM(stop.coords[0],true)+'<br>'+toDM(stop.coords[1],false);
+    markerObj[i] = L.marker(stop.coords, {
+      icon: L.divIcon({
+        className:'',
+        html:'<div style="width:38px;height:38px;border-radius:50%;background:'+clr+';border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;color:#fff;box-shadow:0 3px 12px rgba(0,0,0,.45);cursor:pointer;">'+(i===0||i===7?'STK':i)+'</div>',
+        iconSize:[38,38], iconAnchor:[19,19], popupAnchor:[0,-23]
+      })
+    }).bindPopup(
+      '<div class="pop">'
+      +'<div class="pop-hdr"><div class="pop-name">'+stop.name+'</div><div class="pop-date">'+stop.date+'</div></div>'
+      +'<div class="pop-body">'
+      +'<div class="pop-coords">'+coords+'</div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9875;</span><span class="pop-val">'+stop.marina+'</span></div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+stop.notes+'</span></div>'
+      +navHtml
+      +'</div></div>',
+      { maxWidth:280 }
+    );
+  });
+
+  // POI markers (gold star) -- visit destinations
+  POIS.forEach(function(poi){
+    var mk = L.marker(poi.coords, {
+      icon: L.divIcon({
+        className:'',
+        html:'<div style="width:34px;height:34px;background:#F9A825;border:2.5px solid #fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 10px rgba(0,0,0,.5);cursor:pointer;color:#0b1f36;font-weight:bold;">&#9733;</div>',
+        iconSize:[34,34], iconAnchor:[17,17], popupAnchor:[0,-20]
+      }),
+      zIndexOffset: 200
+    }).bindPopup(
+      '<div class="pop">'
+      +'<div class="pop-hdr" style="background:linear-gradient(135deg,#b37a00,#c88e00)">'
+      +'<div class="pop-name">&#9733; '+poi.name+'</div>'
+      +'<div class="pop-date">Day '+poi.day+' visit</div>'
+      +'</div>'
+      +'<div class="pop-body">'
+      +'<div class="pop-coords">'+toDM(poi.coords[0],true)+'<br>'+toDM(poi.coords[1],false)+'</div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+poi.notes+'</span></div>'
+      +'<div class="pop-row" style="background:#e8f5e9;border-radius:.3rem;padding:.35rem .5rem;margin-top:.4rem;">'
+      +'<span style="font-size:.75rem;color:#2e7d32;">&#9875; Anchor: '+poi.anchor.depth+' &nbsp; '+poi.anchor.bottom+'<br>'+poi.anchor.note+'</span>'
+      +'</div>'
+      +'<div class="pop-row" style="margin-top:.3rem;"><a href="'+poi.url+'" target="_blank" style="font-size:.72rem;color:#1565c0;">More info &#8599;</a></div>'
+      +'</div></div>',
+      {maxWidth:280}
+    );
+    map._poiGrp.addLayer(mk);
+  });
+
+  // Anchor markers (small teal/blue circles)
+  ANCHORS.forEach(function(anch){
+    var typeColor = anch.type === 'marina' ? '#1976D2' : '#00897B';
+    var mk = L.marker(anch.coords, {
+      icon: L.divIcon({
+        className:'',
+        html:'<div style="width:26px;height:26px;border-radius:50%;background:#0b1f36;border:2px solid '+typeColor+';display:flex;align-items:center;justify-content:center;font-size:12px;color:'+typeColor+';box-shadow:0 2px 6px rgba(0,0,0,.4);">&#9875;</div>',
+        iconSize:[26,26], iconAnchor:[13,13], popupAnchor:[0,-16]
+      }),
+      zIndexOffset: 100
+    }).bindPopup(
+      '<div class="pop">'
+      +'<div class="pop-hdr" style="background:linear-gradient(135deg,#0d2540,#1a3a60)">'
+      +'<div class="pop-name">&#9875; Night '+anch.night+' &mdash; '+anch.name+'</div>'
+      +'<div class="pop-date">'+(anch.type==='marina'?'Marina':'Anchorage')+'</div>'
+      +'</div>'
+      +'<div class="pop-body">'
+      +'<div class="pop-coords">'+toDM(anch.coords[0],true)+'<br>'+toDM(anch.coords[1],false)+'</div>'
+      +'<div class="pop-row"><span class="pop-icon">&#8681;</span><span class="pop-val"><b>Depth: '+anch.depth+'</b> &nbsp; Bottom: '+anch.bottom+'</span></div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+anch.note+'</span></div>'
+      +'</div></div>',
+      {maxWidth:280}
+    );
+    map._anchGrp.addLayer(mk);
+  });
+
+  render();
+} catch(e) {
+  console.error('Map error:', e);
+  document.getElementById('map').innerHTML =
+    '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#546e7a;font-size:.9rem">Map failed: '+e.message+'</div>';
+}
+
+</script>
+</body>
+</html>
