@@ -877,7 +877,7 @@
             </thead>
             <tbody id="rosterBody"></tbody>
           </table>
-          <div class="roster-note">7 crew &middot; assignments TBD &mdash; tap a cell to assign later.</div>
+          <div class="roster-note">7 crew &middot; 3 galley, 2 route, 2 sanitation per day &middot; each person: 3G / 2R / 2S across the week.</div>
         </div>
       </div>
 
@@ -1000,20 +1000,18 @@ var ROUTES = [
    [59.3980,18.4600],[59.4050,18.4900],                   // N into Kanholmsfjärden
    [59.4100,18.5200],[59.4150,18.5450],[59.4198,18.5680]],// E to Grinda
   // Day 3: Grinda buoy → Möja mooring field (~19 nm) via southern bypass
-  // Land-validated: S bypass around Lillön/Hägerön/Karklö/Trångholmen cluster (lat 59.397),
-  // then NE past Björkholmen (E of E:18.659), E of Stora Kalholmen (E:18.831).
-  [[59.4198,18.5680],[59.4150,18.5700],[59.4040,18.5910],
-   [59.3970,18.6200],                                      // S of Hägerön/Lillön cluster
-   [59.3970,18.6500],                                      // continue S bypass
-   [59.4170,18.6550],                                      // NE rising clear
-   [59.4220,18.6600],                                      // between island clusters
-   [59.4300,18.6550],                                      // W of Stora Hästnacken
-   [59.4300,18.6600],                                      // E of Björkholmen (E:18.659)
-   [59.4400,18.6760],                                      // N past Björkholmen, turn E
-   [59.4400,18.7080],[59.4450,18.7470],[59.4500,18.7720],
-   [59.4620,18.8230],
-   [59.4580,18.8310],                                      // E of Stora Kalholmen (E:18.8294)
-   [59.4500,18.8280],[59.4390,18.8320],[59.4284,18.9126]],
+  // Northern channel route: direct NE past Finnhamn area, curve SE to Möja
+  [[59.4198,18.5680],[59.4250,18.5850],[59.4330,18.6050],
+   [59.4400,18.6300],                                      // NE through channel
+   [59.4480,18.6600],                                      // N of island clusters
+   [59.4550,18.6950],                                      // past Finnhamn channel
+   [59.4620,18.7300],                                      // continuing NE
+   [59.4650,18.7700],                                      // eastern passage
+   [59.4630,18.8100],                                      // curving SE
+   [59.4570,18.8400],                                      // turning south
+   [59.4480,18.8700],                                      // heading to Möja
+   [59.4400,18.8900],                                      // approach Möja
+   [59.4284,18.9126]],
   // Day 4: Möja mooring → Telegrafholmen anchorage (~10 nm)
   // Land-validated: approach final stop from W of Lökholmen (W:18.9212)
   [[59.4284,18.9126],[59.4170,18.9100],[59.4070,18.9300],[59.3960,18.9400],[59.3840,18.9510],[59.3730,18.9600],[59.3590,18.9570],[59.3470,18.9540],[59.3320,18.9520],[59.3200,18.9500],[59.3050,18.9300],
@@ -1091,8 +1089,8 @@ var POIS = [
 // Overnight anchoring/mooring for every night
 var ANCHORS = [
   { night:1, name:'Vaxholm Gasthamn',    type:'marina',  coords:[59.4021,18.3305], depth:'2.5-4 m', bottom:'Sand',     note:'Full marina. Electricity, showers, fuel. Pre-book in peak season.' },
-  { night:2, name:'Gallno / Sauna cove', type:'anchor',  coords:[59.4010,18.6730], depth:'4-6 m',   bottom:'Mud',      note:'Anchor in cove NW of sauna. Gallno guest dock option (1.8 m only). Calm, sheltered.' },
-  { night:3, name:'Finnhamn Gasthamn',   type:'marina',  coords:[59.4650,18.7270], depth:'2-4 m',   bottom:'Sand/Rock',note:'Guest marina on car-free island. Cafe, hostel. Also anchor in E bay 4-6 m.' },
+  { night:2, name:'Gallno / Sauna cove', type:'anchor',  coords:[59.3990,18.4380], depth:'4-6 m',   bottom:'Mud',      note:'Anchor in cove NW of sauna. Gallno guest dock option (1.8 m only). Calm, sheltered.' },
+  { night:3, name:'Finnhamn Gasthamn',   type:'marina',  coords:[59.4390,18.8320], depth:'2-4 m',   bottom:'Sand/Rock',note:'Guest marina on car-free island. Cafe, hostel. Also anchor in E bay 4-6 m.' },
   { night:4, name:'Sandhamn KSSS',       type:'marina',  coords:[59.2870,18.8940], depth:'2-6 m',   bottom:'Sand',     note:'KSSS marina. Anchor off SE beach 3-5 m. Very busy in Aug -- book ahead.' },
   { night:5, name:'Naemdo Brygga',       type:'anchor',  coords:[59.1530,18.5180], depth:'3-6 m',   bottom:'Mud/Sand', note:'Sheltered natural harbour. No facilities. Nature reserve -- respect quiet zone.' },
   { night:6, name:'Uto Marina',          type:'marina',  coords:[58.9620,18.2050], depth:'2-4 m',   bottom:'Sand',     note:'Gruvbryggan harbour. Restaurant, shop. Famous bakery opens 07:00.' },
@@ -1242,9 +1240,20 @@ ANCHORS.forEach(function(anch){
 });
 
 // ── Roster tab ──
-var CREW = ['Crew 1','Crew 2','Crew 3','Crew 4','Crew 5','Crew 6','Crew 7'];
+var CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','BB'];
 var DUTIES = ['galley','route','sanitation'];
-var rosterData = DAY_DATES.map(function(){ return {galley:'',route:'',sanitation:''}; });
+// Pre-assigned roster: 3 galley, 2 route, 2 sanitation per day.
+// Each person: 3× galley, 2× route, 2× sanitation across 7 days. Roy = route Day 1.
+// Couples paired 3 days: Eric+Gwin (D1 G, D2 R, D3 S), AA+BB (D1 S, D2 G, D3 R).
+var rosterData = [
+  { galley:['Weiyi','Eric','Gwin'],   route:['Roy','Lulu'],    sanitation:['AA','BB'] },     // Day 1 — couples paired
+  { galley:['Roy','AA','BB'],          route:['Eric','Gwin'],   sanitation:['Weiyi','Lulu'] },// Day 2 — couples paired
+  { galley:['Lulu','Weiyi','Roy'],     route:['AA','BB'],       sanitation:['Eric','Gwin'] }, // Day 3 — couples paired
+  { galley:['Gwin','AA','Lulu'],       route:['Roy','Weiyi'],   sanitation:['Eric','BB'] },   // Day 4
+  { galley:['Eric','BB','Weiyi'],      route:['Gwin','Lulu'],   sanitation:['Roy','AA'] },    // Day 5
+  { galley:['Gwin','Eric','AA'],       route:['Weiyi','BB'],    sanitation:['Roy','Lulu'] },  // Day 6
+  { galley:['Roy','BB','Lulu'],        route:['Eric','AA'],     sanitation:['Weiyi','Gwin'] } // Day 7
+];
 
 function buildRoster(){
   var body = document.getElementById('rosterBody');
@@ -1256,7 +1265,8 @@ function buildRoster(){
       '<td class="day-cell"><span style="color:'+leg.color+';font-size:.68rem">&#9632;</span> Day '+(i+1)+'<br><span style="color:var(--muted);font-size:.62rem">'+date+'</span></td>'
       + DUTIES.map(function(d){
           var val = rosterData[i][d];
-          return '<td><div class="duty-slot" data-day="'+i+'" data-duty="'+d+'">'+(val||'&mdash;')+'</div></td>';
+          var txt = Array.isArray(val) ? val.join(', ') : (val || '&mdash;');
+          return '<td><div class="duty-slot" data-day="'+i+'" data-duty="'+d+'">'+txt+'</div></td>';
         }).join('');
     body.appendChild(tr);
   });
