@@ -1,0 +1,49 @@
+{
+  "name": "Midnight Sun · Stockholm Archipelago Sailing Chart",
+  "short_name": "Midnight Sun",
+  "description": "Interactive 7-day Stockholm archipelago sailing chart (Aug 2026) with OSM-verified fairways, live SMHI tides, Open-Meteo wind forecast, editable routes and A→B Quick Nav.",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["navigation", "travel", "weather", "utilities", "sports"],
+  "start_url": "/midnight-sun.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#08192e",
+  "background_color": "#08192e",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='32' fill='%2308192e'/%3E%3Ctext x='96' y='128' font-size='120' text-anchor='middle' fill='%23f0b429'%3E%E2%9B%B5%3C/text%3E%3C/svg%3E",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%2308192e'/%3E%3Ctext x='256' y='340' font-size='300' text-anchor='middle' fill='%23f0b429'%3E%E2%9B%B5%3C/text%3E%3C/svg%3E",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Chart",
+      "short_name": "Chart",
+      "description": "Open the navigation chart with the 7-day route",
+      "url": "/midnight-sun.html?tab=route",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='16' fill='%2308192e'/%3E%3Ctext x='48' y='64' font-size='60' text-anchor='middle' fill='%23f0b429'%3E%E2%9B%B5%3C/text%3E%3C/svg%3E",
+          "type": "image/svg+xml",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Tides & Wind",
+      "short_name": "Tides",
+      "description": "Live SMHI tide + Open-Meteo wind forecast",
+      "url": "/midnight-sun.html?tab=tides"
+    }
+  ]
+}
