@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- ─── Primary SEO meta ──────────────────────────────────────────── -->
+  <title>Midnight Sun · 7-Day Stockholm Archipelago Sailing Chart (Aug 2026)</title>
+  <meta name="description" content="Interactive 7-day Stockholm archipelago sailing chart (Aug 8–15, 2026): Vaxholm → Grinda → Möja → Sandhamn → Utö → Dalarö. Live SMHI tides &amp; wind, OSM fairways, editable routes." />
+  <meta name="keywords" content="Stockholm archipelago sailing, Skärgården navigation chart, Vaxholm Grinda Möja Sandhamn Utö Dalarö, 7-day sailing itinerary Sweden, Baltic sea route planner, marine route editor, OpenSeaMap Leaflet, nautical chart Stockholm, SMHI tide forecast, Sjöfartsverket fairway, GlobeSailor archipelago" />
+  <meta name="author" content="Midnight Sun crew · Aug 2026 charter" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow" />
+  <meta name="bingbot" content="index, follow" />
+  <meta name="rating" content="general" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#08192e" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#08192e" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Midnight Sun Chart" />
+  <meta name="application-name" content="Midnight Sun Chart" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- Geo / location targeting (Stockholm archipelago) -->
+  <meta name="geo.region" content="SE-AB" />
+  <meta name="geo.placename" content="Stockholm Archipelago, Sweden" />
+  <meta name="geo.position" content="59.20;18.42" />
+  <meta name="ICBM" content="59.20, 18.42" />
+
+  <!-- Canonical & language alternates (edit URL when publishing) -->
+  <link rel="canonical" href="https://midnightsun-chart.example.com/midnight-sun.html" />
+  <link rel="alternate" hreflang="en" href="https://midnightsun-chart.example.com/midnight-sun.html" />
+  <link rel="alternate" hreflang="x-default" href="https://midnightsun-chart.example.com/midnight-sun.html" />
+
+  <!-- PWA manifest, sitemap, RSS-like discovery -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- ─── Open Graph (Facebook / LinkedIn / Slack) ──────────────────── -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Midnight Sun · Stockholm Archipelago Chart" />
+  <meta property="og:title" content="Midnight Sun · 7-Day Stockholm Archipelago Sailing Chart" />
+  <meta property="og:description" content="Plan, edit, and navigate a 7-day Stockholm archipelago sail (Aug 2026). 109.9 nm circuit on OSM-verified fairways. Live tides, wind, water temperature. Editable route with bearing & distance." />
+  <meta property="og:url" content="https://midnightsun-chart.example.com/midnight-sun.html" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:locale:alternate" content="sv_SE" />
+  <meta property="og:image" content="https://midnightsun-chart.example.com/og-cover.jpg" />
+  <meta property="og:image:secure_url" content="https://midnightsun-chart.example.com/og-cover.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Map of the Stockholm archipelago with the 7-day Midnight Sun sailing route drawn in dashed coloured lines" />
+
+  <!-- ─── Twitter Card ──────────────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Midnight Sun · Stockholm Archipelago Sailing Chart" />
+  <meta name="twitter:description" content="7-day archipelago itinerary (Aug 2026) with live SMHI tides, wind forecast, editable route, draggable A→B Quick Nav. Wasahamnen → Vaxholm → Grinda → Möja → Sandhamn → Utö → Dalarö." />
+  <meta name="twitter:image" content="https://midnightsun-chart.example.com/og-cover.jpg" />
+  <meta name="twitter:image:alt" content="Stockholm archipelago map with 7-day sail route" />
+
+  <!-- ─── Favicons (inline SVG ⛵ – no extra request) ────────────────── -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2308192e'/%3E%3Ctext x='32' y='44' font-size='40' text-anchor='middle' fill='%23f0b429'%3E%E2%9B%B5%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='32' fill='%2308192e'/%3E%3Ctext x='90' y='120' font-size='110' text-anchor='middle' fill='%23f0b429'%3E%E2%9B%B5%3C/text%3E%3C/svg%3E" />
+
+  <!-- ─── Performance hints: preconnect to all live data origins ────── -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin />
+  <link rel="preconnect" href="https://server.arcgisonline.com" crossorigin />
+  <link rel="preconnect" href="https://tiles.openseamap.org" crossorigin />
+  <link rel="preconnect" href="https://opendata-download-ocobs.smhi.se" crossorigin />
+  <link rel="preconnect" href="https://api.open-meteo.com" crossorigin />
+  <link rel="dns-prefetch" href="https://nominatim.openstreetmap.org" />
+  <link rel="dns-prefetch" href="https://overpass-api.de" />
+
+  <!-- ─── Schema.org structured data (JSON-LD) ──────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://midnightsun-chart.example.com/#website",
+        "url": "https://midnightsun-chart.example.com/midnight-sun.html",
+        "name": "Midnight Sun · Stockholm Archipelago Chart",
+        "description": "Interactive 7-day sailing chart for the Stockholm archipelago with live tides, wind, water temperature, and editable routes.",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "TouristTrip",
+        "@id": "https://midnightsun-chart.example.com/#trip",
+        "name": "Midnight Sun — 7-Day Stockholm Archipelago Sail",
+        "description": "Clockwise 7-day sailing circuit of the Stockholm archipelago, 109.9 nm on OSM-verified fairways. Visits Vaxholm, Fredriksborg Fortress at Oxdjupet (Day 2 direct sail), Grinda nature-reserve island, traditional Möja, sailing-mecca Sandhamn, southern Utö, and 17th-century Dalarö.",
+        "url": "https://midnightsun-chart.example.com/midnight-sun.html",
+        "image": "https://midnightsun-chart.example.com/og-cover.jpg",
+        "touristType": ["Sailors", "Nautical travellers", "Charter crews"],
+        "offers": {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "validFrom": "2026-08-08",
+          "validThrough": "2026-08-15"
+        },
+        "itinerary": [
+          { "@type": "Place", "name": "Wasahamnen, Djurgården (Stockholm)", "geo": { "@type": "GeoCoordinates", "latitude": 59.3260, "longitude": 18.0924 } },
+          { "@type": "Place", "name": "Vaxholm", "geo": { "@type": "GeoCoordinates", "latitude": 59.4030, "longitude": 18.3647 } },
+          { "@type": "Place", "name": "Grinda", "geo": { "@type": "GeoCoordinates", "latitude": 59.4198, "longitude": 18.5680 } },
+          { "@type": "Place", "name": "Möja", "geo": { "@type": "GeoCoordinates", "latitude": 59.4284, "longitude": 18.9126 } },
+          { "@type": "Place", "name": "Sandhamn", "geo": { "@type": "GeoCoordinates", "latitude": 59.2931, "longitude": 18.9245 } },
+          { "@type": "Place", "name": "Utö", "geo": { "@type": "GeoCoordinates", "latitude": 58.9403, "longitude": 18.2167 } },
+          { "@type": "Place", "name": "Dalarö (Ornöhuvud naturhamn)", "geo": { "@type": "GeoCoordinates", "latitude": 59.1212, "longitude": 18.4781 } },
+          { "@type": "Place", "name": "Wasahamnen, Djurgården (Stockholm)", "geo": { "@type": "GeoCoordinates", "latitude": 59.3260, "longitude": 18.0924 } }
+        ]
+      },
+      {
+        "@type": "Map",
+        "name": "Stockholm Archipelago Navigation Chart",
+        "mapType": "https://schema.org/SeaChart",
+        "url": "https://midnightsun-chart.example.com/midnight-sun.html"
+      },
+      {
+        "@type": "Event",
+        "name": "Midnight Sun sailing charter, Stockholm archipelago",
+        "startDate": "2026-08-08",
+        "endDate": "2026-08-15",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "Stockholm Archipelago",
+          "geo": { "@type": "GeoShape", "box": "58.85,17.80 59.55,19.10" }
+        },
+        "description": "Seven-day clockwise sail through Vaxholm, Grinda, Möja, Sandhamn, Utö and Dalarö."
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+    /* Accessibility: hide visually but keep crawler-readable */
+    .visually-hidden{
+      position:absolute !important;
+      width:1px;height:1px;
+      padding:0;margin:-1px;overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;border:0;
+    }
+    /* Reset semantic headings so visual design is unchanged */
+    .trip-name, .trip-sub{font-weight:inherit;font-size:inherit;line-height:inherit}
+
+    :root {
+      --navy:   #08192e;
+      --navy2:  #0e2540;
+      --navy3:  #142f50;
+      --gold:   #f0b429;
+      --gold2:  #c88e00;
+      --teal:   #0097a7;
+      --red:    #c62828;
+      --green:  #1b5e20;
+      --text:   #eceff1;
+      --muted:  #78909c;
+      --border: rgba(255,255,255,0.09);
+      --row-hover: rgba(255,255,255,0.06);
+      --tab-active: rgba(255,255,255,0.12);
+    }
+
+    html,body{height:100%;overflow:hidden;font-family:'Georgia',serif;background:var(--navy);color:var(--text)}
+
+    /* ────────── Layout ────────── */
+    .app{display:flex;height:100vh}
+
+    /* ────────── Sidebar ────────── */
+    .sidebar{
+      width:370px;flex-shrink:0;
+      background:var(--navy);
+      display:flex;flex-direction:column;
+      border-right:1px solid var(--border);
+      z-index:400;
+    }
+
+    /* ── Header ── */
+    .s-hdr{
+      padding:1.2rem 1.3rem 0.9rem;
+      background:linear-gradient(170deg,#0a1e35 0%,#0e2a48 100%);
+      border-bottom:1px solid var(--border);
+      flex-shrink:0;
+    }
+    .s-hdr-top{display:flex;align-items:flex-start;justify-content:space-between}
+    .trip-name{font-size:1.5rem;font-weight:normal;letter-spacing:.07em;color:var(--gold);line-height:1.1}
+    .trip-sub{margin-top:.15rem;font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+    .compass-badge{
+      width:38px;height:38px;flex-shrink:0;
+      background:var(--navy3);border:1px solid var(--border);
+      border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-size:1.2rem;
+    }
+    .trip-dates{
+      margin-top:.7rem;display:flex;align-items:center;gap:.8rem;
+      font-size:.8rem;color:rgba(255,255,255,.65);
+    }
+    .date-chip{
+      padding:.2rem .6rem;border-radius:99px;
+      background:rgba(255,255,255,.08);font-size:.72rem;letter-spacing:.04em;
+    }
+
+    /* ── Stats ── */
+    .stats{display:flex;flex-shrink:0;border-bottom:1px solid var(--border)}
+    .stat{flex:1;padding:.7rem .3rem;text-align:center;border-right:1px solid var(--border)}
+    .stat:last-child{border-right:none}
+    .stat-v{font-size:1.35rem;color:var(--gold);line-height:1}
+    .stat-l{margin-top:.15rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+    /* ── Tabs ── */
+    .tabs{display:flex;flex-shrink:0;border-bottom:1px solid var(--border)}
+    .tab{
+      flex:1;padding:.6rem .3rem;text-align:center;
+      font-size:.71rem;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--muted);cursor:pointer;border:none;background:transparent;
+      font-family:inherit;border-bottom:2px solid transparent;transition:all .2s;
+    }
+    .tab:hover{color:var(--text)}
+    .tab.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(240,180,41,.05)}
+
+    /* ── Tab content ── */
+    .tab-content{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.12) transparent}
+    .tab-pane{display:none;padding:.6rem 0}
+    .tab-pane.active{display:block}
+
+    /* ── Route tab ── */
+    .route-wrap{padding:0 .8rem}
+
+    .day-card{
+      display:flex;align-items:center;gap:.6rem;
+      padding:.62rem .7rem;margin-bottom:.3rem;
+      border:1px solid var(--border);border-radius:.55rem;
+      background:rgba(255,255,255,.04);
+      cursor:pointer;transition:background .18s,border-color .18s,opacity .18s;
+    }
+    .day-card:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2)}
+    .day-card.off{opacity:.32}
+
+    .dc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .dc-body{flex:1;min-width:0}
+    .dc-label{font-size:.8rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .dc-meta{font-size:.63rem;color:var(--muted);margin-top:.1rem}
+    .dc-right{text-align:right;flex-shrink:0}
+    .dc-nm{font-size:.78rem;color:var(--text)}
+    .dc-brg{font-size:.62rem;color:var(--muted);margin-top:.1rem}
+
+    .route-ctrls{display:flex;gap:.4rem;padding:.5rem .8rem .2rem}
+    .rc-btn{
+      flex:1;padding:.42rem .2rem;
+      border:1px solid var(--border);border-radius:.35rem;
+      background:transparent;color:var(--muted);
+      font-family:inherit;font-size:.67rem;letter-spacing:.05em;cursor:pointer;
+      transition:background .18s,color .18s;
+    }
+    .rc-btn:hover{background:rgba(255,255,255,.08);color:var(--text)}
+    .rc-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:bold}
+    .rc-btn.danger{color:#ef9a9a;border-color:rgba(239,154,154,.3)}
+    .rc-btn.danger:hover{background:rgba(239,83,80,.15);color:#ef5350}
+
+    .edit-banner{
+      margin:.3rem .8rem .4rem;padding:.5rem .65rem;
+      background:rgba(240,180,41,.12);border:1px solid rgba(240,180,41,.4);
+      border-radius:.4rem;color:var(--gold);font-size:.66rem;line-height:1.55;
+    }
+    .edit-banner b{color:var(--text)}
+    .edit-banner kbd{
+      background:rgba(0,0,0,.4);padding:1px 5px;border-radius:.2rem;
+      font-family:'Courier New',monospace;font-size:.62rem;color:var(--gold);
+    }
+
+    /* Toast notification */
+    .toast{
+      position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);
+      z-index:2000;
+      background:rgba(8,25,46,.96);color:var(--text);
+      border:1px solid var(--gold);border-radius:.5rem;
+      padding:.55rem 1.1rem;font-size:.75rem;
+      box-shadow:0 6px 24px rgba(0,0,0,.5);
+      opacity:0;transition:opacity .25s,transform .25s;
+      pointer-events:none;
+      font-family:'Georgia',serif;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .toast b{color:var(--gold)}
+
+    /* ── Waypoints tab ── */
+    .wp-table-wrap{overflow-x:auto}
+    table.wptable{
+      width:100%;border-collapse:collapse;font-size:.72rem;
+    }
+    table.wptable th{
+      padding:.45rem .55rem;text-align:left;
+      font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--muted);font-weight:normal;
+      border-bottom:1px solid var(--border);
+      white-space:nowrap;position:sticky;top:0;background:var(--navy);z-index:2;
+    }
+    table.wptable td{
+      padding:.48rem .55rem;border-bottom:1px solid rgba(255,255,255,.05);
+      vertical-align:middle;white-space:nowrap;
+    }
+    table.wptable tr:hover td{background:var(--row-hover);cursor:pointer}
+    table.wptable tr.wp-active td{background:rgba(240,180,41,.12)}
+
+    .wp-num{
+      width:24px;height:24px;border-radius:50%;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-size:.65rem;font-weight:bold;
+      border:1.5px solid currentColor;
+    }
+    .wp-name{color:var(--text);font-size:.78rem}
+    .wp-coord{color:#80cbc4;font-size:.66rem;line-height:1.6}
+    .wp-brg{color:var(--gold);font-size:.75rem;font-variant-numeric:tabular-nums}
+    .wp-dist{color:var(--text);font-size:.75rem;font-variant-numeric:tabular-nums}
+    .wp-eta{color:var(--muted);font-size:.66rem}
+    td.center{text-align:center}
+
+    /* ── ETA tab ── */
+    .eta-wrap{padding:.4rem 1rem}
+    .eta-section{margin-bottom:1.2rem}
+    .eta-label{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+    .speed-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem}
+    .speed-input{
+      width:70px;padding:.4rem .6rem;
+      background:var(--navy3);border:1px solid var(--border);
+      border-radius:.4rem;color:var(--text);font-family:inherit;font-size:.95rem;
+      text-align:center;outline:none;
+    }
+    .speed-input:focus{border-color:var(--gold)}
+    .speed-unit{font-size:.78rem;color:var(--muted)}
+
+    .eta-table{width:100%;border-collapse:collapse;font-size:.72rem}
+    .eta-table th{
+      padding:.35rem .45rem;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--muted);font-weight:normal;border-bottom:1px solid var(--border);text-align:left;
+    }
+    .eta-table td{padding:.42rem .45rem;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text)}
+    .eta-table td.time{color:var(--gold);font-variant-numeric:tabular-nums}
+    .eta-note{
+      margin-top:.8rem;padding:.6rem .8rem;
+      background:rgba(240,180,41,.08);border-left:2px solid var(--gold);
+      border-radius:0 .4rem .4rem 0;font-size:.72rem;color:rgba(255,255,255,.6);
+      line-height:1.6;
+    }
+
+    /* ── Map ── */
+    #map{flex:1;height:100vh}
+
+    /* ── Leaflet popup ── */
+    .leaflet-popup-content-wrapper{
+      border-radius:.7rem;box-shadow:0 8px 32px rgba(0,0,0,.35);
+      border:none;overflow:hidden;
+    }
+    .leaflet-popup-content{margin:0}
+    .leaflet-popup-tip{background:#fff}
+
+    .pop{min-width:230px;font-family:'Georgia',serif}
+    .pop-hdr{
+      padding:.8rem 1rem .7rem;
+      background:linear-gradient(135deg,#0e2540,#1a3a60);
+    }
+    .pop-name{font-size:1rem;color:var(--gold);line-height:1.15}
+    .pop-date{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:.15rem}
+    .pop-body{padding:.75rem 1rem .9rem;background:#fff}
+    .pop-row{display:flex;gap:.4rem;margin-bottom:.4rem;font-size:.77rem}
+    .pop-icon{color:#546e7a;flex-shrink:0;width:14px}
+    .pop-val{color:#37474f}
+    .pop-coords{
+      margin-bottom:.55rem;padding:.4rem .6rem;
+      background:#f5f8fc;border-radius:.35rem;
+      font-family:'Courier New',monospace;font-size:.7rem;color:#1565c0;
+      line-height:1.7;
+    }
+    .pop-nav{
+      margin-top:.55rem;padding:.4rem .6rem;
+      background:#e8f5e9;border-radius:.35rem;
+      font-size:.7rem;color:#2e7d32;
+      display:flex;gap:1rem;
+    }
+    .pop-nav span{font-variant-numeric:tabular-nums}
+
+    /* ── Map legend ── */
+    .map-legend{
+      background:rgba(8,25,46,.88);backdrop-filter:blur(6px);
+      border:1px solid var(--border);border-radius:.5rem;
+      padding:.55rem .75rem;font-family:'Georgia',serif;
+    }
+    .legend-title{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+    .legend-row{display:flex;align-items:center;gap:.45rem;margin-bottom:.2rem;font-size:.68rem;color:rgba(255,255,255,.7)}
+    .legend-line{height:3px;width:22px;border-radius:2px}
+
+    /* ── Roster tab ── */
+    .roster-wrap{padding:.6rem .8rem}
+    .roster-legend{
+      display:flex;gap:.4rem;margin-bottom:.8rem;flex-wrap:wrap;
+    }
+    .duty-chip{
+      display:flex;align-items:center;gap:.35rem;
+      padding:.3rem .65rem;border-radius:99px;
+      font-size:.66rem;letter-spacing:.08em;border:1px solid;
+    }
+    .roster-table{width:100%;border-collapse:collapse;font-size:.72rem}
+    .roster-table th{
+      padding:.42rem .5rem;font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;
+      color:var(--muted);font-weight:normal;border-bottom:1px solid var(--border);
+      text-align:center;position:sticky;top:0;background:var(--navy);z-index:2;
+    }
+    .roster-table th.day-col{text-align:left;min-width:90px}
+    .roster-table td{
+      padding:.5rem .5rem;border-bottom:1px solid rgba(255,255,255,.05);
+      text-align:center;vertical-align:middle;
+    }
+    .roster-table td.day-cell{text-align:left;white-space:nowrap}
+    .roster-table tr:hover td{background:var(--row-hover)}
+    .duty-slot{
+      min-width:60px;min-height:26px;
+      display:inline-flex;align-items:center;justify-content:center;
+      border-radius:.35rem;font-size:.7rem;
+      border:1px dashed rgba(255,255,255,.18);color:var(--muted);
+      padding:.2rem .4rem;
+    }
+    .roster-note{
+      margin-top:.8rem;padding:.55rem .7rem;
+      background:rgba(255,255,255,.04);border-left:2px solid var(--muted);
+      border-radius:0 .4rem .4rem 0;font-size:.68rem;color:var(--muted);line-height:1.6;
+    }
+
+    .ref-link{
+      display:block;padding:.45rem .7rem;
+      border:1px solid var(--border);border-radius:.4rem;
+      background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);
+      font-family:'Georgia',serif;font-size:.74rem;text-decoration:none;
+      transition:background .18s,color .18s;
+    }
+    .ref-link:hover{background:rgba(255,255,255,.1);color:var(--gold)}
+
+    /* ────────── Quick-Nav floating panel ────────── */
+    .qn-panel{
+      position:absolute;top:10px;right:70px;z-index:1000;
+      background:rgba(8,25,46,.92);color:var(--text);
+      border:1px solid var(--border);border-radius:.55rem;
+      box-shadow:0 6px 24px rgba(0,0,0,.4);
+      font-family:'Georgia',serif;
+      min-width:230px;max-width:280px;
+      backdrop-filter:blur(6px);
+    }
+    .qn-header{
+      padding:.5rem .7rem;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+      font-size:.72rem;color:var(--gold);font-weight:bold;
+      text-transform:uppercase;letter-spacing:.06em;
+    }
+    .qn-toggle{
+      background:var(--gold);color:var(--navy);
+      border:none;border-radius:.3rem;
+      padding:.18rem .5rem;cursor:pointer;
+      font-size:.62rem;font-weight:bold;
+      font-family:inherit;
+    }
+    .qn-toggle.on{background:#ef5350;color:#fff}
+    .qn-body{padding:.55rem .7rem;font-size:.72rem;line-height:1.5}
+    .qn-hint{color:var(--muted);font-size:.66rem;font-style:italic}
+    .qn-row{display:flex;justify-content:space-between;margin:.2rem 0}
+    .qn-row .qn-l{color:var(--muted);font-size:.66rem;text-transform:uppercase;letter-spacing:.05em}
+    .qn-row .qn-v{color:var(--gold);font-family:'Courier New',monospace;font-size:.78rem;font-weight:bold}
+    .qn-row .qn-v.coord{color:var(--text);font-size:.7rem}
+    .qn-clear{
+      width:100%;margin-top:.4rem;padding:.3rem;
+      background:rgba(255,255,255,.05);color:var(--text);
+      border:1px solid var(--border);border-radius:.3rem;
+      cursor:pointer;font-size:.65rem;font-family:inherit;
+    }
+    .qn-clear:hover{background:rgba(255,255,255,.1)}
+    .qn-compass{
+      display:inline-block;width:18px;height:18px;
+      margin-right:.3rem;vertical-align:middle;
+      transform-origin:center;transition:transform .2s;
+    }
+
+    /* ────────── Tides tab ────────── */
+    .tides-wrap{padding:.5rem .8rem}
+    .tide-source{
+      font-size:.66rem;color:var(--muted);margin-bottom:.6rem;
+      padding:.45rem .6rem;background:rgba(255,255,255,.03);
+      border-left:2px solid var(--teal);border-radius:0 .35rem .35rem 0;line-height:1.5;
+    }
+    .tide-source a{color:var(--gold);text-decoration:none}
+    .tide-now{
+      display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.7rem;
+    }
+    .tide-card{
+      padding:.6rem .7rem;background:rgba(255,255,255,.04);
+      border:1px solid var(--border);border-radius:.45rem;
+    }
+    .tide-card .tc-label{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .tide-card .tc-val{font-size:1.1rem;color:var(--gold);font-weight:bold;margin-top:.1rem}
+    .tide-card .tc-sub{font-size:.62rem;color:var(--muted);margin-top:.15rem}
+    .tide-table{width:100%;border-collapse:collapse;font-size:.7rem}
+    .tide-table th{
+      text-align:left;color:var(--muted);font-weight:normal;
+      padding:.3rem .35rem;border-bottom:1px solid var(--border);font-size:.62rem;text-transform:uppercase;
+    }
+    .tide-table td{padding:.4rem .35rem;border-bottom:1px solid rgba(255,255,255,.04)}
+    .tide-table td.day-cell{color:var(--gold);font-weight:bold;white-space:nowrap}
+    .tide-table .level-bar{
+      display:inline-block;height:8px;border-radius:2px;vertical-align:middle;
+      background:linear-gradient(90deg,var(--teal),#80deea);
+    }
+    .tide-loading{
+      padding:1.2rem .7rem;text-align:center;color:var(--muted);font-size:.7rem;
+    }
+    .tide-moon{
+      display:inline-block;width:1rem;height:1rem;line-height:1rem;text-align:center;
+      margin-right:.3rem;
+    }
+    .tide-section-h{
+      margin:.7rem 0 .35rem 0;font-size:.66rem;color:var(--gold);
+      text-transform:uppercase;letter-spacing:.08em;font-weight:bold;
+      padding-bottom:.2rem;border-bottom:1px solid var(--border);
+    }
+    .wind-arrow{
+      display:inline-block;font-size:.95rem;color:var(--teal);
+      transform-origin:center center;margin-right:.3rem;
+    }
+    .ws-light{color:#81c784}  /* < 4 m/s */
+    .ws-mod  {color:#fff176}  /* 4-8 m/s */
+    .ws-fresh{color:#ffb74d}  /* 8-12 m/s */
+    .ws-strong{color:#ef5350} /* > 12 m/s */
+
+    .place-card {
+  margin: 0 .8rem .5rem;
+  padding: .7rem .8rem;
+  border: 1px solid var(--border);
+  border-radius: .55rem;
+  background: rgba(255,255,255,.04);
+}
+.place-card-name { font-size:.85rem; color:var(--gold); margin-bottom:.2rem; }
+.place-card-meta { font-size:.7rem; color:var(--muted); line-height:1.6; }
+.place-card-anchor {
+  margin-top:.4rem; padding:.35rem .5rem;
+  background:rgba(0,150,136,.12); border-left:2px solid #00897B;
+  border-radius:0 .3rem .3rem 0; font-size:.68rem; color:#80cbc4; line-height:1.6;
+}
+.anch-row {
+  display:flex; align-items:flex-start; gap:.55rem;
+  padding:.45rem .5rem; margin:.3rem .8rem;
+  border:1px solid var(--border); border-radius:.45rem;
+  background:rgba(255,255,255,.03); cursor:pointer;
+}
+.anch-row:hover { background:rgba(255,255,255,.07); }
+.anch-icon {
+  width:26px; height:26px; border-radius:50%;
+  border:2px solid #00897B; background:rgba(0,137,123,.2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; color:#80cbc4; flex-shrink:0; margin-top:.1rem;
+}
+.anch-info { flex:1; }
+.anch-name { font-size:.78rem; color:var(--text); }
+.anch-depth { font-size:.66rem; color:var(--muted); margin-top:.1rem; }
+
+    @media(max-width:700px){
+      .app{flex-direction:column}
+      .sidebar{width:100%;height:45vh}
+      #map{height:55vh}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Skip-to-content link (a11y best-practice, helps SEO too) ─── -->
+<a href="#main-content" class="visually-hidden">Skip to map</a>
+
+<!-- ─── NOSCRIPT fallback: full text content for crawlers + JS-disabled users ─── -->
+<noscript>
+  <article style="max-width:780px;margin:2rem auto;padding:1rem;color:#eceff1;background:#08192e;font-family:Georgia,serif;line-height:1.6">
+    <h1>Midnight Sun — 7-Day Stockholm Archipelago Sailing Chart</h1>
+    <p><strong>Dates:</strong> 8–15 August 2026 · <strong>Total:</strong> 109.9 nautical miles · <strong>7 stops</strong></p>
+
+    <p>This page is an interactive Leaflet-based navigation chart and requires JavaScript.
+    For accessibility and search-engine indexing, the full itinerary is reproduced below.</p>
+
+    <h2>Itinerary overview</h2>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead><tr><th>Day</th><th>Date</th><th>Leg</th><th>Distance</th><th>Bearing</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Aug 8</td><td>Wasahamnen (Stockholm) → Vaxholm</td><td>10.7 nm</td><td>061° T</td></tr>
+        <tr><td>2</td><td>Aug 9</td><td>Vaxholm → Grinda (via Oxdjupet &amp; Fredriksborg Fortress)</td><td>9.1 nm</td><td>114° T</td></tr>
+        <tr><td>3</td><td>Aug 10</td><td>Grinda → Möja</td><td>13.3 nm</td><td>087° T</td></tr>
+        <tr><td>4</td><td>Aug 11</td><td>Möja → Sandhamn</td><td>8.8 nm</td><td>177° T</td></tr>
+        <tr><td>5</td><td>Aug 12</td><td>Sandhamn → Utö (via inner channels)</td><td>34.1 nm</td><td>226° T</td></tr>
+        <tr><td>6</td><td>Aug 13</td><td>Utö → Dalarö (Ornöhuvud)</td><td>15.2 nm</td><td>037° T</td></tr>
+        <tr><td>7</td><td>Aug 14</td><td>Dalarö → Wasahamnen</td><td>18.7 nm</td><td>316° T</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Anchorages</h2>
+    <ol>
+      <li><strong>Wasahamnen, Djurgården</strong> — Stockholm departure mooring (59.3260, 18.0924).</li>
+      <li><strong>Vaxholm</strong> — Mooring buoy in Vaxholmsfjärden (59.4030, 18.3647).</li>
+      <li><strong>Grinda</strong> — Cardinal buoy north of Grinda (59.4198, 18.5680).</li>
+      <li><strong>Möja (<span lang="sv">Berg gästhamn</span>)</strong> — Mooring field east of Möja (59.4284, 18.9126).</li>
+      <li><strong>Sandhamn (Telegrafholmen)</strong> — Natural anchorage (59.2931, 18.9245).</li>
+      <li><strong>Utö (Ålö-Utö passage)</strong> — Mooring poles (58.9403, 18.2167).</li>
+      <li><strong>Dalarö (<span lang="sv">Ornöhuvud naturhamn</span>)</strong> — Natural harbour (59.1212, 18.4781).</li>
+    </ol>
+
+    <h2>Points of interest</h2>
+    <ul>
+      <li><strong>Fredriksborg Fortress</strong> (1735) at Oxdjupet, Rindö — Day 2 day-time visit.</li>
+      <li><strong>Archipelago Sauna</strong> at Gallnö — Day 2 day-time visit (floating wood-fired sauna).</li>
+    </ul>
+
+    <h2>Data &amp; sources</h2>
+    <ul>
+      <li>Routes: OSM <code>seamark:type=fairway</code> via Overpass API.</li>
+      <li>Tide / sea-level / wave height / water temperature: SMHI Open Data.</li>
+      <li>Wind: Open-Meteo 7-day forecast.</li>
+      <li>Base maps: ESRI Ocean Base, OpenStreetMap, OpenSeaMap.</li>
+    </ul>
+  </article>
+</noscript>
+
+<div class="app" id="main-content">
+
+  <!-- ══ SIDEBAR ══ -->
+  <!-- ── SEO-friendly summary (rendered hidden but crawler-accessible) ── -->
+  <section class="visually-hidden" aria-hidden="false">
+    <h1>Midnight Sun — 7-Day Stockholm Archipelago Sailing Chart (8–15 August 2026)</h1>
+    <p>
+      Interactive nautical navigation chart for a seven-day clockwise sailing circuit of the
+      Stockholm archipelago in August 2026. Starts and ends at <strong>Wasahamnen, Djurgården</strong>
+      (Stockholm) and overnights at <strong>Vaxholm</strong>, <strong>Grinda</strong>,
+      <strong>Möja</strong>, <strong>Sandhamn</strong>, <strong>Utö</strong>, and
+      <strong>Dalarö</strong>. Total distance 109.9 nautical miles on OSM-verified fairways with
+      live tide, wind, water-temperature, and wave-height data from <abbr title="Sveriges Meteorologiska och Hydrologiska Institut">SMHI</abbr>
+      and Open-Meteo. Includes a draggable A→B Quick Nav for ad-hoc bearing &amp; distance, and a
+      full route editor with save / export / clear / reset.
+    </p>
+    <ul>
+      <li>Day 1: Wasahamnen → Vaxholm (10.7 nm)</li>
+      <li>Day 2: Vaxholm → Grinda (9.1 nm) via Oxdjupet south circuit past Fredriksborg Fortress (direct mooring) &amp; Archipelago Sauna POIs</li>
+      <li>Day 3: Grinda → Möja (13.3 nm)</li>
+      <li>Day 4: Möja → Sandhamn (8.8 nm)</li>
+      <li>Day 5: Sandhamn → Utö (34.1 nm) via Krokholmssund, Stångsundet, Kymmendösund</li>
+      <li>Day 6: Utö → Dalarö (15.2 nm) via Mysingen &amp; Jungfrufjärden</li>
+      <li>Day 7: Dalarö → Wasahamnen (18.7 nm) via Baggensfjärden &amp; Saltsjön</li>
+    </ul>
+  </section>
+
+  <aside class="sidebar" role="complementary" aria-label="Trip details">
+
+    <header class="s-hdr">
+      <div class="s-hdr-top">
+        <div>
+          <!-- Visible brand title (h1 is in the hidden SEO summary above so search
+               engines see a single, comprehensive page heading). -->
+          <p class="trip-name" role="heading" aria-level="2">Midnight Sun</p>
+          <p class="trip-sub">Navigation Chart · Stockholm Archipelago</p>
+        </div>
+        <div class="compass-badge" role="img" aria-label="Compass">🧭</div>
+      </div>
+      <div class="trip-dates">
+        <span class="date-chip">⛵ Aug 8 – 15, 2026</span>
+        <span class="date-chip">☀️ 18 hrs daylight</span>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-v">7</div><div class="stat-l">Days</div></div>
+      <div class="stat"><div class="stat-v" id="totalNm">—</div><div class="stat-l">Nm Total</div></div>
+      <div class="stat"><div class="stat-v">7</div><div class="stat-l">Stops</div></div>
+      <div class="stat"><div class="stat-v" id="avgNm">—</div><div class="stat-l">Nm / Day</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="route">Route</button>
+      <button class="tab" data-tab="waypoints">Waypoints</button>
+      <button class="tab" data-tab="eta">ETA Calc</button>
+      <button class="tab" data-tab="places">Places &amp; Anchors</button>
+      <button class="tab" data-tab="tides">Tides</button>
+      <button class="tab" data-tab="roster">Roster</button>
+    </div>
+
+    <div class="tab-content">
+
+      <!-- ── Route tab ── -->
+      <div class="tab-pane active" id="tab-route">
+        <div class="route-ctrls">
+          <button class="rc-btn" onclick="showAll()">Show All</button>
+          <button class="rc-btn" onclick="hideAll()">Hide All</button>
+          <button class="rc-btn" onclick="fitAll()">Fit Map</button>
+        </div>
+        <div class="route-ctrls">
+          <button class="rc-btn" id="editBtn" onclick="toggleEditMode()">Edit Route</button>
+          <button class="rc-btn" onclick="saveRoutes()">Save</button>
+          <button class="rc-btn" onclick="exportRoutes()">Export</button>
+          <button class="rc-btn danger" onclick="clearRoutes()">Clear</button>
+          <button class="rc-btn danger" onclick="resetRoutesToDefault()">Reset</button>
+        </div>
+        <div class="edit-banner" id="editBanner" style="display:none">
+          <b>Edit mode on</b> &mdash; <kbd>Drag</kbd> a waypoint to move it, <kbd>Click</kbd> a route line to insert a waypoint, <kbd>Right-click</kbd> (or long-press) a waypoint to delete it. Changes save automatically.
+        </div>
+        <div class="route-wrap" id="dayCards"></div>
+      </div>
+
+      <!-- ── Waypoints tab ── -->
+      <div class="tab-pane" id="tab-waypoints">
+        <div class="wp-table-wrap">
+          <table class="wptable" id="wpTable">
+            <thead>
+              <tr>
+                <th>WP</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Brg °T</th>
+                <th>Dist nm</th>
+                <th>Cumul.</th>
+              </tr>
+            </thead>
+            <tbody id="wpBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── ETA tab ── -->
+      <div class="tab-pane" id="tab-eta">
+        <div class="eta-wrap">
+          <div class="eta-section">
+            <div class="eta-label">Average boat speed</div>
+            <div class="speed-row">
+              <input class="speed-input" type="number" id="speedInput" value="6" min="1" max="20" />
+              <span class="speed-unit">knots</span>
+            </div>
+            <div class="eta-label">Daily sailing hours</div>
+            <div class="speed-row">
+              <input class="speed-input" type="number" id="hoursInput" value="8" min="1" max="20" />
+              <span class="speed-unit">hrs / day</span>
+            </div>
+          </div>
+          <div class="eta-label">Leg estimates</div>
+          <table class="eta-table" id="etaTable">
+            <thead>
+              <tr>
+                <th>Day</th><th>Leg</th><th>Dist</th><th>Sail time</th><th>Depart</th>
+              </tr>
+            </thead>
+            <tbody id="etaBody"></tbody>
+          </table>
+          <div class="eta-note">
+            In Stockholm Aug 8-15, civil twilight ends ~22:00, returns ~03:30.
+            Ideal for early-morning departures with long sailing windows.
+          </div>
+          <div class="sec-title" style="padding:1rem 0 .5rem">Chart References</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem;padding-bottom:1rem">
+            <a href="https://webapp.navionics.com/#boating@9&key=gzshJymhV" target="_blank" class="ref-link">
+              &#128506; Open in Navionics Boating
+            </a>
+            <a href="https://www.c-map.com/boating/products/c-map-boating-app/" target="_blank" class="ref-link">
+              &#128506; Open C-MAP Boating
+            </a>
+            <a href="https://www.sjofartsverket.se/sv/sjofart/sjokartor/" target="_blank" class="ref-link">
+              &#128506; Sjofartsverket (SE official charts)
+            </a>
+          </div>
+          <div class="eta-note" style="font-size:.67rem">
+            Routes follow approximate fairways through Vaxholmsleden, Kanholmsfjarder,
+            Mysingen and Horsfjarder. Always verify with official Navionics / C-MAP charts
+            and current Notices to Mariners before sailing.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Places & Anchors tab ── -->
+      <div class="tab-pane" id="tab-places"></div>
+
+      <!-- ── Tides tab ── -->
+      <div class="tab-pane" id="tab-tides">
+        <div class="tides-wrap">
+          <div class="tide-source">
+            <strong>Live data:</strong>
+            <a href="https://opendata-download-ocobs.smhi.se/" target="_blank">SMHI Open Data</a> (sea level, waves, water temp)
+            &middot;
+            <a href="https://open-meteo.com/" target="_blank">Open-Meteo</a> (7-day wind forecast).
+            Baltic Sea is nearly tideless (~5&ndash;15 cm astronomical); variations are mostly wind &amp; air-pressure driven (±50 cm).
+          </div>
+
+          <div class="tide-section-h">Current sea level &middot; SMHI stations</div>
+          <div class="tide-now" id="tideNow">
+            <div class="tide-card"><div class="tc-label">Stockholm</div><div class="tc-val">…</div><div class="tc-sub">loading…</div></div>
+            <div class="tide-card"><div class="tc-label">Landsort N.</div><div class="tc-val">…</div><div class="tc-sub">loading…</div></div>
+          </div>
+
+          <div class="tide-section-h">Wave height &amp; water temperature</div>
+          <div class="tide-now" id="condNow">
+            <div class="tide-card"><div class="tc-label">Waves &middot; Huvudskär</div><div class="tc-val">…</div><div class="tc-sub">loading…</div></div>
+            <div class="tide-card"><div class="tc-label">Water temp &middot; Landsort</div><div class="tc-val">…</div><div class="tc-sub">loading…</div></div>
+          </div>
+
+          <div class="tide-section-h">Sea-level &amp; moon forecast (Aug 8&ndash;14)</div>
+          <table class="tide-table" id="tideTable">
+            <thead>
+              <tr>
+                <th class="day-col">Day</th>
+                <th>Sea level</th>
+                <th>Stations</th>
+                <th>Moon</th>
+              </tr>
+            </thead>
+            <tbody id="tideBody"></tbody>
+          </table>
+
+          <div class="tide-section-h">Wind forecast (Open-Meteo)</div>
+          <table class="tide-table" id="windTable">
+            <thead>
+              <tr>
+                <th class="day-col">Day</th>
+                <th>Wind speed</th>
+                <th>Direction</th>
+                <th>Gusts</th>
+              </tr>
+            </thead>
+            <tbody id="windBody">
+              <tr><td colspan="4" class="tide-loading">Loading 7-day forecast…</td></tr>
+            </tbody>
+          </table>
+
+          <div class="roster-note">
+            Sea-level for Aug 8&ndash;14 is a damped-anomaly forecast (3 months out). Wind only forecasts 7&nbsp;days ahead &mdash; the table will show today&rsquo;s 7-day window until closer to departure. Refresh on/after Aug&nbsp;1 for the trip window.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Roster tab ── -->
+      <div class="tab-pane" id="tab-roster">
+        <div class="roster-wrap">
+          <div class="roster-legend">
+            <div class="duty-chip" style="color:#e57373;border-color:#c62828;background:rgba(198,40,40,.1)">&#127859; Galley</div>
+            <div class="duty-chip" style="color:#64b5f6;border-color:#1565c0;background:rgba(21,101,192,.1)">&#9875; Route</div>
+            <div class="duty-chip" style="color:#81c784;border-color:#2e7d32;background:rgba(46,125,50,.1)">&#10022; Sanitation</div>
+          </div>
+          <table class="roster-table" id="rosterTable">
+            <thead>
+              <tr>
+                <th class="day-col">Day</th>
+                <th>Galley</th>
+                <th>Route</th>
+                <th>Sanitation</th>
+              </tr>
+            </thead>
+            <tbody id="rosterBody"></tbody>
+          </table>
+          <div class="roster-note">7 crew &middot; assignments TBD &mdash; tap a cell to assign later.</div>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ══ MAP ══ -->
+  <main id="map" role="application" aria-label="Interactive sailing chart of the Stockholm archipelago">
+    <!-- Quick-Nav floating panel -->
+    <div class="qn-panel" id="qnPanel">
+      <div class="qn-header">
+        <span>Quick Nav</span>
+        <button class="qn-toggle" id="qnToggle">Place Pins</button>
+      </div>
+      <div class="qn-body" id="qnBody">
+        <div class="qn-hint" id="qnHint">Click <em>Place Pins</em>, then click the map for <strong>Start</strong>, click again for <strong>End</strong>.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ── SEO footer (hidden, crawler-accessible) ── -->
+<footer class="visually-hidden">
+  <p>
+    Midnight Sun is an open, single-file HTML navigation chart for the Stockholm archipelago
+    designed for an August 2026 sailing charter. It uses Leaflet for the slippy-map, ESRI Ocean
+    Base + OpenStreetMap + OpenSeaMap tiles for the chart background,
+    <a href="https://opendata-download-ocobs.smhi.se/">SMHI Open Data</a> for live sea level,
+    waves and water temperature, <a href="https://open-meteo.com/">Open-Meteo</a> for 7-day wind
+    forecasts, and OSM <code>seamark:type=fairway</code> data fetched via the
+    <a href="https://overpass-api.de/">Overpass API</a> for the default water-only routing.
+  </p>
+  <p>
+    Topics covered: Stockholm archipelago sailing, Skärgården navigation, Vaxholm, Grinda, Möja,
+    Sandhamn, Utö, Dalarö, Fredriksborg Fortress, Archipelago Sauna at Gallnö, Baltic Sea route
+    planning, marine fairways, SMHI havsvattenstånd, Open-Meteo wind forecast, draggable bearing
+    &amp; distance tool, editable Leaflet polyline route, localStorage route persistence,
+    Schema.org TouristTrip itinerary data.
+  </p>
+  <p>© 2026 Midnight Sun crew · Data: OpenStreetMap, OpenSeaMap, ESRI, SMHI, Open-Meteo.</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── Navigation math ──────────────────────────────────────────────
+
+function toRad(d){ return d * Math.PI / 180 }
+function toDeg(r){ return r * 180 / Math.PI }
+
+function haversineNm(lat1,lon1,lat2,lon2){
+  const R = 3440.065, dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function trueBearing(lat1,lon1,lat2,lon2){
+  const dLon=toRad(lon2-lon1);
+  const y=Math.sin(dLon)*Math.cos(toRad(lat2));
+  const x=Math.cos(toRad(lat1))*Math.sin(toRad(lat2))-Math.sin(toRad(lat1))*Math.cos(toRad(lat2))*Math.cos(dLon);
+  return (toDeg(Math.atan2(y,x))+360)%360;
+}
+
+function toDM(deg,isLat){
+  const d=Math.floor(Math.abs(deg)), m=((Math.abs(deg)-d)*60).toFixed(3);
+  const dir=isLat?(deg>=0?'N':'S'):(deg>=0?'E':'W');
+  return d+'deg '+m.padStart(6,'0')+"' "+dir;
+}
+
+function routeNm(wps){
+  var t=0;
+  for(var i=0;i<wps.length-1;i++) t+=haversineNm(wps[i][0],wps[i][1],wps[i+1][0],wps[i+1][1]);
+  return Math.round(t*10)/10;
+}
+
+// ── Trip data ────────────────────────────────────────────────────
+
+// Anchorage coordinates verified as OSM seamark:type=anchorage / mooring / buoy
+// (open-water positions, not on land). Coords source: Overpass API query.
+var STOPS = [
+  { id:0, name:'Stockholm', emoji:'A', coords:[59.3260,18.0924], date:'Aug 8 - Departure',  marina:'Mooring buoy off Wasahamnen, Djurgården',         notes:'Trip start. OSM mooring buoy in Strömmen, off Wasahamnen marina. Fuel and provisions before departure.' },
+  { id:1, name:'Vaxholm',   emoji:'1', coords:[59.4030,18.3647], date:'Aug 8 - Night 1',    marina:'Mooring buoy, Vaxholmsfjärden',                   notes:'Mooring buoy 2 km east of Vaxholm fortress, in open fjärden. Dinghy to town. ~10 nm.' },
+  { id:2, name:'Grinda',    emoji:'2', coords:[59.4198,18.5680], date:'Aug 9 - Night 2',    marina:'Cardinal buoy north of Grinda',                   notes:'Anchor near cardinal navigation buoy off north Grinda. ~9.1 nm from Vaxholm via Rindö east-tip descent (fairway 751407263) past Fredriksborg Fortress (Aug 9 morning visit, direct boat access).' },
+  { id:3, name:'Möja',      emoji:'3', coords:[59.4284,18.9126], date:'Aug 10 - Night 3',   marina:'Mooring field, east of Möja (Långviksudd)',       notes:'Mooring field on east side of Möja island. Peaceful natural anchorage. ~12 nm leg.' },
+  { id:4, name:'Sandhamn',  emoji:'4', coords:[59.2931,18.9245], date:'Aug 11 - Night 4',   marina:'Telegrafholmen natural anchorage',                notes:'OSM-mapped anchorage at Telegrafholmen, 700 m NE of Sandhamn village. ~9 nm from Möja.' },
+  { id:5, name:'Utö',       emoji:'5', coords:[58.9403,18.2167], date:'Aug 12 - Night 5',   marina:'Mooring poles, Ålö-Utö passage',                  notes:'Mooring field in the protected Ålö-Utö channel. Walk to Utö across causeway. Long 30 nm leg.' },
+  { id:6, name:'Dalarö',    emoji:'6', coords:[59.1212,18.4781], date:'Aug 13 - Night 6',   marina:'Ornöhuvud naturhamn (natural anchorage)',          notes:'Named OSM anchorage at Ornöhuvud (Ornö-head), classic natural harbour 4 km SE of Dalarö. ~14 nm from Utö.' },
+  { id:7, name:'Stockholm', emoji:'B', coords:[59.3260,18.0924], date:'Aug 14-15 - Return', marina:'Mooring buoy off Wasahamnen, Djurgården',         notes:'Home port. Full clockwise archipelago loop complete.' }
+];
+
+var STOP_NAMES = ['Stockholm','Vaxholm','Grinda','Möja','Sandhamn','Utö','Dalarö','Stockholm'];
+var DAY_COLORS = ['#1976D2','#388E3C','#E64A19','#7B1FA2','#C62828','#00838F','#F57C00'];
+var DAY_DATES  = ['Aug 8','Aug 9','Aug 10','Aug 11','Aug 12','Aug 13','Aug 14'];
+
+// Realistic sailing routes following main archipelago fairways
+// Based on Sjöfartsverket (Swedish Maritime Administration) chart channels
+// Cross-reference: Navionics Boating / C-MAP for precise depth-cleared routes
+// Routes computed from OSM seamark:type=fairway data (51 official Sjöfartsverket
+// fairway segments via Overpass API), routed with A* through fairway graph.
+// Inner harbor sections (Wasahamnen entry/exit) and Day 2/7 use manual waypoints
+// confirmed in Saltsjön/Baggensfjärden water bodies.
+var ROUTES = [
+  // Day 1: Wasahamnen mooring → Vaxholmsfjärden mooring (~10 nm)
+  [[59.3260,18.0924],[59.3210,18.0980],[59.3210,18.1300],[59.3220,18.1600],[59.3260,18.1900],[59.3350,18.2090],[59.3490,18.2390],[59.3580,18.2590],[59.3630,18.2840],[59.3670,18.3060],[59.3740,18.3350],[59.3870,18.3400],[59.3980,18.3460],[59.4030,18.3647]],
+  // Day 2: Vaxholm → Fredriksborg Fortress → Grinda (~10 nm)
+  // Skarpö (S:59.4061, N:59.4169, W:18.363, E:18.410) sits immediately north of the mooring.
+  // Going south of Skarpö is impossible — Rindö's north coast (59.405–59.407°N) leaves only
+  // ~100 m of water. Instead: W through the Vaxholm narrows gap (between Vaxön E:18.356 and
+  // Skarpö W:18.363), N above Skarpö (>59.42°N), E past Skarpö, then use OSM fairway
+  // 751407263 nodes 11→13 to descend to the fortress. After visit continue nodes 14–16
+  // around Rindö's east tip, then NE through Kanholmsfjärden to Grinda.
+  [[59.4030,18.3647],
+   [59.4030,18.3580],                                      // W through Vaxholm narrows gap
+   [59.4200,18.3580],                                      // N above Skarpö (N:59.4169)
+   [59.4200,18.3900],[59.4200,18.4130],                   // E past Skarpö, above N edge
+   [59.4100,18.4126],                                      // fairway 751407263 node 11
+   [59.3996,18.4369],[59.3991,18.4381],                   // nodes 12-13: fortress jetty
+   [59.3968,18.4410],[59.3947,18.4426],[59.3932,18.4425], // nodes 14-16: around Rindö east tip
+   [59.3980,18.4600],[59.4050,18.4900],                   // N into Kanholmsfjärden
+   [59.4100,18.5200],[59.4150,18.5450],[59.4198,18.5680]],// E to Grinda
+  // Day 3: Grinda buoy → Möja mooring field (~19 nm) via OSM fairway
+  [[59.4198,18.5680],[59.4150,18.5700],[59.4040,18.5910],[59.4110,18.6190],[59.4220,18.6320],[59.4300,18.6480],[59.4370,18.6760],[59.4400,18.7080],[59.4450,18.7470],[59.4500,18.7720],[59.4620,18.8230],[59.4500,18.8280],[59.4390,18.8320],[59.4284,18.9126]],
+  // Day 4: Möja mooring → Telegrafholmen anchorage (~10 nm)
+  [[59.4284,18.9126],[59.4170,18.9100],[59.4070,18.9300],[59.3960,18.9400],[59.3840,18.9510],[59.3730,18.9600],[59.3590,18.9570],[59.3470,18.9540],[59.3320,18.9520],[59.3200,18.9500],[59.3050,18.9300],[59.2931,18.9245]],
+  // Day 5: Telegrafholmen → Utö mooring (~34 nm) via Krokholmssund → inner channels → Mysingen
+  [[59.2931,18.9245],[59.2970,18.8860],[59.3030,18.8580],[59.3080,18.8330],[59.3110,18.8100],[59.2980,18.7520],[59.2900,18.7350],[59.2800,18.7200],[59.2650,18.6950],[59.2490,18.6640],[59.2400,18.6460],[59.2300,18.6320],[59.2200,18.6150],[59.2010,18.5930],[59.1700,18.5670],[59.1580,18.5520],[59.1530,18.5180],[59.1240,18.4720],[59.1140,18.4510],[59.1060,18.4310],[59.0950,18.4150],[59.0890,18.3890],[59.0820,18.3540],[59.0730,18.3360],[59.0560,18.3140],[59.0350,18.2890],[59.0130,18.2610],[58.9990,18.2370],[58.9810,18.2070],[58.9620,18.2050],[58.9403,18.2167]],
+  // Day 6: Utö mooring → Ornöhuvud naturhamn (~13 nm) via Mysingen → Jungfrufjärden
+  [[58.9403,18.2167],[58.9620,18.2050],[58.9810,18.2070],[58.9990,18.2370],[59.0130,18.2610],[59.0350,18.2890],[59.0560,18.3140],[59.0680,18.3290],[59.0830,18.3450],[59.0930,18.3600],[59.1030,18.3740],[59.1160,18.3850],[59.1212,18.4781]],
+  // Day 7: Ornöhuvud naturhamn → Wasahamnen mooring (~18 nm) via Jungfrufjärden → Baggensfjärden → Saltsjön
+  [[59.1212,18.4781],[59.1400,18.4500],[59.1700,18.4200],[59.2000,18.3900],[59.2300,18.3600],[59.2600,18.3300],[59.2850,18.3000],[59.3000,18.2700],[59.3100,18.2400],[59.3200,18.2100],[59.3260,18.1900],[59.3220,18.1600],[59.3210,18.1300],[59.3210,18.0980],[59.3260,18.0924]]
+];
+
+// Keep an immutable deep-clone of the default routes so users can reset.
+var DEFAULT_ROUTES = ROUTES.map(function(r){ return r.map(function(p){ return [p[0],p[1]]; }); });
+
+// Try to restore user-edited routes from localStorage.
+(function loadUserRoutes(){
+  try {
+    var raw = localStorage.getItem('midnightSun.routes.v1');
+    if (!raw) return;
+    var saved = JSON.parse(raw);
+    if (Array.isArray(saved) && saved.length === ROUTES.length) {
+      saved.forEach(function(r, i){
+        if (Array.isArray(r) && r.length >= 2) ROUTES[i] = r;
+      });
+    }
+  } catch(e) { /* corrupt LS, ignore */ }
+})();
+
+var LEGS = ROUTES.map(function(wps,i){
+  var nm  = routeNm(wps);
+  var brg = Math.round(trueBearing(wps[0][0],wps[0][1],wps[wps.length-1][0],wps[wps.length-1][1]));
+  return {
+    day: i+1, from: i, to: i+1,
+    waypoints: wps, nm: nm, brg: brg,
+    color: DAY_COLORS[i],
+    date: DAY_DATES[i],
+    label: STOP_NAMES[i]+' to '+STOP_NAMES[i+1]
+  };
+});
+
+// Two special POIs to visit (Day 2)
+var POIS = [
+  {
+    id: 'fortress',
+    name: 'Fredriksborg Fortress',
+    coords: [59.4004, 18.4426],
+    day: 2,
+    notes: 'Historic 1735 fortress at Oxdjupet on Rindö island. Day 2 morning visit (Aug 9): direct boat access — Day 2 route sails Oxdjupet fairway past the fortress jetty. 2-h stop, then continue east via Trälhavet and Kanholmsfjärden to Grinda. Guided tours in summer.',
+    url: 'https://visitvarmdo.com/utbud/fredriksborgs-fortress/',
+    anchor: { coords:[59.3991,18.4381], depth:'3-6 m', bottom:'Mud/Rock', note:'Fortress jetty at Oxdjupet (OSM fairway 751407263 waypoint). Day 2 route passes directly here. Bow-to or anchor off the jetty; short wall available. Exposed to S swell from Trälhavet — fair in typical Aug conditions.' }
+  },
+  {
+    id: 'sauna',
+    name: 'Archipelago Sauna',
+    coords: [59.3989, 18.6755],
+    day: 2,
+    notes: 'Floating wood-fired sauna in a nature reserve. Book in advance. Boat access only.',
+    url: 'https://archipelagosauna.com',
+    anchor: { coords:[59.4010,18.6730], depth:'4-6 m', bottom:'Mud', note:'Sheltered cove NW of sauna raft. Good holding. Gallno guest dock 1.8-2 m (call ahead).' }
+  }
+];
+
+// Overnight anchoring/mooring for every night
+var ANCHORS = [
+  { night:1, name:'Vaxholm Gasthamn',    type:'marina',  coords:[59.4021,18.3305], depth:'2.5-4 m', bottom:'Sand',     note:'Full marina. Electricity, showers, fuel. Pre-book in peak season.' },
+  { night:2, name:'Gallno / Sauna cove', type:'anchor',  coords:[59.4010,18.6730], depth:'4-6 m',   bottom:'Mud',      note:'Anchor in cove NW of sauna. Gallno guest dock option (1.8 m only). Calm, sheltered.' },
+  { night:3, name:'Finnhamn Gasthamn',   type:'marina',  coords:[59.4670,18.7330], depth:'2-4 m',   bottom:'Sand/Rock',note:'Guest marina on car-free island. Cafe, hostel. Also anchor in E bay 4-6 m.' },
+  { night:4, name:'Sandhamn KSSS',       type:'marina',  coords:[59.2885,18.9154], depth:'2-6 m',   bottom:'Sand',     note:'KSSS marina. Anchor off SE beach 3-5 m. Very busy in Aug -- book ahead.' },
+  { night:5, name:'Naemdo Brygga',       type:'anchor',  coords:[59.1150,18.7350], depth:'3-6 m',   bottom:'Mud/Sand', note:'Sheltered natural harbour. No facilities. Nature reserve -- respect quiet zone.' },
+  { night:6, name:'Uto Marina',          type:'marina',  coords:[58.9790,17.9250], depth:'2-4 m',   bottom:'Sand',     note:'Gruvbryggan harbour. Restaurant, shop. Famous bakery opens 07:00.' },
+  { night:7, name:'Dalaro Gasthamn',     type:'marina',  coords:[59.1330,18.4044], depth:'2.5-4 m', bottom:'Sand/Rock',note:'Guest harbour, fuel, showers. Historic 17th-century customs house nearby.' }
+];
+
+var totalNm = Math.round(LEGS.reduce(function(s,l){ return s+l.nm; },0)*10)/10;
+var avgNm   = Math.round(totalNm/7*10)/10;
+
+document.getElementById('totalNm').textContent = totalNm;
+document.getElementById('avgNm').textContent   = avgNm;
+
+// ── Route tab: day cards ──
+var dayCardsEl = document.getElementById('dayCards');
+var legState   = {};
+LEGS.forEach(function(leg){
+  legState[leg.day] = { visible:true, line:null, arrowMark:null };
+  var el = document.createElement('div');
+  el.className = 'day-card';
+  el.dataset.day = leg.day;
+  el.innerHTML =
+    '<div class="dc-dot" style="background:'+leg.color+'"></div>'
+    +'<div class="dc-body">'
+    +'<div class="dc-label">'+leg.label+'</div>'
+    +'<div class="dc-meta">Day '+leg.day+' &middot; '+leg.date+'</div>'
+    +'</div>'
+    +'<div class="dc-right">'
+    +'<div class="dc-nm">'+leg.nm+' nm</div>'
+    +'<div class="dc-brg">'+leg.brg+'&deg;T</div>'
+    +'</div>';
+  (function(d,l){
+    el.addEventListener('click', function(){
+      legState[l.day].visible = !legState[l.day].visible;
+      el.classList.toggle('off', !legState[l.day].visible);
+      render();
+    });
+  })(el, leg);
+  dayCardsEl.appendChild(el);
+});
+
+// ── Waypoints tab ──
+var wpBodyEl = document.getElementById('wpBody');
+var cumNm = 0;
+STOPS.forEach(function(stop,i){
+  var arrLeg = LEGS.filter(function(l){ return l.to===i; })[0];
+  var clr    = i===0 ? LEGS[0].color : (arrLeg ? arrLeg.color : LEGS[LEGS.length-1].color);
+  if(arrLeg) cumNm = Math.round((cumNm+arrLeg.nm)*10)/10;
+  var tr = document.createElement('tr');
+  var idStr = i < 10 ? '0'+i : ''+i;
+  tr.innerHTML =
+    '<td style="text-align:center"><span class="wp-num" style="color:'+clr+';border-color:'+clr+'">'+idStr+'</span></td>'
+    +'<td class="wp-name">'+stop.name+'</td>'
+    +'<td class="wp-coord">'+toDM(stop.coords[0],true)+'<br>'+toDM(stop.coords[1],false)+'</td>'
+    +'<td class="wp-brg" style="text-align:center">'+(arrLeg ? arrLeg.brg+'&deg;' : '&mdash;')+'</td>'
+    +'<td class="wp-dist" style="text-align:center">'+(arrLeg ? arrLeg.nm : '&mdash;')+'</td>'
+    +'<td class="wp-dist" style="text-align:center">'+(arrLeg ? cumNm : '0.0')+'</td>';
+  (function(s,idx){
+    tr.addEventListener('click', function(){
+      document.querySelectorAll('.wptable tr.wp-active').forEach(function(r){ r.classList.remove('wp-active'); });
+      tr.classList.add('wp-active');
+      if(map){ map.flyTo(s.coords,12,{duration:1.2}); setTimeout(function(){ if(markerObj[idx]) markerObj[idx].openPopup(); },1300); }
+    });
+  })(stop, i);
+  wpBodyEl.appendChild(tr);
+});
+
+// ── ETA tab ──
+function buildETA(){
+  var kts  = parseFloat(document.getElementById('speedInput').value)||6;
+  var hrs  = parseFloat(document.getElementById('hoursInput').value)||8;
+  var body = document.getElementById('etaBody');
+  body.innerHTML = '';
+  LEGS.forEach(function(leg){
+    var sh=leg.nm/kts, hh=Math.floor(sh), mm=Math.round((sh-hh)*60);
+    var ah=8+sh, ahh=Math.floor(ah), amm=Math.round((ah-Math.floor(ah))*60);
+    var ok = sh<=hrs ? '&#10003;' : '&#9888;';
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="color:'+leg.color+'">Day '+leg.day+'</td>'
+      +'<td style="font-size:.66rem">'+leg.label+'</td>'
+      +'<td>'+leg.nm+' nm</td>'
+      +'<td class="time">'+hh+'h '+(mm<10?'0':'')+mm+'m</td>'
+      +'<td class="time">'+(ahh<10?'0':'')+ahh+':'+(amm<10?'0':'')+amm+' '+ok+'</td>';
+    body.appendChild(tr);
+  });
+}
+buildETA();
+document.getElementById('speedInput').addEventListener('input', buildETA);
+document.getElementById('hoursInput').addEventListener('input', buildETA);
+
+// ── Places & Anchors tab ──
+var placesTabEl = document.getElementById('tab-places');
+var plHtml = '<div class="sec-title" style="padding:.9rem 1.3rem .5rem">Daytime Visits</div>';
+POIS.forEach(function(poi){
+  plHtml += '<div class="place-card">'
+    +'<div class="place-card-name">&#9733; '+poi.name+'</div>'
+    +'<div class="place-card-meta">Day '+poi.day+' stop &middot; '+toDM(poi.coords[0],true)+' &nbsp; '+toDM(poi.coords[1],false)+'<br>'+poi.notes+'<br><a href="'+poi.url+'" target="_blank" style="color:#80cbc4;font-size:.66rem">More info &#8599;</a></div>'
+    +'<div class="place-card-anchor">&#9875; Anchor nearby: '+poi.anchor.depth+' &nbsp; Bottom: '+poi.anchor.bottom+'<br>'+poi.anchor.note+'</div>'
+    +'</div>';
+});
+plHtml += '<div class="sec-title" style="padding:.9rem 1.3rem .5rem">Overnight Anchors &amp; Marinas</div>';
+placesTabEl.innerHTML = plHtml;
+
+ANCHORS.forEach(function(anch){
+  var row = document.createElement('div');
+  row.className = 'anch-row';
+  var typeIcon = anch.type === 'marina' ? 'M' : 'A';
+  var typeColor = anch.type === 'marina' ? '#1976D2' : '#00897B';
+  row.innerHTML = '<div class="anch-icon" style="border-color:'+typeColor+';color:'+typeColor+'">'+typeIcon+'</div>'
+    +'<div class="anch-info">'
+    +'<div class="anch-name">Night '+anch.night+' &middot; '+anch.name+'</div>'
+    +'<div class="anch-depth">Depth: <b>'+anch.depth+'</b> &middot; Bottom: '+anch.bottom+'<br>'+anch.note+'</div>'
+    +'</div>';
+  (function(a){ row.addEventListener('click', function(){ if(map){ map.flyTo(a.coords,13,{duration:1.2}); } }); })(anch);
+  placesTabEl.appendChild(row);
+});
+
+// ── Roster tab ──
+var CREW = ['Crew 1','Crew 2','Crew 3','Crew 4','Crew 5','Crew 6','Crew 7'];
+var DUTIES = ['galley','route','sanitation'];
+var rosterData = DAY_DATES.map(function(){ return {galley:'',route:'',sanitation:''}; });
+
+function buildRoster(){
+  var body = document.getElementById('rosterBody');
+  body.innerHTML = '';
+  DAY_DATES.forEach(function(date, i){
+    var leg = LEGS[i];
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="day-cell"><span style="color:'+leg.color+';font-size:.68rem">&#9632;</span> Day '+(i+1)+'<br><span style="color:var(--muted);font-size:.62rem">'+date+'</span></td>'
+      + DUTIES.map(function(d){
+          var val = rosterData[i][d];
+          return '<td><div class="duty-slot" data-day="'+i+'" data-duty="'+d+'">'+(val||'&mdash;')+'</div></td>';
+        }).join('');
+    body.appendChild(tr);
+  });
+}
+buildRoster();
+
+// ── Tides (SMHI Open Data) ──────────────────────────────────────────────
+// Trip dates: Aug 8 – 15, 2026. Baltic astronomical tide ≈ 5–15 cm (negligible
+// for navigation). Sea-level swings from wind/pressure can reach ±50 cm.
+// SMHI param 6 = Havsvattenstånd. Stations: 2069 (Stockholm), 2507 (Landsort N).
+
+// Moon phase (Conway algorithm) — for a given JS Date returns a phase 0..7
+function moonPhase(d) {
+  var y=d.getFullYear(), m=d.getMonth()+1, day=d.getDate();
+  if (m<3){y--;m+=12;}
+  var c=365.25*y, e=30.6*(m+1);
+  var jd=c+e+day-694039.09;        // days since 1900 Jan 0
+  jd/=29.5305882;                  // synodic month
+  jd=jd-Math.floor(jd);
+  return Math.round(jd*8) & 7;     // 0=new, 4=full
+}
+var MOON_EMOJI=['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
+var MOON_NAME =['New','Wax Cres','First Qtr','Wax Gib','Full','Wan Gib','Last Qtr','Wan Cres'];
+
+function fetchLatestSeaLevel(stationId) {
+  var url='https://opendata-download-ocobs.smhi.se/api/version/latest/parameter/6/station/'+stationId+'/period/latest-day/data.json';
+  return fetch(url).then(function(r){return r.json();}).then(function(d){
+    var vals=(d.value||[]).map(function(v){return {t:v.date, v:parseFloat(v.value)};}).filter(function(v){return !isNaN(v.v);});
+    if(!vals.length) return null;
+    var latest=vals[vals.length-1];
+    var mn=Math.min.apply(null,vals.map(function(v){return v.v;}));
+    var mx=Math.max.apply(null,vals.map(function(v){return v.v;}));
+    return {latest:latest, min:mn, max:mx, range:mx-mn, n:vals.length, all:vals};
+  }).catch(function(){return null;});
+}
+
+function renderTideCard(card, name, data) {
+  if (!data) {
+    card.innerHTML='<div class="tc-label">'+name+'</div><div class="tc-val">—</div><div class="tc-sub">offline / no data</div>';
+    return;
+  }
+  var when=new Date(data.latest.t);
+  var stamp=when.getUTCHours().toString().padStart(2,'0')+':'+when.getUTCMinutes().toString().padStart(2,'0')+' UTC';
+  card.innerHTML='<div class="tc-label">'+name+'</div>'+
+    '<div class="tc-val">'+(data.latest.v>=0?'+':'')+data.latest.v.toFixed(1)+' cm</div>'+
+    '<div class="tc-sub">24 h range '+data.range.toFixed(0)+' cm &middot; '+stamp+'</div>';
+}
+
+function predictTripTide(date, stockholmRef, landsortRef) {
+  // Predictive estimate for Aug 8-15, 2026 based on:
+  // 1) climatology: August mean sea level near Stockholm is ~ -5 cm (RH2000), seasonal range ~ ±10 cm
+  // 2) Astronomical tide (Baltic): negligible, ~ ±3 cm semi-diurnal
+  // 3) Current observed offset (anomaly) carried forward into the future
+  // For dates > 10 days out we damp the anomaly toward climatology mean.
+  var now = new Date();
+  var daysOut = (date - now) / 86400000;
+  var augMean_sthlm = -5;   // cm RH2000 climatology
+  var augMean_lands = -3;
+  // Current anomaly = observed - climatology, damped exponentially over 30 d
+  var damp = Math.exp(-Math.max(0,daysOut)/30);
+  var anomS = stockholmRef ? (stockholmRef.latest.v - augMean_sthlm)*damp : 0;
+  var anomL = landsortRef  ? (landsortRef.latest.v  - augMean_lands)*damp : 0;
+  // Diurnal jitter from astronomical Baltic component
+  var t = date.getUTCHours() + date.getUTCMinutes()/60;
+  var astron = 4*Math.sin(2*Math.PI*t/12.42);   // ~ ±4 cm M2-like
+  return {
+    stockholm: augMean_sthlm + anomS + astron,
+    landsort:  augMean_lands + anomL + astron*0.7
+  };
+}
+
+function buildTideTable(stockholmRef, landsortRef) {
+  var body=document.getElementById('tideBody');
+  body.innerHTML='';
+  // Trip year is 2026, DAY_DATES like "Aug 8". Parse with explicit year.
+  for (var i=0;i<DAY_DATES.length;i++) {
+    var dateStr=DAY_DATES[i]+' 2026 12:00:00 UTC';
+    var d=new Date(dateStr);
+    if (isNaN(d.getTime())) {
+      // Fallback parse
+      var parts=DAY_DATES[i].split(' ');  // ["Aug","8"]
+      var months={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+      d=new Date(Date.UTC(2026, months[parts[0]]||7, parseInt(parts[1])||(i+8), 12, 0, 0));
+    }
+    var pred=predictTripTide(d, stockholmRef, landsortRef);
+    var p=moonPhase(d);
+    var lvl=(pred.stockholm+pred.landsort)/2;
+    var lvlAbs=Math.abs(lvl);
+    var barW=Math.min(60, 4+lvlAbs*2);
+    var sign=lvl>=0?'+':'';
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td class="day-cell">Day '+(i+1)+' &middot; '+DAY_DATES[i]+'</td>'+
+      '<td><span class="level-bar" style="width:'+barW+'px;'+(lvl<0?'background:linear-gradient(90deg,#ef5350,#ffab91)':'')+'"></span> '+
+        sign+lvl.toFixed(1)+' cm</td>'+
+      '<td>Sthlm '+(pred.stockholm>=0?'+':'')+pred.stockholm.toFixed(0)+', Lands '+(pred.landsort>=0?'+':'')+pred.landsort.toFixed(0)+'</td>'+
+      '<td><span class="tide-moon">'+MOON_EMOJI[p]+'</span>'+MOON_NAME[p]+'</td>';
+    body.appendChild(tr);
+  }
+}
+
+// Generic SMHI latest-day fetch for any parameter & station
+function fetchSmhiLatest(paramId, stationId) {
+  var url='https://opendata-download-ocobs.smhi.se/api/version/latest/parameter/'+paramId+'/station/'+stationId+'/period/latest-day/data.json';
+  return fetch(url).then(function(r){return r.json();}).then(function(d){
+    var vals=(d.value||[]).map(function(v){return {t:v.date, v:parseFloat(v.value)};}).filter(function(v){return !isNaN(v.v);});
+    if(!vals.length) return null;
+    var latest=vals[vals.length-1];
+    var mn=Math.min.apply(null, vals.map(function(v){return v.v;}));
+    var mx=Math.max.apply(null, vals.map(function(v){return v.v;}));
+    return {latest:latest, min:mn, max:mx, range:mx-mn, n:vals.length};
+  }).catch(function(){return null;});
+}
+
+function renderCondCard(card, label, data, unit, fmt) {
+  if (!data) {
+    card.innerHTML='<div class="tc-label">'+label+'</div><div class="tc-val">—</div><div class="tc-sub">offline / no data</div>';
+    return;
+  }
+  fmt = fmt || function(v){ return v.toFixed(2); };
+  var when=new Date(data.latest.t);
+  var stamp=when.getUTCHours().toString().padStart(2,'0')+':'+when.getUTCMinutes().toString().padStart(2,'0')+' UTC';
+  card.innerHTML='<div class="tc-label">'+label+'</div>'+
+    '<div class="tc-val">'+fmt(data.latest.v)+' '+unit+'</div>'+
+    '<div class="tc-sub">24 h '+fmt(data.min)+'–'+fmt(data.max)+' '+unit+' &middot; '+stamp+'</div>';
+}
+
+// ── Wind forecast via Open-Meteo (free, no key, 7-day forecast) ──
+function fetchWindForecast(lat, lon) {
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+
+    '&hourly=wind_speed_10m,wind_direction_10m,wind_gusts_10m'+
+    '&wind_speed_unit=ms&forecast_days=7&timezone=Europe%2FStockholm';
+  return fetch(url).then(function(r){return r.json();}).catch(function(){return null;});
+}
+
+function compassDir(deg) {
+  var d=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  return d[Math.round(deg/22.5)%16];
+}
+function windClass(ms) {
+  if (ms<4) return 'ws-light';
+  if (ms<8) return 'ws-mod';
+  if (ms<12) return 'ws-fresh';
+  return 'ws-strong';
+}
+
+function buildWindTable(forecast) {
+  var body=document.getElementById('windBody');
+  body.innerHTML='';
+  if (!forecast || !forecast.hourly) {
+    body.innerHTML='<tr><td colspan="4" class="tide-loading">Wind forecast unavailable.</td></tr>';
+    return;
+  }
+  var h=forecast.hourly;
+  var times=h.time||[], ws=h.wind_speed_10m||[], wd=h.wind_direction_10m||[], gust=h.wind_gusts_10m||[];
+  // Aggregate by day, sample at 12:00 each day
+  var byDay={};
+  for (var i=0;i<times.length;i++){
+    var t=times[i], date=t.split('T')[0], hour=parseInt(t.split('T')[1]);
+    if (!byDay[date]) byDay[date]={samples:[], noon:null};
+    byDay[date].samples.push({h:hour, ws:ws[i], wd:wd[i], g:gust[i]});
+    if (hour===12) byDay[date].noon=byDay[date].samples[byDay[date].samples.length-1];
+  }
+  var dates=Object.keys(byDay).sort();
+  dates.forEach(function(date){
+    var d=byDay[date];
+    // Use noon, or mean of day's samples
+    var rep = d.noon || d.samples[Math.floor(d.samples.length/2)];
+    if (!rep) return;
+    var avgWs = d.samples.reduce(function(s,x){return s+x.ws;},0)/d.samples.length;
+    var maxG  = d.samples.reduce(function(s,x){return Math.max(s,x.g||0);},0);
+    var dirName=compassDir(rep.wd);
+    var cls=windClass(avgWs);
+    var dispDate=new Date(date+'T12:00:00').toDateString().slice(4,10);  // "May 21"
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td class="day-cell">'+dispDate+'</td>'+
+      '<td class="'+cls+'">'+avgWs.toFixed(1)+' m/s ('+(avgWs*1.943).toFixed(0)+' kt)</td>'+
+      '<td><span class="wind-arrow" style="transform:rotate('+(rep.wd+180)+'deg);">&#x27A4;</span>'+dirName+' '+rep.wd.toFixed(0)+'°</td>'+
+      '<td>'+maxG.toFixed(1)+' m/s</td>';
+    body.appendChild(tr);
+  });
+}
+
+function loadTides() {
+  var cards=document.querySelectorAll('#tideNow .tide-card');
+  Promise.all([fetchLatestSeaLevel(2069), fetchLatestSeaLevel(2507)]).then(function(res){
+    var sthlm=res[0], lands=res[1];
+    renderTideCard(cards[0], 'Stockholm', sthlm);
+    renderTideCard(cards[1], 'Landsort N.', lands);
+    buildTideTable(sthlm, lands);
+  });
+
+  // Waves (Huvudskär buoy 33002) + Water temp (Landsort 2507)
+  var cond=document.querySelectorAll('#condNow .tide-card');
+  fetchSmhiLatest(1, 33002).then(function(w){
+    renderCondCard(cond[0], 'Waves · Huvudskär', w, 'm', function(v){return v.toFixed(2);});
+  });
+  fetchSmhiLatest(5, 2507).then(function(t){
+    renderCondCard(cond[1], 'Water temp · Landsort', t, '°C', function(v){return v.toFixed(1);});
+  });
+
+  // Wind forecast at Stockholm departure point
+  fetchWindForecast(59.33, 18.09).then(buildWindTable);
+}
+
+// Lazy-load tides on first open of the tab
+var tidesLoaded=false;
+
+// ── Tab switching ──
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+    if (tab.dataset.tab === 'tides' && !tidesLoaded) {
+      tidesLoaded = true;
+      loadTides();
+    }
+  });
+});
+
+// ══ Map (Leaflet-dependent — isolated so sidebar works even if map fails) ══
+
+var map = null;
+var markerObj = {};
+
+function stopColor(id){
+  if(id===0) return LEGS[0].color;
+  var l = LEGS.filter(function(l){ return l.to===id; })[0];
+  return l ? l.color : LEGS[LEGS.length-1].color;
+}
+
+function render(){
+  if(!map) return;
+  map._routeGrp.clearLayers(); map._arrowGrp.clearLayers(); map._markerGrp.clearLayers();
+  var vis = {};
+  LEGS.forEach(function(leg){
+    var s = legState[leg.day];
+    if(s.visible){
+      if(s.line) map._routeGrp.addLayer(s.line);
+      if(s.arrowMark) map._arrowGrp.addLayer(s.arrowMark);
+      vis[leg.from] = true; vis[leg.to] = true;
+    }
+  });
+  STOPS.forEach(function(s,i){ if(vis[i] && markerObj[i]) map._markerGrp.addLayer(markerObj[i]); });
+}
+
+function showAll(){
+  LEGS.forEach(function(l){ legState[l.day].visible=true; });
+  document.querySelectorAll('.day-card').forEach(function(c){ c.classList.remove('off'); });
+  render();
+}
+function hideAll(){
+  LEGS.forEach(function(l){ legState[l.day].visible=false; });
+  document.querySelectorAll('.day-card').forEach(function(c){ c.classList.add('off'); });
+  render();
+}
+function fitAll(){
+  if(map) map.fitBounds(L.latLngBounds(STOPS.map(function(s){ return s.coords; })),{padding:[50,50]});
+}
+
+try {
+  map = L.map('map', { center:[59.20,18.42], zoom:9 });
+
+  // ESRI World Ocean Base — depth tints, soundings, rocks, reefs (free, no key needed)
+  var esriOcean = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
+    { attribution:'Tiles &copy; Esri &mdash; GEBCO, NOAA, CHS, National Geographic, DeLorme', maxZoom:13, minZoom:2 }
+  ).addTo(map);
+
+  // ESRI Ocean Reference — adds place names and labels on top
+  var esriRef = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
+    { attribution:'', maxZoom:13, opacity:0.85 }
+  ).addTo(map);
+
+  // OSM fallback (zooms > 13 where ESRI has no tiles)
+  var osmLayer = L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', minZoom:14, maxZoom:19 }
+  ).addTo(map);
+
+  // OpenSeaMap buoys, depth marks, hazards overlay
+  var seaLayer = L.tileLayer(
+    'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
+    { attribution:'&copy; <a href="https://www.openseamap.org">OpenSeaMap</a>', opacity:0.85, maxZoom:18 }
+  ).addTo(map);
+
+  map._routeGrp  = L.layerGroup().addTo(map);
+  map._arrowGrp  = L.layerGroup().addTo(map);
+  map._markerGrp = L.layerGroup().addTo(map);
+  map._poiGrp    = L.layerGroup().addTo(map);
+  map._anchGrp   = L.layerGroup().addTo(map);
+
+  L.control.layers(
+    { 'ESRI Ocean (nautical)': esriOcean, 'OpenStreetMap': osmLayer },
+    { 'Chart marks (OpenSeaMap)': seaLayer, 'Ocean labels (ESRI)': esriRef, 'POI visits': map._poiGrp, 'Overnight anchors': map._anchGrp },
+    { position:'topright' }
+  ).addTo(map);
+
+  // Legend
+  var LegCtrl = L.Control.extend({
+    options:{ position:'bottomright' },
+    onAdd: function(){
+      var d = L.DomUtil.create('div','map-legend');
+      var rows = LEGS.map(function(l){
+        return '<div class="legend-row"><div class="legend-line" style="background:'+l.color+'"></div><span>Day '+l.day+' &middot; '+l.date+'</span></div>';
+      }).join('');
+      d.innerHTML = '<div class="legend-title">Route</div>'+rows;
+      return d;
+    }
+  });
+  new LegCtrl().addTo(map);
+
+  // Build multi-point route lines + direction arrows
+  LEGS.forEach(function(leg){
+    legState[leg.day].line = L.polyline(leg.waypoints, {
+      color: leg.color, weight: 4, opacity: 0.90,
+      dashArray: '10 5', lineJoin: 'round', lineCap: 'round'
+    });
+    // Arrow at middle waypoint, bearing along that segment
+    var mi = Math.floor(leg.waypoints.length / 2);
+    var mp = leg.waypoints[mi];
+    var mb = Math.round(trueBearing(leg.waypoints[mi-1][0],leg.waypoints[mi-1][1],mp[0],mp[1]));
+    legState[leg.day].arrowMark = L.marker(mp, {
+      icon: L.divIcon({
+        className:'',
+        html:'<svg width="22" height="22" viewBox="0 0 22 22" style="transform:rotate('+mb+'deg);filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))"><polygon points="11,1 20,20 11,14 2,20" fill="'+leg.color+'" stroke="white" stroke-width="1.5"/></svg>',
+        iconSize:[22,22], iconAnchor:[11,11]
+      }),
+      interactive:false, zIndexOffset:-100
+    });
+  });
+
+  // Stop markers with nav info popups
+  STOPS.forEach(function(stop,i){
+    var clr    = stopColor(i);
+    var arrLeg = LEGS.filter(function(l){ return l.to===i; })[0];
+    var navHtml = arrLeg
+      ? '<div class="pop-nav"><span>Brg <b>'+arrLeg.brg+'&deg;T</b></span><span><b>'+arrLeg.nm+' nm</b></span></div>'
+      : '';
+    var coords = toDM(stop.coords[0],true)+'<br>'+toDM(stop.coords[1],false);
+    markerObj[i] = L.marker(stop.coords, {
+      icon: L.divIcon({
+        className:'',
+        html:'<div style="width:38px;height:38px;border-radius:50%;background:'+clr+';border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;color:#fff;box-shadow:0 3px 12px rgba(0,0,0,.45);cursor:pointer;">'+(i===0||i===7?'STK':i)+'</div>',
+        iconSize:[38,38], iconAnchor:[19,19], popupAnchor:[0,-23]
+      })
+    }).bindPopup(
+      '<div class="pop">'
+      +'<div class="pop-hdr"><div class="pop-name">'+stop.name+'</div><div class="pop-date">'+stop.date+'</div></div>'
+      +'<div class="pop-body">'
+      +'<div class="pop-coords">'+coords+'</div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9875;</span><span class="pop-val">'+stop.marina+'</span></div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+stop.notes+'</span></div>'
+      +navHtml
+      +'</div></div>',
+      { maxWidth:280 }
+    );
+  });
+
+  // POI markers (gold star) -- visit destinations
+  POIS.forEach(function(poi){
+    var mk = L.marker(poi.coords, {
+      icon: L.divIcon({
+        className:'',
+        html:'<div style="width:34px;height:34px;background:#F9A825;border:2.5px solid #fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 10px rgba(0,0,0,.5);cursor:pointer;color:#0b1f36;font-weight:bold;">&#9733;</div>',
+        iconSize:[34,34], iconAnchor:[17,17], popupAnchor:[0,-20]
+      }),
+      zIndexOffset: 200
+    }).bindPopup(
+      '<div class="pop">'
+      +'<div class="pop-hdr" style="background:linear-gradient(135deg,#b37a00,#c88e00)">'
+      +'<div class="pop-name">&#9733; '+poi.name+'</div>'
+      +'<div class="pop-date">Day '+poi.day+' visit</div>'
+      +'</div>'
+      +'<div class="pop-body">'
+      +'<div class="pop-coords">'+toDM(poi.coords[0],true)+'<br>'+toDM(poi.coords[1],false)+'</div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+poi.notes+'</span></div>'
+      +'<div class="pop-row" style="background:#e8f5e9;border-radius:.3rem;padding:.35rem .5rem;margin-top:.4rem;">'
+      +'<span style="font-size:.75rem;color:#2e7d32;">&#9875; Anchor: '+poi.anchor.depth+' &nbsp; '+poi.anchor.bottom+'<br>'+poi.anchor.note+'</span>'
+      +'</div>'
+      +'<div class="pop-row" style="margin-top:.3rem;"><a href="'+poi.url+'" target="_blank" style="font-size:.72rem;color:#1565c0;">More info &#8599;</a></div>'
+      +'</div></div>',
+      {maxWidth:280}
+    );
+    map._poiGrp.addLayer(mk);
+  });
+
+  // Anchor markers (small teal/blue circles)
+  ANCHORS.forEach(function(anch){
+    var typeColor = anch.type === 'marina' ? '#1976D2' : '#00897B';
+    var mk = L.marker(anch.coords, {
+      icon: L.divIcon({
+        className:'',
+        html:'<div style="width:26px;height:26px;border-radius:50%;background:#0b1f36;border:2px solid '+typeColor+';display:flex;align-items:center;justify-content:center;font-size:12px;color:'+typeColor+';box-shadow:0 2px 6px rgba(0,0,0,.4);">&#9875;</div>',
+        iconSize:[26,26], iconAnchor:[13,13], popupAnchor:[0,-16]
+      }),
+      zIndexOffset: 100
+    }).bindPopup(
+      '<div class="pop">'
+      +'<div class="pop-hdr" style="background:linear-gradient(135deg,#0d2540,#1a3a60)">'
+      +'<div class="pop-name">&#9875; Night '+anch.night+' &mdash; '+anch.name+'</div>'
+      +'<div class="pop-date">'+(anch.type==='marina'?'Marina':'Anchorage')+'</div>'
+      +'</div>'
+      +'<div class="pop-body">'
+      +'<div class="pop-coords">'+toDM(anch.coords[0],true)+'<br>'+toDM(anch.coords[1],false)+'</div>'
+      +'<div class="pop-row"><span class="pop-icon">&#8681;</span><span class="pop-val"><b>Depth: '+anch.depth+'</b> &nbsp; Bottom: '+anch.bottom+'</span></div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+anch.note+'</span></div>'
+      +'</div></div>',
+      {maxWidth:280}
+    );
+    map._anchGrp.addLayer(mk);
+  });
+
+  render();
+
+  // ── Route editor: drag waypoints, click line to insert, right-click to delete ──
+  var editMode = false;
+  var editLayer = L.layerGroup().addTo(map);   // holds handles
+  var insertHints = L.layerGroup().addTo(map); // (reserved for visual hints)
+
+  function saveUserRoutes(){
+    try { localStorage.setItem('midnightSun.routes.v1', JSON.stringify(ROUTES)); } catch(e){}
+  }
+
+  // Recompute one leg's distance/bearing and refresh its polyline, arrow, and card.
+  function refreshLeg(dayIdx){
+    var leg = LEGS[dayIdx];
+    var wps = ROUTES[dayIdx];
+    leg.waypoints = wps;
+    leg.nm  = routeNm(wps);
+    leg.brg = Math.round(trueBearing(wps[0][0],wps[0][1],wps[wps.length-1][0],wps[wps.length-1][1]));
+    // Polyline
+    if (legState[leg.day].line) legState[leg.day].line.setLatLngs(wps);
+    // Arrow (mid waypoint)
+    if (legState[leg.day].arrowMark){
+      var mi = Math.floor(wps.length / 2);
+      var mp = wps[mi];
+      var mb = Math.round(trueBearing(wps[Math.max(0,mi-1)][0],wps[Math.max(0,mi-1)][1],mp[0],mp[1]));
+      legState[leg.day].arrowMark.setLatLng(mp);
+      legState[leg.day].arrowMark.setIcon(L.divIcon({
+        className:'',
+        html:'<svg width="22" height="22" viewBox="0 0 22 22" style="transform:rotate('+mb+'deg);filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))"><polygon points="11,1 20,20 11,14 2,20" fill="'+leg.color+'" stroke="white" stroke-width="1.5"/></svg>',
+        iconSize:[22,22], iconAnchor:[11,11]
+      }));
+    }
+    // Day card: distance + bearing
+    var card = document.querySelector('.day-card[data-day="'+leg.day+'"]');
+    if (card){
+      card.querySelector('.dc-nm').textContent  = leg.nm.toFixed(1)+' nm';
+      card.querySelector('.dc-brg').textContent = leg.brg+'°T';
+    }
+    // Header totals
+    var total = LEGS.reduce(function(t,l){ return t+l.nm; }, 0);
+    document.getElementById('totalNm').textContent = total.toFixed(1);
+    document.getElementById('avgNm').textContent   = (total/LEGS.length).toFixed(1);
+  }
+
+  function makeHandle(dayIdx, wpIdx){
+    var wp = ROUTES[dayIdx][wpIdx];
+    var color = LEGS[dayIdx].color;
+    var isEndpoint = (wpIdx === 0 || wpIdx === ROUTES[dayIdx].length - 1);
+    var size = isEndpoint ? 14 : 10;
+    var marker = L.marker(wp, {
+      draggable: !isEndpoint,                      // endpoints are fixed
+      zIndexOffset: 1500,
+      icon: L.divIcon({
+        className: '',
+        html: '<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:'+color+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.5);cursor:'+(isEndpoint?'not-allowed':'move')+';"></div>',
+        iconSize: [size+4, size+4],
+        iconAnchor: [(size+4)/2, (size+4)/2]
+      })
+    });
+    if (isEndpoint) {
+      marker.bindTooltip(wpIdx===0 ? 'Day start (locked — change in STOPS)' : 'Day end (locked)', {direction:'top'});
+    } else {
+      marker.on('drag', function(e){
+        var ll = e.target.getLatLng();
+        ROUTES[dayIdx][wpIdx] = [Math.round(ll.lat*10000)/10000, Math.round(ll.lng*10000)/10000];
+        refreshLeg(dayIdx);
+      });
+      marker.on('dragend', function(){
+        saveUserRoutes();
+      });
+      marker.on('contextmenu', function(e){
+        // Right-click delete (only if more than 2 waypoints)
+        L.DomEvent.preventDefault(e);
+        if (ROUTES[dayIdx].length <= 2) return;
+        ROUTES[dayIdx].splice(wpIdx, 1);
+        refreshLeg(dayIdx);
+        rebuildEditHandles();
+        saveUserRoutes();
+      });
+      // Long-press for touch devices (~600ms)
+      var pressTimer=null;
+      marker.on('mousedown', function(){
+        if (pressTimer) clearTimeout(pressTimer);
+        pressTimer = setTimeout(function(){
+          if (ROUTES[dayIdx].length <= 2) return;
+          ROUTES[dayIdx].splice(wpIdx, 1);
+          refreshLeg(dayIdx);
+          rebuildEditHandles();
+          saveUserRoutes();
+        }, 700);
+      });
+      marker.on('mouseup mouseout drag', function(){
+        if (pressTimer) { clearTimeout(pressTimer); pressTimer=null; }
+      });
+    }
+    return marker;
+  }
+
+  // Click on a polyline → insert waypoint at click location, between the two
+  // nearest existing waypoints on that line.
+  function bindLineInsertHandlers(){
+    LEGS.forEach(function(leg, dayIdx){
+      var line = legState[leg.day].line;
+      if (!line || line._editClickBound) return;
+      line._editClickBound = true;
+      line.on('click', function(ev){
+        if (!editMode) return;
+        var clickLL = ev.latlng;
+        // Find best insertion index: edge with min perpendicular distance
+        var wps = ROUTES[dayIdx];
+        var bestIdx = 1, bestDist = Infinity;
+        for (var i=0; i<wps.length-1; i++){
+          var a = L.latLng(wps[i][0], wps[i][1]);
+          var b = L.latLng(wps[i+1][0], wps[i+1][1]);
+          var pa = map.latLngToLayerPoint(a);
+          var pb = map.latLngToLayerPoint(b);
+          var pc = map.latLngToLayerPoint(clickLL);
+          // Distance from point pc to segment pa-pb
+          var dx = pb.x-pa.x, dy = pb.y-pa.y;
+          var len2 = dx*dx+dy*dy || 1;
+          var t = Math.max(0, Math.min(1, ((pc.x-pa.x)*dx+(pc.y-pa.y)*dy)/len2));
+          var px = pa.x+t*dx, py = pa.y+t*dy;
+          var d = (px-pc.x)*(px-pc.x)+(py-pc.y)*(py-pc.y);
+          if (d < bestDist){ bestDist=d; bestIdx=i+1; }
+        }
+        ROUTES[dayIdx].splice(bestIdx, 0, [
+          Math.round(clickLL.lat*10000)/10000,
+          Math.round(clickLL.lng*10000)/10000
+        ]);
+        refreshLeg(dayIdx);
+        rebuildEditHandles();
+        saveUserRoutes();
+        L.DomEvent.stopPropagation(ev);
+      });
+    });
+  }
+
+  function rebuildEditHandles(){
+    editLayer.clearLayers();
+    if (!editMode) return;
+    ROUTES.forEach(function(wps, dayIdx){
+      // Only show handles for visible days
+      if (!legState[dayIdx+1].visible) return;
+      wps.forEach(function(_wp, wpIdx){
+        editLayer.addLayer(makeHandle(dayIdx, wpIdx));
+      });
+    });
+  }
+
+  window.toggleEditMode = function(){
+    editMode = !editMode;
+    var btn = document.getElementById('editBtn');
+    var banner = document.getElementById('editBanner');
+    if (editMode){
+      btn.classList.add('active');
+      btn.textContent = 'Done Editing';
+      banner.style.display = 'block';
+      bindLineInsertHandlers();
+      rebuildEditHandles();
+    } else {
+      btn.classList.remove('active');
+      btn.textContent = 'Edit Route';
+      banner.style.display = 'none';
+      editLayer.clearLayers();
+    }
+  };
+
+  window.resetRoutesToDefault = function(){
+    if (!confirm('Reset all routes to the default OSM-fairway plan? Your custom edits will be lost.')) return;
+    ROUTES.forEach(function(_, i){
+      ROUTES[i] = DEFAULT_ROUTES[i].map(function(p){ return [p[0],p[1]]; });
+    });
+    LEGS.forEach(function(_, i){ refreshLeg(i); });
+    if (editMode) rebuildEditHandles();
+    try { localStorage.removeItem('midnightSun.routes.v1'); } catch(e){}
+    if (window.showToast) window.showToast('<b>Reset</b> &middot; routes restored to default plan');
+  };
+
+  // Build a portable JSON snapshot of the current routes & stops
+  function buildSnapshot(){
+    return {
+      app: 'midnight-sun', version: 1,
+      savedAt: new Date().toISOString(),
+      stops: STOPS.map(function(s){ return { name:s.name, coords:s.coords, marina:s.marina, date:s.date }; }),
+      routes: ROUTES.map(function(r,i){
+        return {
+          day: i+1, label: LEGS[i].label, color: LEGS[i].color,
+          nm: LEGS[i].nm, brg: LEGS[i].brg, waypoints: r
+        };
+      }),
+      totalNm: LEGS.reduce(function(t,l){return t+l.nm;},0)
+    };
+  }
+
+  // ── SAVE: silently persist edits to localStorage (no file download) ──
+  window.saveRoutes = function(){
+    saveUserRoutes();
+    var snap = buildSnapshot();
+    if (window.showToast)
+      window.showToast('<b>Saved</b> &middot; '+snap.totalNm.toFixed(1)+' nm stored in this browser');
+  };
+
+  // ── EXPORT: explicit download of the route JSON for sharing / backup ──
+  window.exportRoutes = function(){
+    saveUserRoutes();              // also commits to localStorage
+    var snapshot = buildSnapshot();
+    try {
+      var blob = new Blob([JSON.stringify(snapshot, null, 2)], {type:'application/json'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'midnight-sun-route-' + new Date().toISOString().slice(0,10) + '.json';
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+      if (window.showToast)
+        window.showToast('<b>Exported</b> &middot; downloaded JSON ('+snapshot.totalNm.toFixed(1)+' nm)');
+    } catch(e) {
+      if (window.showToast) window.showToast('Export failed: '+e.message);
+    }
+  };
+
+  // ── CLEAR: strip middle waypoints from all days. Each day becomes a straight
+  // A→B line between its two STOP endpoints, ready for the user to design from
+  // scratch by clicking on the line to add new waypoints. ──
+  window.clearRoutes = function(){
+    if (!confirm('Clear ALL middle waypoints? Each day will become a straight line between its two anchor points — you can then build your own route from scratch. Use Reset to restore the default plan instead.')) return;
+    ROUTES.forEach(function(r, i){
+      // Keep just the first and last waypoint
+      ROUTES[i] = [ r[0].slice(), r[r.length-1].slice() ];
+    });
+    LEGS.forEach(function(_, i){ refreshLeg(i); });
+    if (editMode) rebuildEditHandles();
+    saveUserRoutes();
+    if (window.showToast) window.showToast('<b>Cleared</b> &middot; '+ROUTES.length+' days reduced to straight A&rarr;B lines. Click any line in edit mode to add waypoints.');
+  };
+
+  // Re-render handles when day visibility toggles (Show/Hide All, card click)
+  var _origRender = render;
+  window.render = function(){
+    _origRender();
+    if (editMode) rebuildEditHandles();
+  };
+
+  // ── Interactive Quick-Nav: click-place start/end pins, show bearing & distance ──
+  (function initQuickNav(){
+    var startPin=null, endPin=null, qnLine=null, qnArrow=null;
+    var mode='idle'; // idle | place-start | place-end
+    var toggle=document.getElementById('qnToggle');
+    var body  =document.getElementById('qnBody');
+    var panel =document.getElementById('qnPanel');
+    // Prevent clicks INSIDE the panel from reaching the Leaflet map.
+    // Without this, clicking the toggle button would also fire a map-click
+    // and place a pin at the panel's screen position.
+    L.DomEvent.disableClickPropagation(panel);
+    L.DomEvent.disableScrollPropagation(panel);
+
+    function fmtCoord(lat, lon){
+      return lat.toFixed(4)+', '+lon.toFixed(4);
+    }
+    function compass(deg){
+      var d=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+      return d[Math.round(deg/22.5)%16];
+    }
+    function pinIcon(label, color){
+      return L.divIcon({
+        className:'',
+        html:'<div style="width:30px;height:30px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:'+color+';border:2.5px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;"><span style="transform:rotate(45deg);color:#fff;font-weight:bold;font-size:13px;font-family:Georgia,serif;">'+label+'</span></div>',
+        iconSize:[30,30], iconAnchor:[15,30], popupAnchor:[0,-30]
+      });
+    }
+    function clearLine(){
+      if (qnLine)  { map.removeLayer(qnLine);  qnLine=null; }
+      if (qnArrow) { map.removeLayer(qnArrow); qnArrow=null; }
+    }
+    function render(){
+      var html='';
+      if (startPin){
+        var s=startPin.getLatLng();
+        html+='<div class="qn-row"><span class="qn-l">Start</span><span class="qn-v coord">'+fmtCoord(s.lat,s.lng)+'</span></div>';
+      }
+      if (endPin){
+        var e=endPin.getLatLng();
+        html+='<div class="qn-row"><span class="qn-l">End</span><span class="qn-v coord">'+fmtCoord(e.lat,e.lng)+'</span></div>';
+      }
+      if (startPin && endPin){
+        var s=startPin.getLatLng(), e=endPin.getLatLng();
+        var nm=haversineNm(s.lat,s.lng,e.lat,e.lng);
+        var brg=trueBearing(s.lat,s.lng,e.lat,e.lng);
+        var km=nm*1.852;
+        html+='<div class="qn-row"><span class="qn-l">Distance</span><span class="qn-v">'+nm.toFixed(2)+' nm <span style="color:var(--muted);font-weight:normal;font-size:.66rem">('+km.toFixed(2)+' km)</span></span></div>';
+        html+='<div class="qn-row"><span class="qn-l">Bearing</span><span class="qn-v"><span class="qn-compass" style="transform:rotate('+brg+'deg);color:var(--gold);font-size:14px;">&#x27A4;</span>'+brg.toFixed(1)+'&deg; T &middot; '+compass(brg)+'</span></div>';
+        var rev=(brg+180)%360;
+        html+='<div class="qn-row"><span class="qn-l">Reverse</span><span class="qn-v" style="color:var(--text);font-size:.7rem;font-weight:normal;">'+rev.toFixed(1)+'&deg; T &middot; '+compass(rev)+'</span></div>';
+      }
+      if (!startPin) {
+        html+='<div class="qn-hint">'+(mode==='place-start'?'Click map to set <strong>Start</strong> pin…':'Click <em>Place Pins</em> to begin.')+'</div>';
+      } else if (!endPin) {
+        html+='<div class="qn-hint">'+(mode==='place-end'?'Click map to set <strong>End</strong> pin…':'Toggle <em>Place Pins</em> to continue.')+'</div>';
+      }
+      if (startPin || endPin) {
+        html+='<button class="qn-clear" id="qnClear">Clear pins</button>';
+      }
+      body.innerHTML=html;
+      var clrBtn=document.getElementById('qnClear');
+      if (clrBtn) clrBtn.addEventListener('click', clearAll);
+    }
+    function clearAll(){
+      if (startPin) { map.removeLayer(startPin); startPin=null; }
+      if (endPin)   { map.removeLayer(endPin);   endPin=null;   }
+      clearLine();
+      mode='idle';
+      toggle.classList.remove('on');
+      toggle.textContent='Place Pins';
+      map.getContainer().style.cursor='';
+      render();
+    }
+    function drawLine(){
+      clearLine();
+      if (!startPin || !endPin) return;
+      var s=startPin.getLatLng(), e=endPin.getLatLng();
+      qnLine = L.polyline([s,e], {
+        color:'#f0b429', weight:3, opacity:.9,
+        dashArray:'10 6'
+      }).addTo(map);
+      // Midpoint arrow
+      var mid = [(s.lat+e.lat)/2, (s.lng+e.lng)/2];
+      var brg = trueBearing(s.lat,s.lng,e.lat,e.lng);
+      qnArrow = L.marker(mid, {
+        icon: L.divIcon({
+          className:'',
+          html:'<div style="font-size:20px;color:#f0b429;text-shadow:0 0 4px #000;transform:rotate('+(brg-90)+'deg);">&#x27A4;</div>',
+          iconSize:[20,20], iconAnchor:[10,10]
+        }),
+        interactive:false
+      }).addTo(map);
+    }
+    function onPinDrag(){
+      drawLine();
+      render();
+    }
+
+    toggle.addEventListener('click', function(){
+      if (mode==='idle' && !startPin) {
+        mode='place-start';
+        toggle.classList.add('on');
+        toggle.textContent='Cancel';
+        map.getContainer().style.cursor='crosshair';
+      } else if (mode==='idle' && startPin && !endPin) {
+        mode='place-end';
+        toggle.classList.add('on');
+        toggle.textContent='Cancel';
+        map.getContainer().style.cursor='crosshair';
+      } else if (mode==='place-start' || mode==='place-end') {
+        mode='idle';
+        toggle.classList.remove('on');
+        toggle.textContent=startPin && !endPin ? 'Place End' : 'Place Pins';
+        map.getContainer().style.cursor='';
+      } else {
+        // Both pins placed — start over
+        clearAll();
+      }
+      render();
+    });
+
+    map.on('click', function(ev){
+      if (mode==='place-start'){
+        if (startPin) map.removeLayer(startPin);
+        startPin = L.marker(ev.latlng, {
+          icon: pinIcon('A','#1976D2'), draggable:true, zIndexOffset:2000
+        }).addTo(map);
+        startPin.on('drag', onPinDrag);
+        mode='idle';
+        toggle.classList.remove('on');
+        toggle.textContent='Place End';
+        map.getContainer().style.cursor='';
+        drawLine();
+        render();
+      } else if (mode==='place-end'){
+        if (endPin) map.removeLayer(endPin);
+        endPin = L.marker(ev.latlng, {
+          icon: pinIcon('B','#c62828'), draggable:true, zIndexOffset:2000
+        }).addTo(map);
+        endPin.on('drag', onPinDrag);
+        mode='idle';
+        toggle.classList.remove('on');
+        toggle.textContent='Clear';
+        map.getContainer().style.cursor='';
+        drawLine();
+        render();
+      }
+    });
+
+    render();
+  })();
+
+} catch(e) {
+  console.error('Map error:', e);
+  document.getElementById('map').innerHTML =
+    '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#546e7a;font-size:.9rem">Map failed: '+e.message+'</div>';
+}
+
+// ── Toast helper (available outside try-block too) ──
+window.showToast = function(html, ms){
+  ms = ms || 2200;
+  var t = document.getElementById('toast');
+  if (!t){
+    t = document.createElement('div');
+    t.className = 'toast';
+    t.id = 'toast';
+    document.body.appendChild(t);
+  }
+  t.innerHTML = html;
+  // Force reflow then add show
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(function(){ t.classList.remove('show'); }, ms);
+};
+
+</script>
+</body>
+</html>
