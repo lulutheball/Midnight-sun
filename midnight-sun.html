@@ -43,7 +43,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Midnight Sun · Stockholm Archipelago Chart" />
   <meta property="og:title" content="Midnight Sun · 7-Day Stockholm Archipelago Sailing Chart" />
-  <meta property="og:description" content="Plan, edit, and navigate a 7-day Stockholm archipelago sail (Aug 2026). 109.9 nm circuit on OSM-verified fairways. Live tides, wind, water temperature. Editable route with bearing & distance." />
+  <meta property="og:description" content="Plan, edit, and navigate a 7-day Stockholm archipelago sail (Aug 2026). 113.7 nm circuit on OSM-verified fairways. Live tides, wind, water temperature. Editable route with bearing & distance." />
   <meta property="og:url" content="https://midnightsun-chart.example.com/midnight-sun.html" />
   <meta property="og:locale" content="en_GB" />
   <meta property="og:locale:alternate" content="sv_SE" />
@@ -92,7 +92,7 @@
         "@type": "TouristTrip",
         "@id": "https://midnightsun-chart.example.com/#trip",
         "name": "Midnight Sun — 7-Day Stockholm Archipelago Sail",
-        "description": "Clockwise 7-day sailing circuit of the Stockholm archipelago, 109.9 nm on OSM-verified fairways. Visits Vaxholm, Fredriksborg Fortress at Oxdjupet (Day 2 direct sail), Grinda nature-reserve island, traditional Möja, sailing-mecca Sandhamn, southern Utö, and 17th-century Dalarö.",
+        "description": "Clockwise 7-day sailing circuit of the Stockholm archipelago, 113.7 nm on OSM-verified fairways. Visits Vaxholm, Fredriksborg Fortress at Oxdjupet (Day 2 direct sail), Grinda nature-reserve island, traditional Möja, sailing-mecca Sandhamn, southern Utö, and 17th-century Dalarö.",
         "url": "https://midnightsun-chart.example.com/midnight-sun.html",
         "image": "https://midnightsun-chart.example.com/og-cover.jpg",
         "touristType": ["Sailors", "Nautical travellers", "Charter crews"],
@@ -175,12 +175,18 @@
 
     /* ────────── Sidebar ────────── */
     .sidebar{
-      width:370px;flex-shrink:0;
+      width:370px;min-width:260px;max-width:60vw;flex-shrink:0;
       background:var(--navy);
       display:flex;flex-direction:column;
-      border-right:1px solid var(--border);
+      border-right:none;
       z-index:400;
     }
+    .resize-handle{
+      width:6px;flex-shrink:0;cursor:col-resize;
+      background:var(--border);position:relative;z-index:401;
+      transition:background .15s;
+    }
+    .resize-handle:hover,.resize-handle.active{background:var(--gold);}
 
     /* ── Header ── */
     .s-hdr{
@@ -192,6 +198,21 @@
     .s-hdr-top{display:flex;align-items:flex-start;justify-content:space-between}
     .trip-name{font-size:1.5rem;font-weight:normal;letter-spacing:.07em;color:var(--gold);line-height:1.1}
     .trip-sub{margin-top:.15rem;font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+    /* ────────── GPS button ────────── */
+    .gps-btn{
+      width:36px;height:36px;border-radius:6px;border:2px solid rgba(255,255,255,.25);
+      background:var(--navy2);color:#fff;display:flex;align-items:center;justify-content:center;
+      font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4);
+      transition:background .2s, border-color .2s, box-shadow .2s;
+    }
+    .gps-btn:hover{background:var(--navy3);border-color:rgba(255,255,255,.4);}
+    .gps-btn.active{background:#1b5e20;border-color:#4caf50;box-shadow:0 0 12px rgba(76,175,80,.5);}
+    .gps-btn.searching{animation:gps-pulse 1.2s infinite;}
+    @keyframes gps-pulse{
+      0%,100%{border-color:#4caf50;box-shadow:0 0 4px rgba(76,175,80,.3);}
+      50%{border-color:#81c784;box-shadow:0 0 16px rgba(76,175,80,.6);}
+    }
+    .gps-btn.error{background:#b71c1c;border-color:#ef5350;}
     .compass-badge{
       width:38px;height:38px;flex-shrink:0;
       background:var(--navy3);border:1px solid var(--border);
@@ -581,7 +602,7 @@
 <noscript>
   <article style="max-width:780px;margin:2rem auto;padding:1rem;color:#eceff1;background:#08192e;font-family:Georgia,serif;line-height:1.6">
     <h1>Midnight Sun — 7-Day Stockholm Archipelago Sailing Chart</h1>
-    <p><strong>Dates:</strong> 8–15 August 2026 · <strong>Total:</strong> 109.9 nautical miles · <strong>7 stops</strong></p>
+    <p><strong>Dates:</strong> 8–15 August 2026 · <strong>Total:</strong> 113.7 nautical miles · <strong>7 stops</strong></p>
 
     <p>This page is an interactive Leaflet-based navigation chart and requires JavaScript.
     For accessibility and search-engine indexing, the full itinerary is reproduced below.</p>
@@ -591,11 +612,11 @@
       <thead><tr><th>Day</th><th>Date</th><th>Leg</th><th>Distance</th><th>Bearing</th></tr></thead>
       <tbody>
         <tr><td>1</td><td>Aug 8</td><td>Wasahamnen (Stockholm) → Vaxholm</td><td>10.7 nm</td><td>061° T</td></tr>
-        <tr><td>2</td><td>Aug 9</td><td>Vaxholm → Grinda (via Oxdjupet &amp; Fredriksborg Fortress)</td><td>9.1 nm</td><td>114° T</td></tr>
-        <tr><td>3</td><td>Aug 10</td><td>Grinda → Möja</td><td>13.3 nm</td><td>087° T</td></tr>
-        <tr><td>4</td><td>Aug 11</td><td>Möja → Sandhamn</td><td>8.8 nm</td><td>177° T</td></tr>
+        <tr><td>2</td><td>Aug 9</td><td>Vaxholm → Grinda (via Oxdjupet &amp; Fredriksborg Fortress)</td><td>11.1 nm</td><td>114° T</td></tr>
+        <tr><td>3</td><td>Aug 10</td><td>Grinda → Möja</td><td>14.9 nm</td><td>087° T</td></tr>
+        <tr><td>4</td><td>Aug 11</td><td>Möja → Sandhamn</td><td>9.2 nm</td><td>177° T</td></tr>
         <tr><td>5</td><td>Aug 12</td><td>Sandhamn → Utö (via inner channels)</td><td>34.1 nm</td><td>226° T</td></tr>
-        <tr><td>6</td><td>Aug 13</td><td>Utö → Dalarö (Ornöhuvud)</td><td>15.2 nm</td><td>037° T</td></tr>
+        <tr><td>6</td><td>Aug 13</td><td>Utö → Dalarö (Ornöhuvud)</td><td>15.0 nm</td><td>037° T</td></tr>
         <tr><td>7</td><td>Aug 14</td><td>Dalarö → Wasahamnen</td><td>18.7 nm</td><td>316° T</td></tr>
       </tbody>
     </table>
@@ -638,18 +659,18 @@
       Stockholm archipelago in August 2026. Starts and ends at <strong>Wasahamnen, Djurgården</strong>
       (Stockholm) and overnights at <strong>Vaxholm</strong>, <strong>Grinda</strong>,
       <strong>Möja</strong>, <strong>Sandhamn</strong>, <strong>Utö</strong>, and
-      <strong>Dalarö</strong>. Total distance 109.9 nautical miles on OSM-verified fairways with
+      <strong>Dalarö</strong>. Total distance 113.7 nautical miles on OSM-verified fairways with
       live tide, wind, water-temperature, and wave-height data from <abbr title="Sveriges Meteorologiska och Hydrologiska Institut">SMHI</abbr>
       and Open-Meteo. Includes a draggable A→B Quick Nav for ad-hoc bearing &amp; distance, and a
       full route editor with save / export / clear / reset.
     </p>
     <ul>
       <li>Day 1: Wasahamnen → Vaxholm (10.7 nm)</li>
-      <li>Day 2: Vaxholm → Grinda (9.1 nm) via Oxdjupet south circuit past Fredriksborg Fortress (direct mooring) &amp; Archipelago Sauna POIs</li>
-      <li>Day 3: Grinda → Möja (13.3 nm)</li>
-      <li>Day 4: Möja → Sandhamn (8.8 nm)</li>
+      <li>Day 2: Vaxholm → Grinda (11.1 nm) via Oxdjupet south circuit past Fredriksborg Fortress (direct mooring) &amp; Archipelago Sauna POIs</li>
+      <li>Day 3: Grinda → Möja (14.9 nm)</li>
+      <li>Day 4: Möja → Sandhamn (9.2 nm)</li>
       <li>Day 5: Sandhamn → Utö (34.1 nm) via Krokholmssund, Stångsundet, Kymmendösund</li>
-      <li>Day 6: Utö → Dalarö (15.2 nm) via Mysingen &amp; Jungfrufjärden</li>
+      <li>Day 6: Utö → Dalarö (15.0 nm) via Mysingen &amp; Jungfrufjärden</li>
       <li>Day 7: Dalarö → Wasahamnen (18.7 nm) via Baggensfjärden &amp; Saltsjön</li>
     </ul>
   </section>
@@ -863,6 +884,9 @@
     </div>
   </aside>
 
+  <!-- ══ RESIZE HANDLE ══ -->
+  <div class="resize-handle" id="resizeHandle" title="Drag to resize sidebar"></div>
+
   <!-- ══ MAP ══ -->
   <main id="map" role="application" aria-label="Interactive sailing chart of the Stockholm archipelago">
     <!-- Quick-Nav floating panel -->
@@ -938,11 +962,11 @@ function routeNm(wps){
 var STOPS = [
   { id:0, name:'Stockholm', emoji:'A', coords:[59.3260,18.0924], date:'Aug 8 - Departure',  marina:'Mooring buoy off Wasahamnen, Djurgården',         notes:'Trip start. OSM mooring buoy in Strömmen, off Wasahamnen marina. Fuel and provisions before departure.' },
   { id:1, name:'Vaxholm',   emoji:'1', coords:[59.4030,18.3647], date:'Aug 8 - Night 1',    marina:'Mooring buoy, Vaxholmsfjärden',                   notes:'Mooring buoy 2 km east of Vaxholm fortress, in open fjärden. Dinghy to town. ~10 nm.' },
-  { id:2, name:'Grinda',    emoji:'2', coords:[59.4198,18.5680], date:'Aug 9 - Night 2',    marina:'Cardinal buoy north of Grinda',                   notes:'Anchor near cardinal navigation buoy off north Grinda. ~9.1 nm from Vaxholm via Rindö east-tip descent (fairway 751407263) past Fredriksborg Fortress (Aug 9 morning visit, direct boat access).' },
-  { id:3, name:'Möja',      emoji:'3', coords:[59.4284,18.9126], date:'Aug 10 - Night 3',   marina:'Mooring field, east of Möja (Långviksudd)',       notes:'Mooring field on east side of Möja island. Peaceful natural anchorage. ~12 nm leg.' },
+  { id:2, name:'Grinda',    emoji:'2', coords:[59.4198,18.5680], date:'Aug 9 - Night 2',    marina:'Cardinal buoy north of Grinda',                   notes:'Anchor near cardinal navigation buoy off north Grinda. ~11 nm from Vaxholm via western narrows channel, then OSM fairway 751407263 past Fredriksborg Fortress (Aug 9 morning visit, direct boat access).' },
+  { id:3, name:'Möja',      emoji:'3', coords:[59.4284,18.9126], date:'Aug 10 - Night 3',   marina:'Mooring field, east of Möja (Långviksudd)',       notes:'Mooring field on east side of Möja island. Peaceful natural anchorage. ~15 nm leg.' },
   { id:4, name:'Sandhamn',  emoji:'4', coords:[59.2931,18.9245], date:'Aug 11 - Night 4',   marina:'Telegrafholmen natural anchorage',                notes:'OSM-mapped anchorage at Telegrafholmen, 700 m NE of Sandhamn village. ~9 nm from Möja.' },
   { id:5, name:'Utö',       emoji:'5', coords:[58.9403,18.2167], date:'Aug 12 - Night 5',   marina:'Mooring poles, Ålö-Utö passage',                  notes:'Mooring field in the protected Ålö-Utö channel. Walk to Utö across causeway. Long 30 nm leg.' },
-  { id:6, name:'Dalarö',    emoji:'6', coords:[59.1212,18.4781], date:'Aug 13 - Night 6',   marina:'Ornöhuvud naturhamn (natural anchorage)',          notes:'Named OSM anchorage at Ornöhuvud (Ornö-head), classic natural harbour 4 km SE of Dalarö. ~14 nm from Utö.' },
+  { id:6, name:'Dalarö',    emoji:'6', coords:[59.1212,18.4781], date:'Aug 13 - Night 6',   marina:'Ornöhuvud naturhamn (natural anchorage)',          notes:'Named OSM anchorage at Ornöhuvud (Ornö-head), classic natural harbour 4 km SE of Dalarö. ~15 nm from Utö.' },
   { id:7, name:'Stockholm', emoji:'B', coords:[59.3260,18.0924], date:'Aug 14-15 - Return', marina:'Mooring buoy off Wasahamnen, Djurgården',         notes:'Home port. Full clockwise archipelago loop complete.' }
 ];
 
@@ -961,29 +985,54 @@ var ROUTES = [
   // Day 1: Wasahamnen mooring → Vaxholmsfjärden mooring (~10 nm)
   [[59.3260,18.0924],[59.3210,18.0980],[59.3210,18.1300],[59.3220,18.1600],[59.3260,18.1900],[59.3350,18.2090],[59.3490,18.2390],[59.3580,18.2590],[59.3630,18.2840],[59.3670,18.3060],[59.3740,18.3350],[59.3870,18.3400],[59.3980,18.3460],[59.4030,18.3647]],
   // Day 2: Vaxholm → Fredriksborg Fortress → Grinda (~10 nm)
-  // Skarpö (S:59.4061, N:59.4169, W:18.363, E:18.410) sits immediately north of the mooring.
-  // Going south of Skarpö is impossible — Rindö's north coast (59.405–59.407°N) leaves only
-  // ~100 m of water. Instead: W through the Vaxholm narrows gap (between Vaxön E:18.356 and
-  // Skarpö W:18.363), N above Skarpö (>59.42°N), E past Skarpö, then use OSM fairway
-  // 751407263 nodes 11→13 to descend to the fortress. After visit continue nodes 14–16
-  // around Rindö's east tip, then NE through Kanholmsfjärden to Grinda.
+  // Land-validated route: W through western narrows channel (lon 18.348, west of Vaxholmen/
+  // Hästholmen/Stegesund islets), N to 59.431 clearing Rönnholmen/Ekholmen, E above Skarpö,
+  // then OSM fairway 751407263 nodes 11→13 to fortress, 14→16 around Rindö east tip.
   [[59.4030,18.3647],
-   [59.4030,18.3580],                                      // W through Vaxholm narrows gap
-   [59.4200,18.3580],                                      // N above Skarpö (N:59.4169)
-   [59.4200,18.3900],[59.4200,18.4130],                   // E past Skarpö, above N edge
+   [59.4010,18.3540],                                      // SW of Vaxholmen (S:59.4024)
+   [59.4010,18.3480],                                      // W into clear western channel
+   [59.4300,18.3480],                                      // N through channel (W of all islets)
+   [59.4310,18.3900],                                      // E above Rönnholmen/Ekholmen/Tisterön
+   [59.4200,18.3900],[59.4200,18.4130],                   // S+E past Skarpö, above N edge
    [59.4100,18.4126],                                      // fairway 751407263 node 11
    [59.3996,18.4369],[59.3991,18.4381],                   // nodes 12-13: fortress jetty
    [59.3968,18.4410],[59.3947,18.4426],[59.3932,18.4425], // nodes 14-16: around Rindö east tip
    [59.3980,18.4600],[59.4050,18.4900],                   // N into Kanholmsfjärden
    [59.4100,18.5200],[59.4150,18.5450],[59.4198,18.5680]],// E to Grinda
-  // Day 3: Grinda buoy → Möja mooring field (~19 nm) via OSM fairway
-  [[59.4198,18.5680],[59.4150,18.5700],[59.4040,18.5910],[59.4110,18.6190],[59.4220,18.6320],[59.4300,18.6480],[59.4370,18.6760],[59.4400,18.7080],[59.4450,18.7470],[59.4500,18.7720],[59.4620,18.8230],[59.4500,18.8280],[59.4390,18.8320],[59.4284,18.9126]],
+  // Day 3: Grinda buoy → Möja mooring field (~19 nm) via southern bypass
+  // Land-validated: S bypass around Lillön/Hägerön/Karklö/Trångholmen cluster (lat 59.397),
+  // then NE past Björkholmen (E of E:18.659), E of Stora Kalholmen (E:18.831).
+  [[59.4198,18.5680],[59.4150,18.5700],[59.4040,18.5910],
+   [59.3970,18.6200],                                      // S of Hägerön/Lillön cluster
+   [59.3970,18.6500],                                      // continue S bypass
+   [59.4170,18.6550],                                      // NE rising clear
+   [59.4220,18.6600],                                      // between island clusters
+   [59.4300,18.6550],                                      // W of Stora Hästnacken
+   [59.4300,18.6600],                                      // E of Björkholmen (E:18.659)
+   [59.4400,18.6760],                                      // N past Björkholmen, turn E
+   [59.4400,18.7080],[59.4450,18.7470],[59.4500,18.7720],
+   [59.4620,18.8230],
+   [59.4580,18.8310],                                      // E of Stora Kalholmen (E:18.8294)
+   [59.4500,18.8280],[59.4390,18.8320],[59.4284,18.9126]],
   // Day 4: Möja mooring → Telegrafholmen anchorage (~10 nm)
-  [[59.4284,18.9126],[59.4170,18.9100],[59.4070,18.9300],[59.3960,18.9400],[59.3840,18.9510],[59.3730,18.9600],[59.3590,18.9570],[59.3470,18.9540],[59.3320,18.9520],[59.3200,18.9500],[59.3050,18.9300],[59.2931,18.9245]],
+  // Land-validated: approach final stop from W of Lökholmen (W:18.9212)
+  [[59.4284,18.9126],[59.4170,18.9100],[59.4070,18.9300],[59.3960,18.9400],[59.3840,18.9510],[59.3730,18.9600],[59.3590,18.9570],[59.3470,18.9540],[59.3320,18.9520],[59.3200,18.9500],[59.3050,18.9300],
+   [59.2960,18.9190],                                      // W of Lökholmen
+   [59.2940,18.9150],                                      // approach from W
+   [59.2931,18.9245]],
   // Day 5: Telegrafholmen → Utö mooring (~34 nm) via Krokholmssund → inner channels → Mysingen
-  [[59.2931,18.9245],[59.2970,18.8860],[59.3030,18.8580],[59.3080,18.8330],[59.3110,18.8100],[59.2980,18.7520],[59.2900,18.7350],[59.2800,18.7200],[59.2650,18.6950],[59.2490,18.6640],[59.2400,18.6460],[59.2300,18.6320],[59.2200,18.6150],[59.2010,18.5930],[59.1700,18.5670],[59.1580,18.5520],[59.1530,18.5180],[59.1240,18.4720],[59.1140,18.4510],[59.1060,18.4310],[59.0950,18.4150],[59.0890,18.3890],[59.0820,18.3540],[59.0730,18.3360],[59.0560,18.3140],[59.0350,18.2890],[59.0130,18.2610],[58.9990,18.2370],[58.9810,18.2070],[58.9620,18.2050],[58.9403,18.2167]],
+  // Land-validated: departs S of Lilla Jutkobben (S:59.2948)
+  [[59.2931,18.9245],
+   [59.2940,18.9040],                                      // S of Lilla Jutkobben
+   [59.2970,18.8860],[59.3030,18.8580],[59.3080,18.8330],[59.3110,18.8100],[59.2980,18.7520],[59.2900,18.7350],[59.2800,18.7200],[59.2650,18.6950],[59.2490,18.6640],[59.2400,18.6460],[59.2300,18.6320],[59.2200,18.6150],[59.2010,18.5930],[59.1700,18.5670],[59.1580,18.5520],[59.1530,18.5180],[59.1240,18.4720],[59.1140,18.4510],[59.1060,18.4310],[59.0950,18.4150],[59.0890,18.3890],[59.0820,18.3540],[59.0730,18.3360],[59.0560,18.3140],[59.0350,18.2890],[59.0130,18.2610],[58.9990,18.2370],[58.9810,18.2070],[58.9620,18.2050],[58.9403,18.2167]],
   // Day 6: Utö mooring → Ornöhuvud naturhamn (~13 nm) via Mysingen → Jungfrufjärden
-  [[58.9403,18.2167],[58.9620,18.2050],[58.9810,18.2070],[58.9990,18.2370],[59.0130,18.2610],[59.0350,18.2890],[59.0560,18.3140],[59.0680,18.3290],[59.0830,18.3450],[59.0930,18.3600],[59.1030,18.3740],[59.1160,18.3850],[59.1212,18.4781]],
+  // Land-validated: avoids Kycklingarna, Segholmen, Aspön, Stora Gryt
+  [[58.9403,18.2167],[58.9620,18.2050],[58.9810,18.2070],[58.9990,18.2370],[59.0130,18.2610],[59.0350,18.2890],[59.0560,18.3140],[59.0680,18.3290],[59.0830,18.3450],[59.0930,18.3600],[59.1030,18.3740],
+   [59.1070,18.3860],                                      // SE of Kycklingarna (E:18.3845)
+   [59.1080,18.4200],                                      // S of Segholmen (S:59.1086)
+   [59.1130,18.4300],                                      // between Segholmen + Aspön
+   [59.1170,18.4600],                                      // S of Stora Gryt (S:59.1178)
+   [59.1212,18.4781]],
   // Day 7: Ornöhuvud naturhamn → Wasahamnen mooring (~18 nm) via Jungfrufjärden → Baggensfjärden → Saltsjön
   [[59.1212,18.4781],[59.1400,18.4500],[59.1700,18.4200],[59.2000,18.3900],[59.2300,18.3600],[59.2600,18.3300],[59.2850,18.3000],[59.3000,18.2700],[59.3100,18.2400],[59.3200,18.2100],[59.3260,18.1900],[59.3220,18.1600],[59.3210,18.1300],[59.3210,18.0980],[59.3260,18.0924]]
 ];
@@ -1043,12 +1092,42 @@ var POIS = [
 var ANCHORS = [
   { night:1, name:'Vaxholm Gasthamn',    type:'marina',  coords:[59.4021,18.3305], depth:'2.5-4 m', bottom:'Sand',     note:'Full marina. Electricity, showers, fuel. Pre-book in peak season.' },
   { night:2, name:'Gallno / Sauna cove', type:'anchor',  coords:[59.4010,18.6730], depth:'4-6 m',   bottom:'Mud',      note:'Anchor in cove NW of sauna. Gallno guest dock option (1.8 m only). Calm, sheltered.' },
-  { night:3, name:'Finnhamn Gasthamn',   type:'marina',  coords:[59.4670,18.7330], depth:'2-4 m',   bottom:'Sand/Rock',note:'Guest marina on car-free island. Cafe, hostel. Also anchor in E bay 4-6 m.' },
-  { night:4, name:'Sandhamn KSSS',       type:'marina',  coords:[59.2885,18.9154], depth:'2-6 m',   bottom:'Sand',     note:'KSSS marina. Anchor off SE beach 3-5 m. Very busy in Aug -- book ahead.' },
-  { night:5, name:'Naemdo Brygga',       type:'anchor',  coords:[59.1150,18.7350], depth:'3-6 m',   bottom:'Mud/Sand', note:'Sheltered natural harbour. No facilities. Nature reserve -- respect quiet zone.' },
-  { night:6, name:'Uto Marina',          type:'marina',  coords:[58.9790,17.9250], depth:'2-4 m',   bottom:'Sand',     note:'Gruvbryggan harbour. Restaurant, shop. Famous bakery opens 07:00.' },
+  { night:3, name:'Finnhamn Gasthamn',   type:'marina',  coords:[59.4650,18.7270], depth:'2-4 m',   bottom:'Sand/Rock',note:'Guest marina on car-free island. Cafe, hostel. Also anchor in E bay 4-6 m.' },
+  { night:4, name:'Sandhamn KSSS',       type:'marina',  coords:[59.2870,18.8940], depth:'2-6 m',   bottom:'Sand',     note:'KSSS marina. Anchor off SE beach 3-5 m. Very busy in Aug -- book ahead.' },
+  { night:5, name:'Naemdo Brygga',       type:'anchor',  coords:[59.1530,18.5180], depth:'3-6 m',   bottom:'Mud/Sand', note:'Sheltered natural harbour. No facilities. Nature reserve -- respect quiet zone.' },
+  { night:6, name:'Uto Marina',          type:'marina',  coords:[58.9620,18.2050], depth:'2-4 m',   bottom:'Sand',     note:'Gruvbryggan harbour. Restaurant, shop. Famous bakery opens 07:00.' },
   { night:7, name:'Dalaro Gasthamn',     type:'marina',  coords:[59.1330,18.4044], depth:'2.5-4 m', bottom:'Sand/Rock',note:'Guest harbour, fuel, showers. Historic 17th-century customs house nearby.' }
 ];
+
+// Keep immutable deep-clones for anchor reset
+var DEFAULT_POI_ANCHORS = POIS.map(function(p){ return [p.anchor.coords[0], p.anchor.coords[1]]; });
+var DEFAULT_ANCHORS = ANCHORS.map(function(a){ return [a.coords[0], a.coords[1]]; });
+
+// Restore user-moved anchor positions from localStorage.
+(function loadUserAnchors(){
+  try {
+    var raw = localStorage.getItem('midnightSun.poiAnchors.v1');
+    if (raw) {
+      var saved = JSON.parse(raw);
+      if (Array.isArray(saved) && saved.length === POIS.length) {
+        saved.forEach(function(c, i){
+          if (Array.isArray(c) && c.length === 2) POIS[i].anchor.coords = c;
+        });
+      }
+    }
+  } catch(e) {}
+  try {
+    var raw2 = localStorage.getItem('midnightSun.overnightAnchors.v1');
+    if (raw2) {
+      var saved2 = JSON.parse(raw2);
+      if (Array.isArray(saved2) && saved2.length === ANCHORS.length) {
+        saved2.forEach(function(c, i){
+          if (Array.isArray(c) && c.length === 2) ANCHORS[i].coords = c;
+        });
+      }
+    }
+  } catch(e) {}
+})();
 
 var totalNm = Math.round(LEGS.reduce(function(s,l){ return s+l.nm; },0)*10)/10;
 var avgNm   = Math.round(totalNm/7*10)/10;
@@ -1155,6 +1234,7 @@ ANCHORS.forEach(function(anch){
   row.innerHTML = '<div class="anch-icon" style="border-color:'+typeColor+';color:'+typeColor+'">'+typeIcon+'</div>'
     +'<div class="anch-info">'
     +'<div class="anch-name">Night '+anch.night+' &middot; '+anch.name+'</div>'
+    +'<div class="anch-depth" style="font-size:.65rem;color:#80cbc4;margin-bottom:2px;">&#128205; Default: ['+anch.coords[0]+', '+anch.coords[1]+']</div>'
     +'<div class="anch-depth">Depth: <b>'+anch.depth+'</b> &middot; Bottom: '+anch.bottom+'<br>'+anch.note+'</div>'
     +'</div>';
   (function(a){ row.addEventListener('click', function(){ if(map){ map.flyTo(a.coords,13,{duration:1.2}); } }); })(anch);
@@ -1538,6 +1618,8 @@ try {
     );
   });
 
+  // Build all POI + anchor markers (callable for reset too)
+  function rebuildAnchorMarkers(){
   // POI markers (gold star) -- visit destinations
   POIS.forEach(function(poi){
     var mk = L.marker(poi.coords, {
@@ -1566,31 +1648,78 @@ try {
     map._poiGrp.addLayer(mk);
   });
 
-  // Anchor markers (small teal/blue circles)
-  ANCHORS.forEach(function(anch){
-    var typeColor = anch.type === 'marina' ? '#1976D2' : '#00897B';
-    var mk = L.marker(anch.coords, {
+  // POI anchor-point markers (draggable) — the actual anchoring spot near each POI
+  POIS.forEach(function(poi, poiIdx){
+    function poiAnchorPopupHtml(c){
+      return '<div class="pop">'
+        +'<div class="pop-hdr" style="background:linear-gradient(135deg,#1b5e20,#2e7d32)">'
+        +'<div class="pop-name">&#9875; '+poi.name+' Anchor</div>'
+        +'<div class="pop-date">Drag to move &middot; Day '+poi.day+'</div>'
+        +'</div>'
+        +'<div class="pop-body">'
+        +'<div class="pop-coords">'+toDM(c[0],true)+'<br>'+toDM(c[1],false)+'</div>'
+        +'<div class="pop-row"><span class="pop-icon">&#8681;</span><span class="pop-val"><b>Depth: '+poi.anchor.depth+'</b> &nbsp; Bottom: '+poi.anchor.bottom+'</span></div>'
+        +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+poi.anchor.note+'</span></div>'
+        +'</div></div>';
+    }
+    var amk = L.marker(poi.anchor.coords, {
+      draggable: true,
+      zIndexOffset: 250,
       icon: L.divIcon({
         className:'',
-        html:'<div style="width:26px;height:26px;border-radius:50%;background:#0b1f36;border:2px solid '+typeColor+';display:flex;align-items:center;justify-content:center;font-size:12px;color:'+typeColor+';box-shadow:0 2px 6px rgba(0,0,0,.4);">&#9875;</div>',
+        html:'<div style="width:28px;height:28px;border-radius:50%;background:#1b5e20;border:2.5px solid #a5d6a7;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.5);cursor:move;">&#9875;</div>',
+        iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-18]
+      })
+    }).bindPopup(poiAnchorPopupHtml(poi.anchor.coords), {maxWidth:280});
+
+    amk.on('dragend', function(){
+      var ll = amk.getLatLng();
+      var newCoords = [Math.round(ll.lat*10000)/10000, Math.round(ll.lng*10000)/10000];
+      poi.anchor.coords = newCoords;
+      amk.setPopupContent(poiAnchorPopupHtml(newCoords));
+      savePoiAnchors();
+      if (window.showToast) window.showToast('&#9875; <b>'+poi.name+'</b> anchor moved &mdash; saved');
+    });
+    map._poiGrp.addLayer(amk);
+  });
+
+  // Anchor markers (small teal/blue circles) — draggable with save
+  ANCHORS.forEach(function(anch, anchIdx){
+    var typeColor = anch.type === 'marina' ? '#1976D2' : '#00897B';
+    function anchPopupHtml(c){
+      return '<div class="pop">'
+        +'<div class="pop-hdr" style="background:linear-gradient(135deg,#0d2540,#1a3a60)">'
+        +'<div class="pop-name">&#9875; Night '+anch.night+' &mdash; '+anch.name+'</div>'
+        +'<div class="pop-date">'+(anch.type==='marina'?'Marina':'Anchorage')+' &middot; Drag to move</div>'
+        +'</div>'
+        +'<div class="pop-body">'
+        +'<div class="pop-coords">'+toDM(c[0],true)+'<br>'+toDM(c[1],false)+'</div>'
+        +'<div class="pop-row"><span class="pop-icon">&#8681;</span><span class="pop-val"><b>Depth: '+anch.depth+'</b> &nbsp; Bottom: '+anch.bottom+'</span></div>'
+        +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+anch.note+'</span></div>'
+        +'</div></div>';
+    }
+    var mk = L.marker(anch.coords, {
+      draggable: true,
+      icon: L.divIcon({
+        className:'',
+        html:'<div style="width:26px;height:26px;border-radius:50%;background:#0b1f36;border:2px solid '+typeColor+';display:flex;align-items:center;justify-content:center;font-size:12px;color:'+typeColor+';box-shadow:0 2px 6px rgba(0,0,0,.4);cursor:move;">&#9875;</div>',
         iconSize:[26,26], iconAnchor:[13,13], popupAnchor:[0,-16]
       }),
       zIndexOffset: 100
-    }).bindPopup(
-      '<div class="pop">'
-      +'<div class="pop-hdr" style="background:linear-gradient(135deg,#0d2540,#1a3a60)">'
-      +'<div class="pop-name">&#9875; Night '+anch.night+' &mdash; '+anch.name+'</div>'
-      +'<div class="pop-date">'+(anch.type==='marina'?'Marina':'Anchorage')+'</div>'
-      +'</div>'
-      +'<div class="pop-body">'
-      +'<div class="pop-coords">'+toDM(anch.coords[0],true)+'<br>'+toDM(anch.coords[1],false)+'</div>'
-      +'<div class="pop-row"><span class="pop-icon">&#8681;</span><span class="pop-val"><b>Depth: '+anch.depth+'</b> &nbsp; Bottom: '+anch.bottom+'</span></div>'
-      +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+anch.note+'</span></div>'
-      +'</div></div>',
-      {maxWidth:280}
-    );
+    }).bindPopup(anchPopupHtml(anch.coords), {maxWidth:280});
+
+    mk.on('dragend', function(){
+      var ll = mk.getLatLng();
+      var newCoords = [Math.round(ll.lat*10000)/10000, Math.round(ll.lng*10000)/10000];
+      anch.coords = newCoords;
+      mk.setPopupContent(anchPopupHtml(newCoords));
+      saveOvernightAnchors();
+      if (window.showToast) window.showToast('&#9875; <b>Night '+anch.night+'</b> anchor moved &mdash; saved');
+    });
     map._anchGrp.addLayer(mk);
   });
+  } // end rebuildAnchorMarkers
+  rebuildAnchorMarkers();
 
   render();
 
@@ -1601,6 +1730,12 @@ try {
 
   function saveUserRoutes(){
     try { localStorage.setItem('midnightSun.routes.v1', JSON.stringify(ROUTES)); } catch(e){}
+  }
+  function savePoiAnchors(){
+    try { localStorage.setItem('midnightSun.poiAnchors.v1', JSON.stringify(POIS.map(function(p){ return p.anchor.coords; }))); } catch(e){}
+  }
+  function saveOvernightAnchors(){
+    try { localStorage.setItem('midnightSun.overnightAnchors.v1', JSON.stringify(ANCHORS.map(function(a){ return a.coords; }))); } catch(e){}
   }
 
   // Recompute one leg's distance/bearing and refresh its polyline, arrow, and card.
@@ -1767,7 +1902,14 @@ try {
     LEGS.forEach(function(_, i){ refreshLeg(i); });
     if (editMode) rebuildEditHandles();
     try { localStorage.removeItem('midnightSun.routes.v1'); } catch(e){}
-    if (window.showToast) window.showToast('<b>Reset</b> &middot; routes restored to default plan');
+    // Also reset anchor positions
+    POIS.forEach(function(p, i){ p.anchor.coords = [DEFAULT_POI_ANCHORS[i][0], DEFAULT_POI_ANCHORS[i][1]]; });
+    ANCHORS.forEach(function(a, i){ a.coords = [DEFAULT_ANCHORS[i][0], DEFAULT_ANCHORS[i][1]]; });
+    try { localStorage.removeItem('midnightSun.poiAnchors.v1'); localStorage.removeItem('midnightSun.overnightAnchors.v1'); } catch(e){}
+    // Rebuild anchor markers by re-rendering
+    map._poiGrp.clearLayers(); map._anchGrp.clearLayers();
+    rebuildAnchorMarkers();
+    if (window.showToast) window.showToast('<b>Reset</b> &middot; routes &amp; anchors restored to default plan');
   };
 
   // Build a portable JSON snapshot of the current routes & stops
@@ -2010,6 +2152,222 @@ window.showToast = function(html, ms){
   clearTimeout(window._toastTimer);
   window._toastTimer = setTimeout(function(){ t.classList.remove('show'); }, ms);
 };
+
+// ── Real-time GPS tracking ──
+(function initGPS(){
+  if (!navigator.geolocation) return;   // no API, skip silently
+
+  var gpsMarker = null;      // L.circleMarker for position dot
+  var gpsCircle = null;      // L.circle for accuracy radius
+  var watchId   = null;       // geolocation watch ID
+  var following = false;      // auto-pan to position
+  var btnEl     = null;       // the control button DOM element
+
+  // GPS marker styles
+  var dotStyle = {
+    radius: 8, fillColor: '#4285F4', fillOpacity: 1,
+    color: '#fff', weight: 3, opacity: 1
+  };
+  var circleStyle = {
+    fillColor: '#4285F4', fillOpacity: 0.1,
+    color: '#4285F4', weight: 1, opacity: 0.3
+  };
+
+  // Leaflet control: GPS button in top-left, below zoom
+  var GpsControl = L.Control.extend({
+    options: { position: 'topleft' },
+    onAdd: function(){
+      var container = L.DomUtil.create('div', 'leaflet-bar');
+      btnEl = L.DomUtil.create('button', 'gps-btn', container);
+      btnEl.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>';
+      btnEl.title = 'Show my location';
+      btnEl.setAttribute('aria-label', 'Toggle GPS location tracking');
+      L.DomEvent.disableClickPropagation(container);
+      L.DomEvent.on(btnEl, 'click', toggleGPS);
+      return container;
+    }
+  });
+  new GpsControl().addTo(map);
+
+  function toggleGPS(){
+    if (watchId !== null) {
+      stopGPS();
+    } else {
+      startGPS();
+    }
+  }
+
+  function startGPS(){
+    btnEl.classList.remove('error','active');
+    btnEl.classList.add('searching');
+    btnEl.title = 'Searching for GPS signal…';
+    following = true;
+
+    watchId = navigator.geolocation.watchPosition(
+      onPosition,
+      onError,
+      { enableHighAccuracy: true, maximumAge: 3000, timeout: 15000 }
+    );
+  }
+
+  function stopGPS(){
+    if (watchId !== null) {
+      navigator.geolocation.clearWatch(watchId);
+      watchId = null;
+    }
+    if (gpsMarker) { map.removeLayer(gpsMarker); gpsMarker = null; }
+    if (gpsCircle) { map.removeLayer(gpsCircle); gpsCircle = null; }
+    btnEl.classList.remove('active','searching','error');
+    btnEl.title = 'Show my location';
+    following = false;
+    if (window.showToast) window.showToast('GPS tracking stopped');
+  }
+
+  function onPosition(pos){
+    var lat = pos.coords.latitude;
+    var lon = pos.coords.longitude;
+    var acc = pos.coords.accuracy;        // metres
+    var spd = pos.coords.speed;           // m/s or null
+    var hdg = pos.coords.heading;         // degrees or null
+
+    btnEl.classList.remove('searching','error');
+    btnEl.classList.add('active');
+    btnEl.title = 'GPS active — click to stop';
+
+    // Update or create marker
+    if (!gpsMarker) {
+      gpsMarker = L.circleMarker([lat, lon], dotStyle).addTo(map);
+      gpsCircle = L.circle([lat, lon], { radius: acc, ...circleStyle }).addTo(map);
+      gpsMarker.bindPopup('');   // placeholder, updated below
+    } else {
+      gpsMarker.setLatLng([lat, lon]);
+      gpsCircle.setLatLng([lat, lon]);
+      gpsCircle.setRadius(acc);
+    }
+
+    // Build popup content
+    var popHtml = '<div class="pop">'
+      +'<div class="pop-hdr" style="background:linear-gradient(135deg,#1565c0,#1e88e5)">'
+      +'<div class="pop-name">My Location</div>'
+      +'<div class="pop-date">GPS &middot; '+ new Date().toLocaleTimeString() +'</div>'
+      +'</div>'
+      +'<div class="pop-body">'
+      +'<div class="pop-coords" style="font-size:.68rem;">'+ lat.toFixed(5) +', '+ lon.toFixed(5) +'</div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9678;</span><span class="pop-val">Accuracy: '+ (acc < 1000 ? Math.round(acc)+' m' : (acc/1000).toFixed(1)+' km') +'</span></div>';
+    if (spd !== null && spd > 0) {
+      var knots = (spd * 1.94384).toFixed(1);
+      popHtml += '<div class="pop-row"><span class="pop-icon">&#9992;</span><span class="pop-val">Speed: '+ knots +' kn ('+ (spd*3.6).toFixed(1) +' km/h)</span></div>';
+    }
+    if (hdg !== null && !isNaN(hdg)) {
+      popHtml += '<div class="pop-row"><span class="pop-icon">&#10148;</span><span class="pop-val">Heading: '+ Math.round(hdg) +'&deg; T</span></div>';
+    }
+
+    // Distance to nearest stop
+    var nearDist = Infinity, nearName = '';
+    STOPS.forEach(function(s){
+      var d = haversineNm(lat, lon, s.coords[0], s.coords[1]);
+      if (d < nearDist) { nearDist = d; nearName = s.name; }
+    });
+    if (nearDist < 999) {
+      popHtml += '<div class="pop-row"><span class="pop-icon">&#9875;</span><span class="pop-val">Nearest stop: <b>'+ nearName +'</b> ('+ nearDist.toFixed(1) +' nm)</span></div>';
+    }
+    popHtml += '</div></div>';
+    gpsMarker.setPopupContent(popHtml);
+
+    // Pan map to follow (only if user hasn't manually dragged)
+    if (following) {
+      map.setView([lat, lon], Math.max(map.getZoom(), 13));
+      // After first pan, keep following until user drags the map
+    }
+  }
+
+  function onError(err){
+    btnEl.classList.remove('searching','active');
+    btnEl.classList.add('error');
+    var msg = 'GPS error';
+    if (err.code === 1) msg = 'Location access denied';
+    else if (err.code === 2) msg = 'Position unavailable';
+    else if (err.code === 3) msg = 'GPS timeout';
+    btnEl.title = msg + ' — click to retry';
+    if (window.showToast) window.showToast('<b>GPS:</b> ' + msg);
+    // Don't clear watch on timeout — it may recover
+    if (err.code === 1) stopGPS();
+  }
+
+  // Stop following when user manually drags the map
+  map.on('dragstart', function(){
+    if (watchId !== null) following = false;
+  });
+
+  // Re-center button: double-click GPS button to re-follow
+  L.DomEvent.on(btnEl, 'dblclick', function(e){
+    L.DomEvent.stop(e);
+    if (watchId !== null && gpsMarker) {
+      following = true;
+      map.setView(gpsMarker.getLatLng(), Math.max(map.getZoom(), 14));
+      if (window.showToast) window.showToast('Re-centering on GPS position');
+    }
+  });
+})();
+
+// ── Resizable sidebar ──
+(function initResize(){
+  var handle = document.getElementById('resizeHandle');
+  var sidebar = document.querySelector('.sidebar');
+  var mapEl = document.getElementById('map');
+  if (!handle || !sidebar) return;
+
+  var dragging = false;
+  var startX, startW;
+
+  handle.addEventListener('mousedown', onDown);
+  handle.addEventListener('touchstart', onDown, {passive:false});
+
+  function onDown(e){
+    e.preventDefault();
+    dragging = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    startW = sidebar.offsetWidth;
+    handle.classList.add('active');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    document.addEventListener('touchmove', onMove, {passive:false});
+    document.addEventListener('touchend', onUp);
+  }
+
+  function onMove(e){
+    if (!dragging) return;
+    e.preventDefault();
+    var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    var newW = startW + (clientX - startX);
+    var minW = 260;
+    var maxW = window.innerWidth * 0.6;
+    newW = Math.max(minW, Math.min(maxW, newW));
+    sidebar.style.width = newW + 'px';
+    if (window.map) window.map.invalidateSize();
+  }
+
+  function onUp(){
+    dragging = false;
+    handle.classList.remove('active');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onUp);
+    if (window.map) window.map.invalidateSize();
+    try { localStorage.setItem('midnightSun.sidebarWidth', sidebar.style.width); } catch(e){}
+  }
+
+  // Restore saved width
+  try {
+    var saved = localStorage.getItem('midnightSun.sidebarWidth');
+    if (saved) { sidebar.style.width = saved; if (window.map) window.map.invalidateSize(); }
+  } catch(e){}
+})();
 
 </script>
 </body>
