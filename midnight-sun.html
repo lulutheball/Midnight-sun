@@ -960,14 +960,14 @@ function routeNm(wps){
 // Anchorage coordinates verified as OSM seamark:type=anchorage / mooring / buoy
 // (open-water positions, not on land). Coords source: Overpass API query.
 var STOPS = [
-  { id:0, name:'Saltsjö Pir',   emoji:'STK', coords:[59.2840,18.3120], date:'Aug 8 - Departure',  marina:'Saltsjöpir Marina, Saltsjöbaden',                 notes:'Base: Brantvägen 3, Floor 3 (stairs down), 133 42 Saltsjöbaden. Base Manager: +46 8 5861 8000. Restaurant in marina, supermarkets nearby. Fill up diesel before departure.' },
+  { id:0, name:'Saltsjö Pir',   emoji:'STK', coords:[59.2965,18.2640], date:'Aug 8 - Departure',  marina:'Saltsjöpir Marina, Fisksätra',                    notes:'Base: Brantvägen 3, Floor 3 (stairs down), 133 42 Saltsjöbaden. Base Manager: +46 8 5861 8000. Restaurant in marina, supermarkets nearby. Fill up diesel before departure.' },
   { id:1, name:'Grinda',        emoji:'1',   coords:[59.4148,18.5547], date:'Aug 8 - Night 1',    marina:'Guest harbour, Grinda',                           notes:'Nice guest harbour with 2 restaurants, showers and shops. Framfickan Bistro on the shore. ~14 nm.' },
   { id:2, name:'Finnhamn',      emoji:'2',   coords:[59.4814,18.8280], date:'Aug 9 - Night 2',    marina:'Guest harbour, Finnhamn',                         notes:'Group of 3 islands (Stora Jolpen, Lilla Jolpen, Idholmen). Restaurant Finnhamns Cafe & Krog with sea view. ~12 nm.' },
   { id:3, name:'Sandhamn',      emoji:'3',   coords:[59.2883,18.9203], date:'Aug 10 - Night 3',   marina:'Main marina, Sandhamn',                           notes:'The "Cowes of the North". Restaurants, cafes, shops. Sandy beaches on far side of island. ~16 nm.' },
   { id:4, name:'Malma Kvarn',   emoji:'4',   coords:[59.2545,18.6137], date:'Aug 11 - Night 4',   marina:'Guest harbour, Malma Kvarn (SXK)',                notes:'Small harbour run by Svenska Kryssarklubben. 12 guest places at jetty. Well protected from all winds. ~12 nm.' },
   { id:5, name:'Utö',           emoji:'5',   coords:[58.9652,18.3119], date:'Aug 12 - Night 5',   marina:'Guest harbour, NW Utö',                           notes:'One of the biggest islands in south Stockholm archipelago. Historic iron mine. Restaurants, shops, bars. ~20 nm.' },
   { id:6, name:'Dalarö',        emoji:'6',   coords:[59.1330,18.4044], date:'Aug 13 - Night 6',   marina:'Dalarö Gasthamn',                                 notes:'Guest harbour with fuel, showers. Historic 17th-century customs house. ~15 nm from Utö.' },
-  { id:7, name:'Saltsjö Pir',   emoji:'B',   coords:[59.2840,18.3120], date:'Aug 14 - Return',    marina:'Saltsjöpir Marina, Saltsjöbaden',                 notes:'Home port. Return via Baggensstäket strait (max 3 m draft). Fill up diesel at Saltsjöbaden. Base: Brantvägen 3, Floor 3, +46 8 5861 8000.' }
+  { id:7, name:'Saltsjö Pir',   emoji:'B',   coords:[59.2965,18.2640], date:'Aug 14 - Return',    marina:'Saltsjöpir Marina, Fisksätra',                    notes:'Home port. Return via Baggensstäket strait (max 3 m draft). Fill up diesel at Saltsjöbaden. Base: Brantvägen 3, Floor 3, +46 8 5861 8000.' }
 ];
 
 var STOP_NAMES = ['Saltsjö Pir','Grinda','Finnhamn','Sandhamn','Malma Kvarn','Utö','Dalarö','Saltsjö Pir'];
@@ -982,8 +982,10 @@ var DAY_DATES  = ['Aug 8','Aug 9','Aug 10','Aug 11','Aug 12','Aug 13','Aug 14'];
 // Inner harbor sections (Wasahamnen entry/exit) and Day 2/7 use manual waypoints
 // confirmed in Saltsjön/Baggensfjärden water bodies.
 var ROUTES = [
-  // Day 1: Saltsjö Pir → Grinda (~14 nm) via Baggensfjärden → Farstaviken → N channels → Tynningö → Grinda
-  [[59.2840,18.3120],
+  // Day 1: Saltsjö Pir → Grinda (~14 nm) via Lännerstasundet → Baggensfjärden → N channels → Tynningö → Grinda
+  [[59.2965,18.2640],
+   [59.2930,18.2800],                                      // SE through Lännerstasundet
+   [59.2900,18.3100],                                      // E into Baggensfjärden
    [59.2930,18.3400],                                      // NE into Baggensfjärden bay
    [59.3020,18.3650],                                      // NE through Baggensfjärden center
    [59.3100,18.3850],                                      // NE approaching Hälludden narrows
@@ -1039,7 +1041,8 @@ var ROUTES = [
    [59.1779,18.4316],[59.1874,18.4275],[59.1948,18.4247],[59.2019,18.4209],[59.2082,18.4118],
    [59.2172,18.3986],[59.2215,18.3943],[59.232,18.3888],[59.2424,18.3866],[59.2478,18.3872],
    [59.2559,18.3836],[59.2591,18.3798],[59.2636,18.3732],[59.2678,18.365],[59.2714,18.3562],
-   [59.2738,18.3459],[59.2771,18.3377],[59.2834,18.3265],[59.284,18.312]]
+   [59.2738,18.3459],[59.2771,18.3377],[59.2834,18.3265],[59.2900,18.3100],
+   [59.2930,18.2800],[59.2965,18.2640]]
 ];
 
 // Keep an immutable deep-clone of the default routes so users can reset.
