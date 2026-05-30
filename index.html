@@ -7,7 +7,7 @@
 
   <!-- ─── Primary SEO meta ──────────────────────────────────────────── -->
   <title>Midnight Sun · 7-Day Stockholm Archipelago Sailing Chart (Aug 2026)</title>
-  <meta name="description" content="Interactive 7-day Stockholm archipelago sailing chart (Aug 8–15, 2026): Vaxholm → Grinda → Möja → Sandhamn → Utö → Dalarö. Live SMHI tides &amp; wind, OSM fairways, editable routes." />
+  <meta name="description" content="Interactive 7-day Stockholm archipelago sailing chart (Aug 8–15, 2026): Saltsjö Pir → Grinda → Finnhamn → Sandhamn → Malma Kvarn → Utö → Dalarö. Live SMHI tides &amp; wind, editable routes." />
   <meta name="keywords" content="Stockholm archipelago sailing, Skärgården navigation chart, Vaxholm Grinda Möja Sandhamn Utö Dalarö, 7-day sailing itinerary Sweden, Baltic sea route planner, marine route editor, OpenSeaMap Leaflet, nautical chart Stockholm, SMHI tide forecast, Sjöfartsverket fairway, GlobeSailor archipelago" />
   <meta name="author" content="Midnight Sun crew · Aug 2026 charter" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -611,13 +611,13 @@
     <table border="1" cellpadding="6" cellspacing="0">
       <thead><tr><th>Day</th><th>Date</th><th>Leg</th><th>Distance</th><th>Bearing</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>Aug 8</td><td>Wasahamnen (Stockholm) → Vaxholm</td><td>10.7 nm</td><td>061° T</td></tr>
-        <tr><td>2</td><td>Aug 9</td><td>Vaxholm → Grinda (via Oxdjupet &amp; Fredriksborg Fortress)</td><td>11.1 nm</td><td>114° T</td></tr>
-        <tr><td>3</td><td>Aug 10</td><td>Grinda → Möja</td><td>14.9 nm</td><td>087° T</td></tr>
-        <tr><td>4</td><td>Aug 11</td><td>Möja → Sandhamn</td><td>9.2 nm</td><td>177° T</td></tr>
-        <tr><td>5</td><td>Aug 12</td><td>Sandhamn → Utö (via inner channels)</td><td>34.1 nm</td><td>226° T</td></tr>
-        <tr><td>6</td><td>Aug 13</td><td>Utö → Dalarö (Ornöhuvud)</td><td>15.0 nm</td><td>037° T</td></tr>
-        <tr><td>7</td><td>Aug 14</td><td>Dalarö → Wasahamnen</td><td>18.7 nm</td><td>316° T</td></tr>
+        <tr><td>1</td><td>Aug 8</td><td>Saltsjö Pir → Grinda</td><td>14 nm</td><td>045° T</td></tr>
+        <tr><td>2</td><td>Aug 9</td><td>Grinda → Finnhamn</td><td>12 nm</td><td>055° T</td></tr>
+        <tr><td>3</td><td>Aug 10</td><td>Finnhamn → Sandhamn</td><td>16 nm</td><td>170° T</td></tr>
+        <tr><td>4</td><td>Aug 11</td><td>Sandhamn → Malma Kvarn</td><td>12 nm</td><td>250° T</td></tr>
+        <tr><td>5</td><td>Aug 12</td><td>Malma Kvarn → Utö</td><td>20 nm</td><td>210° T</td></tr>
+        <tr><td>6</td><td>Aug 13</td><td>Utö → Dalarö</td><td>15 nm</td><td>020° T</td></tr>
+        <tr><td>7</td><td>Aug 14</td><td>Dalarö → Saltsjö Pir (via Baggensstäket)</td><td>15 nm</td><td>320° T</td></tr>
       </tbody>
     </table>
 
@@ -960,17 +960,17 @@ function routeNm(wps){
 // Anchorage coordinates verified as OSM seamark:type=anchorage / mooring / buoy
 // (open-water positions, not on land). Coords source: Overpass API query.
 var STOPS = [
-  { id:0, name:'Stockholm', emoji:'A', coords:[59.3260,18.0924], date:'Aug 8 - Departure',  marina:'Mooring buoy off Wasahamnen, Djurgården',         notes:'Trip start. OSM mooring buoy in Strömmen, off Wasahamnen marina. Fuel and provisions before departure.' },
-  { id:1, name:'Vaxholm',   emoji:'1', coords:[59.4030,18.3647], date:'Aug 8 - Night 1',    marina:'Mooring buoy, Vaxholmsfjärden',                   notes:'Mooring buoy 2 km east of Vaxholm fortress, in open fjärden. Dinghy to town. ~10 nm.' },
-  { id:2, name:'Grinda',    emoji:'2', coords:[59.4198,18.5680], date:'Aug 9 - Night 2',    marina:'Cardinal buoy north of Grinda',                   notes:'Anchor near cardinal navigation buoy off north Grinda. ~11 nm from Vaxholm via western narrows channel, then OSM fairway 751407263 past Fredriksborg Fortress (Aug 9 morning visit, direct boat access).' },
-  { id:3, name:'Möja',      emoji:'3', coords:[59.4284,18.9126], date:'Aug 10 - Night 3',   marina:'Mooring field, east of Möja (Långviksudd)',       notes:'Mooring field on east side of Möja island. Peaceful natural anchorage. ~15 nm leg.' },
-  { id:4, name:'Sandhamn',  emoji:'4', coords:[59.2931,18.9245], date:'Aug 11 - Night 4',   marina:'Telegrafholmen natural anchorage',                notes:'OSM-mapped anchorage at Telegrafholmen, 700 m NE of Sandhamn village. ~9 nm from Möja.' },
-  { id:5, name:'Utö',       emoji:'5', coords:[58.9403,18.2167], date:'Aug 12 - Night 5',   marina:'Mooring poles, Ålö-Utö passage',                  notes:'Mooring field in the protected Ålö-Utö channel. Walk to Utö across causeway. Long 30 nm leg.' },
-  { id:6, name:'Dalarö',    emoji:'6', coords:[59.1212,18.4781], date:'Aug 13 - Night 6',   marina:'Ornöhuvud naturhamn (natural anchorage)',          notes:'Named OSM anchorage at Ornöhuvud (Ornö-head), classic natural harbour 4 km SE of Dalarö. ~15 nm from Utö.' },
-  { id:7, name:'Stockholm', emoji:'B', coords:[59.3260,18.0924], date:'Aug 14-15 - Return', marina:'Mooring buoy off Wasahamnen, Djurgården',         notes:'Home port. Full clockwise archipelago loop complete.' }
+  { id:0, name:'Saltsjö Pir',   emoji:'STK', coords:[59.2840,18.3120], date:'Aug 8 - Departure',  marina:'Saltsjöpir Marina, Saltsjöbaden',                 notes:'Base: Brantvägen 3, Floor 3 (stairs down), 133 42 Saltsjöbaden. Base Manager: +46 8 5861 8000. Restaurant in marina, supermarkets nearby. Fill up diesel before departure.' },
+  { id:1, name:'Grinda',        emoji:'1',   coords:[59.4148,18.5547], date:'Aug 8 - Night 1',    marina:'Guest harbour, Grinda',                           notes:'Nice guest harbour with 2 restaurants, showers and shops. Framfickan Bistro on the shore. ~14 nm.' },
+  { id:2, name:'Finnhamn',      emoji:'2',   coords:[59.4814,18.8280], date:'Aug 9 - Night 2',    marina:'Guest harbour, Finnhamn',                         notes:'Group of 3 islands (Stora Jolpen, Lilla Jolpen, Idholmen). Restaurant Finnhamns Cafe & Krog with sea view. ~12 nm.' },
+  { id:3, name:'Sandhamn',      emoji:'3',   coords:[59.2883,18.9203], date:'Aug 10 - Night 3',   marina:'Main marina, Sandhamn',                           notes:'The "Cowes of the North". Restaurants, cafes, shops. Sandy beaches on far side of island. ~16 nm.' },
+  { id:4, name:'Malma Kvarn',   emoji:'4',   coords:[59.2545,18.6137], date:'Aug 11 - Night 4',   marina:'Guest harbour, Malma Kvarn (SXK)',                notes:'Small harbour run by Svenska Kryssarklubben. 12 guest places at jetty. Well protected from all winds. ~12 nm.' },
+  { id:5, name:'Utö',           emoji:'5',   coords:[58.9652,18.3119], date:'Aug 12 - Night 5',   marina:'Guest harbour, NW Utö',                           notes:'One of the biggest islands in south Stockholm archipelago. Historic iron mine. Restaurants, shops, bars. ~20 nm.' },
+  { id:6, name:'Dalarö',        emoji:'6',   coords:[59.1330,18.4044], date:'Aug 13 - Night 6',   marina:'Dalarö Gasthamn',                                 notes:'Guest harbour with fuel, showers. Historic 17th-century customs house. ~15 nm from Utö.' },
+  { id:7, name:'Saltsjö Pir',   emoji:'B',   coords:[59.2840,18.3120], date:'Aug 14 - Return',    marina:'Saltsjöpir Marina, Saltsjöbaden',                 notes:'Home port. Return via Baggensstäket strait (max 3 m draft). Fill up diesel at Saltsjöbaden. Base: Brantvägen 3, Floor 3, +46 8 5861 8000.' }
 ];
 
-var STOP_NAMES = ['Stockholm','Vaxholm','Grinda','Möja','Sandhamn','Utö','Dalarö','Stockholm'];
+var STOP_NAMES = ['Saltsjö Pir','Grinda','Finnhamn','Sandhamn','Malma Kvarn','Utö','Dalarö','Saltsjö Pir'];
 var DAY_COLORS = ['#1976D2','#388E3C','#E64A19','#7B1FA2','#C62828','#00838F','#F57C00'];
 var DAY_DATES  = ['Aug 8','Aug 9','Aug 10','Aug 11','Aug 12','Aug 13','Aug 14'];
 
@@ -982,57 +982,48 @@ var DAY_DATES  = ['Aug 8','Aug 9','Aug 10','Aug 11','Aug 12','Aug 13','Aug 14'];
 // Inner harbor sections (Wasahamnen entry/exit) and Day 2/7 use manual waypoints
 // confirmed in Saltsjön/Baggensfjärden water bodies.
 var ROUTES = [
-  // Day 1: Wasahamnen mooring → Vaxholmsfjärden mooring (~10 nm)
-  [[59.3260,18.0924],[59.3210,18.0980],[59.3210,18.1300],[59.3220,18.1600],[59.3260,18.1900],[59.3350,18.2090],[59.3490,18.2390],[59.3580,18.2590],[59.3630,18.2840],[59.3670,18.3060],[59.3740,18.3350],[59.3870,18.3400],[59.3980,18.3460],[59.4030,18.3647]],
-  // Day 2: Vaxholm → Fredriksborg Fortress → Grinda (~10 nm)
-  // Land-validated route: W through western narrows channel (lon 18.348, west of Vaxholmen/
-  // Hästholmen/Stegesund islets), N to 59.431 clearing Rönnholmen/Ekholmen, E above Skarpö,
-  // then OSM fairway 751407263 nodes 11→13 to fortress, 14→16 around Rindö east tip.
-  [[59.4030,18.3647],
-   [59.4010,18.3540],                                      // SW of Vaxholmen (S:59.4024)
-   [59.4010,18.3480],                                      // W into clear western channel
-   [59.4300,18.3480],                                      // N through channel (W of all islets)
-   [59.4310,18.3900],                                      // E above Rönnholmen/Ekholmen/Tisterön
-   [59.4200,18.3900],[59.4200,18.4130],                   // S+E past Skarpö, above N edge
-   [59.4100,18.4126],                                      // fairway 751407263 node 11
-   [59.3996,18.4369],[59.3991,18.4381],                   // nodes 12-13: fortress jetty
-   [59.3968,18.4410],[59.3947,18.4426],[59.3932,18.4425], // nodes 14-16: around Rindö east tip
-   [59.3980,18.4600],[59.4050,18.4900],                   // N into Kanholmsfjärden
-   [59.4100,18.5200],[59.4150,18.5450],[59.4198,18.5680]],// E to Grinda
-  // Day 3: Grinda buoy → Möja mooring field (~19 nm) via southern bypass
-  // Northern channel route: direct NE past Finnhamn area, curve SE to Möja
-  [[59.4198,18.5680],[59.4250,18.5850],[59.4330,18.6050],
-   [59.4400,18.6300],                                      // NE through channel
-   [59.4480,18.6600],                                      // N of island clusters
-   [59.4550,18.6950],                                      // past Finnhamn channel
-   [59.4620,18.7300],                                      // continuing NE
-   [59.4650,18.7700],                                      // eastern passage
-   [59.4630,18.8100],                                      // curving SE
-   [59.4570,18.8400],                                      // turning south
-   [59.4480,18.8700],                                      // heading to Möja
-   [59.4400,18.8900],                                      // approach Möja
-   [59.4284,18.9126]],
-  // Day 4: Möja mooring → Telegrafholmen anchorage (~10 nm)
-  // Land-validated: approach final stop from W of Lökholmen (W:18.9212)
-  [[59.4284,18.9126],[59.4170,18.9100],[59.4070,18.9300],[59.3960,18.9400],[59.3840,18.9510],[59.3730,18.9600],[59.3590,18.9570],[59.3470,18.9540],[59.3320,18.9520],[59.3200,18.9500],[59.3050,18.9300],
-   [59.2960,18.9190],                                      // W of Lökholmen
-   [59.2940,18.9150],                                      // approach from W
-   [59.2931,18.9245]],
-  // Day 5: Telegrafholmen → Utö mooring (~34 nm) via Krokholmssund → inner channels → Mysingen
-  // Land-validated: departs S of Lilla Jutkobben (S:59.2948)
-  [[59.2931,18.9245],
-   [59.2940,18.9040],                                      // S of Lilla Jutkobben
-   [59.2970,18.8860],[59.3030,18.8580],[59.3080,18.8330],[59.3110,18.8100],[59.2980,18.7520],[59.2900,18.7350],[59.2800,18.7200],[59.2650,18.6950],[59.2490,18.6640],[59.2400,18.6460],[59.2300,18.6320],[59.2200,18.6150],[59.2010,18.5930],[59.1700,18.5670],[59.1580,18.5520],[59.1530,18.5180],[59.1240,18.4720],[59.1140,18.4510],[59.1060,18.4310],[59.0950,18.4150],[59.0890,18.3890],[59.0820,18.3540],[59.0730,18.3360],[59.0560,18.3140],[59.0350,18.2890],[59.0130,18.2610],[58.9990,18.2370],[58.9810,18.2070],[58.9620,18.2050],[58.9403,18.2167]],
-  // Day 6: Utö mooring → Ornöhuvud naturhamn (~13 nm) via Mysingen → Jungfrufjärden
-  // Land-validated: avoids Kycklingarna, Segholmen, Aspön, Stora Gryt
-  [[58.9403,18.2167],[58.9620,18.2050],[58.9810,18.2070],[58.9990,18.2370],[59.0130,18.2610],[59.0350,18.2890],[59.0560,18.3140],[59.0680,18.3290],[59.0830,18.3450],[59.0930,18.3600],[59.1030,18.3740],
-   [59.1070,18.3860],                                      // SE of Kycklingarna (E:18.3845)
-   [59.1080,18.4200],                                      // S of Segholmen (S:59.1086)
-   [59.1130,18.4300],                                      // between Segholmen + Aspön
-   [59.1170,18.4600],                                      // S of Stora Gryt (S:59.1178)
-   [59.1212,18.4781]],
-  // Day 7: Ornöhuvud naturhamn → Wasahamnen mooring (~18 nm) via Jungfrufjärden → Baggensfjärden → Saltsjön
-  [[59.1212,18.4781],[59.1400,18.4500],[59.1700,18.4200],[59.2000,18.3900],[59.2300,18.3600],[59.2600,18.3300],[59.2850,18.3000],[59.3000,18.2700],[59.3100,18.2400],[59.3200,18.2100],[59.3260,18.1900],[59.3220,18.1600],[59.3210,18.1300],[59.3210,18.0980],[59.3260,18.0924]]
+  // Day 1: Saltsjö Pir → Grinda (~14 nm) via Baggensfjärden → Farstaviken → N channels → Tynningö → Grinda
+  [[59.2840,18.3120],
+   [59.2930,18.3400],                                      // NE into Baggensfjärden bay
+   [59.3020,18.3650],                                      // NE through Baggensfjärden center
+   [59.3100,18.3850],                                      // NE approaching Hälludden narrows
+   [59.3170,18.3950],                                      // through passage past Hälludden
+   [59.3250,18.3950],                                      // N into Farstaviken, past Kråkholmen
+   [59.3350,18.3900],                                      // N past Tacka udden
+   [59.3450,18.3850],                                      // N through channel near Velamsund
+   [59.3550,18.3900],                                      // N past Björnkärret
+   [59.3630,18.4050],                                      // NE toward Norra Lagnö
+   [59.3720,18.4300],                                      // E past Norra Lagnö
+   [59.3820,18.4600],                                      // NE approaching Tynningö from S
+   [59.3900,18.4900],                                      // E through Tynningö passage
+   [59.4000,18.5150],                                      // NE toward Grinda
+   [59.4148,18.5547]],
+  // Day 2: Grinda → Finnhamn (~12 nm) via NE through archipelago channels
+  [[59.4148,18.5547],[59.4200,18.5700],[59.4280,18.5900],[59.4350,18.6100],
+   [59.4420,18.6350],[59.4500,18.6600],[59.4560,18.6900],[59.4620,18.7200],
+   [59.4680,18.7500],[59.4730,18.7800],[59.4780,18.8050],[59.4814,18.8280]],
+  // Day 3: Finnhamn → Sandhamn (~16 nm) via SE through outer archipelago
+  [[59.4814,18.8280],[59.4750,18.8400],[59.4650,18.8550],[59.4500,18.8700],
+   [59.4350,18.8800],[59.4200,18.8900],[59.4050,18.9000],[59.3900,18.9100],
+   [59.3700,18.9200],[59.3500,18.9250],[59.3300,18.9250],[59.3100,18.9230],
+   [59.2883,18.9203]],
+  // Day 4: Sandhamn → Malma Kvarn (~12 nm) via SW through inner channels
+  [[59.2883,18.9203],[59.2900,18.9000],[59.2900,18.8700],[59.2850,18.8400],
+   [59.2800,18.8100],[59.2750,18.7800],[59.2700,18.7500],[59.2680,18.7200],
+   [59.2650,18.6900],[59.2620,18.6600],[59.2580,18.6400],[59.2545,18.6137]],
+  // Day 5: Malma Kvarn → Utö (~20 nm) via Mysingen basin
+  [[59.2545,18.6137],[59.2400,18.5900],[59.2200,18.5600],[59.2000,18.5300],
+   [59.1800,18.5000],[59.1600,18.4700],[59.1400,18.4400],[59.1200,18.4100],
+   [59.1000,18.3800],[59.0800,18.3500],[59.0600,18.3300],[59.0400,18.3100],
+   [59.0200,18.3000],[59.0000,18.3000],[58.9800,18.3050],[58.9652,18.3119]],
+  // Day 6: Utö → Dalarö (~15 nm) via Mysingen → Jungfrufjärden
+  [[58.9652,18.3119],[58.9800,18.3050],[59.0000,18.3000],[59.0200,18.3000],
+   [59.0400,18.3100],[59.0600,18.3300],[59.0750,18.3450],[59.0900,18.3600],
+   [59.1050,18.3750],[59.1150,18.3900],[59.1250,18.4050],[59.1330,18.4044]],
+  // Day 7: Dalarö → Saltsjö Pir (~15 nm) via Baggensstäket strait
+  [[59.1330,18.4044],[59.1500,18.4000],[59.1700,18.3900],[59.1900,18.3750],
+   [59.2100,18.3600],[59.2300,18.3500],[59.2500,18.3400],[59.2650,18.3300],
+   [59.2750,18.3250],[59.2840,18.3120]]
 ];
 
 // Keep an immutable deep-clone of the default routes so users can reset.
@@ -1067,34 +1058,34 @@ var LEGS = ROUTES.map(function(wps,i){
 // Two special POIs to visit (Day 2)
 var POIS = [
   {
-    id: 'fortress',
-    name: 'Fredriksborg Fortress',
-    coords: [59.4004, 18.4426],
-    day: 2,
-    notes: 'Historic 1735 fortress at Oxdjupet on Rindö island. Day 2 morning visit (Aug 9): direct boat access — Day 2 route sails Oxdjupet fairway past the fortress jetty. 2-h stop, then continue east via Trälhavet and Kanholmsfjärden to Grinda. Guided tours in summer.',
-    url: 'https://visitvarmdo.com/utbud/fredriksborgs-fortress/',
-    anchor: { coords:[59.3991,18.4381], depth:'3-6 m', bottom:'Mud/Rock', note:'Fortress jetty at Oxdjupet (OSM fairway 751407263 waypoint). Day 2 route passes directly here. Bow-to or anchor off the jetty; short wall available. Exposed to S swell from Trälhavet — fair in typical Aug conditions.' }
+    id: 'grinda-bistro',
+    name: 'Framfickan Bistro',
+    coords: [59.4140, 18.5560],
+    day: 1,
+    notes: 'Popular bistro on the shore of Grinda island. Great food with archipelago views. Day 1 dinner stop.',
+    url: 'https://grfrinda.com',
+    anchor: { coords:[59.4148,18.5547], depth:'2-4 m', bottom:'Sand/Rock', note:'Grinda guest harbour. Moor at the jetty, bistro is a short walk along the shore.' }
   },
   {
-    id: 'sauna',
-    name: 'Archipelago Sauna',
-    coords: [59.3989, 18.6755],
+    id: 'finnhamn-cafe',
+    name: 'Finnhamns Cafe & Krog',
+    coords: [59.4820, 18.8270],
     day: 2,
-    notes: 'Floating wood-fired sauna in a nature reserve. Book in advance. Boat access only.',
-    url: 'https://archipelagosauna.com',
-    anchor: { coords:[59.4010,18.6730], depth:'4-6 m', bottom:'Mud', note:'Sheltered cove NW of sauna raft. Good holding. Gallno guest dock 1.8-2 m (call ahead).' }
+    notes: 'Restaurant with lovely sea view on car-free Finnhamn island. Summer supermarket nearby. Swim from rocks or sandy beaches.',
+    url: 'https://finnhamn.se',
+    anchor: { coords:[59.4814,18.8280], depth:'2-4 m', bottom:'Sand/Rock', note:'Finnhamn guest harbour. Multiple small harbours available on the island group.' }
   }
 ];
 
 // Overnight anchoring/mooring for every night
 var ANCHORS = [
-  { night:1, name:'Vaxholm Gasthamn',    type:'marina',  coords:[59.4021,18.3305], depth:'2.5-4 m', bottom:'Sand',     note:'Full marina. Electricity, showers, fuel. Pre-book in peak season.' },
-  { night:2, name:'Gallno / Sauna cove', type:'anchor',  coords:[59.3990,18.4380], depth:'4-6 m',   bottom:'Mud',      note:'Anchor in cove NW of sauna. Gallno guest dock option (1.8 m only). Calm, sheltered.' },
-  { night:3, name:'Finnhamn Gasthamn',   type:'marina',  coords:[59.4390,18.8320], depth:'2-4 m',   bottom:'Sand/Rock',note:'Guest marina on car-free island. Cafe, hostel. Also anchor in E bay 4-6 m.' },
-  { night:4, name:'Sandhamn KSSS',       type:'marina',  coords:[59.2870,18.8940], depth:'2-6 m',   bottom:'Sand',     note:'KSSS marina. Anchor off SE beach 3-5 m. Very busy in Aug -- book ahead.' },
-  { night:5, name:'Naemdo Brygga',       type:'anchor',  coords:[59.1530,18.5180], depth:'3-6 m',   bottom:'Mud/Sand', note:'Sheltered natural harbour. No facilities. Nature reserve -- respect quiet zone.' },
-  { night:6, name:'Uto Marina',          type:'marina',  coords:[58.9620,18.2050], depth:'2-4 m',   bottom:'Sand',     note:'Gruvbryggan harbour. Restaurant, shop. Famous bakery opens 07:00.' },
-  { night:7, name:'Dalaro Gasthamn',     type:'marina',  coords:[59.1330,18.4044], depth:'2.5-4 m', bottom:'Sand/Rock',note:'Guest harbour, fuel, showers. Historic 17th-century customs house nearby.' }
+  { night:1, name:'Grinda Guest Harbour',   type:'marina',  coords:[59.3450,18.3850], depth:'2-4 m',   bottom:'Sand/Rock',note:'Nice guest harbour. Two restaurants, showers, shops. Framfickan Bistro on the shore.' },
+  { night:2, name:'Finnhamn Guest Harbour',  type:'marina',  coords:[59.4560,18.6900], depth:'2-4 m',   bottom:'Sand/Rock',note:'Finnhamns Cafe & Krog with sea view. Supermarket open in summer. Swim from rocks or sandy beaches.' },
+  { night:3, name:'Sandhamn Marina',         type:'marina',  coords:[59.4050,18.9000], depth:'2-6 m',   bottom:'Sand',     note:'The "Cowes of the North". Restaurants, cafes, shops. Sandy beaches across the island.' },
+  { night:4, name:'Malma Kvarn (SXK)',       type:'marina',  coords:[59.2700,18.7500], depth:'2-4 m',   bottom:'Mud/Sand', note:'SXK guest harbour. 12 guest places at jetty. Inner part well protected from all winds. Small restaurant.' },
+  { night:5, name:'Utö Guest Harbour',       type:'marina',  coords:[59.1000,18.3800], depth:'2-4 m',   bottom:'Sand',     note:'NW side guest harbour. Historic iron mine. Restaurants, shops, bars, showers. Good for kids.' },
+  { night:6, name:'Dalarö Gasthamn',         type:'marina',  coords:[59.0750,18.3450], depth:'2.5-4 m', bottom:'Sand/Rock',note:'Guest harbour, fuel, showers. Historic 17th-century customs house nearby.' },
+  { night:7, name:'Saltsjöpir Marina',       type:'marina',  coords:[59.2300,18.3500], depth:'2-4 m',   bottom:'Sand',     note:'Home port. Brantvägen 3, Floor 3, 133 42 Saltsjöbaden. Base Manager: +46 8 5861 8000. Restaurant, supermarkets nearby.' }
 ];
 
 // Keep immutable deep-clones for anchor reset
