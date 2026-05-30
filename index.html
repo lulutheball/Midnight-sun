@@ -998,32 +998,48 @@ var ROUTES = [
    [59.3900,18.4900],                                      // E through Tynningö passage
    [59.4000,18.5150],                                      // NE toward Grinda
    [59.4148,18.5547]],
-  // Day 2: Grinda → Finnhamn (~12 nm) via NE through archipelago channels
-  [[59.4148,18.5547],[59.4200,18.5700],[59.4280,18.5900],[59.4350,18.6100],
-   [59.4420,18.6350],[59.4500,18.6600],[59.4560,18.6900],[59.4620,18.7200],
-   [59.4680,18.7500],[59.4730,18.7800],[59.4780,18.8050],[59.4814,18.8280]],
-  // Day 3: Finnhamn → Sandhamn (~16 nm) via SE through outer archipelago
-  [[59.4814,18.8280],[59.4750,18.8400],[59.4650,18.8550],[59.4500,18.8700],
-   [59.4350,18.8800],[59.4200,18.8900],[59.4050,18.9000],[59.3900,18.9100],
-   [59.3700,18.9200],[59.3500,18.9250],[59.3300,18.9250],[59.3100,18.9230],
-   [59.2883,18.9203]],
-  // Day 4: Sandhamn → Malma Kvarn (~12 nm) via SW through inner channels
-  [[59.2883,18.9203],[59.2900,18.9000],[59.2900,18.8700],[59.2850,18.8400],
-   [59.2800,18.8100],[59.2750,18.7800],[59.2700,18.7500],[59.2680,18.7200],
-   [59.2650,18.6900],[59.2620,18.6600],[59.2580,18.6400],[59.2545,18.6137]],
-  // Day 5: Malma Kvarn → Utö (~20 nm) via Mysingen basin
-  [[59.2545,18.6137],[59.2400,18.5900],[59.2200,18.5600],[59.2000,18.5300],
-   [59.1800,18.5000],[59.1600,18.4700],[59.1400,18.4400],[59.1200,18.4100],
-   [59.1000,18.3800],[59.0800,18.3500],[59.0600,18.3300],[59.0400,18.3100],
-   [59.0200,18.3000],[59.0000,18.3000],[58.9800,18.3050],[58.9652,18.3119]],
-  // Day 6: Utö → Dalarö (~15 nm) via Mysingen → Jungfrufjärden
-  [[58.9652,18.3119],[58.9800,18.3050],[59.0000,18.3000],[59.0200,18.3000],
-   [59.0400,18.3100],[59.0600,18.3300],[59.0750,18.3450],[59.0900,18.3600],
-   [59.1050,18.3750],[59.1150,18.3900],[59.1250,18.4050],[59.1330,18.4044]],
-  // Day 7: Dalarö → Saltsjö Pir (~15 nm) via Baggensstäket strait
-  [[59.1330,18.4044],[59.1500,18.4000],[59.1700,18.3900],[59.1900,18.3750],
-   [59.2100,18.3600],[59.2300,18.3500],[59.2500,18.3400],[59.2650,18.3300],
-   [59.2750,18.3250],[59.2840,18.3120]]
+  // Day 2: Grinda → Finnhamn (~10 nm) via OSM recommended_track fairways
+  [[59.4148,18.5547],[59.4186,18.5641],[59.4227,18.5675],[59.428,18.5826],[59.4315,18.5852],
+   [59.4385,18.5941],[59.4413,18.6002],[59.4454,18.6114],[59.4496,18.6233],[59.4551,18.6391],
+   [59.4572,18.6501],[59.4601,18.6656],[59.4607,18.6792],[59.4626,18.6937],[59.4642,18.6995],
+   [59.4654,18.709],[59.4652,18.7156],[59.4648,18.7263],[59.4649,18.7383],[59.4643,18.7517],
+   [59.4637,18.76],[59.463,18.7742],[59.4644,18.7842],[59.4667,18.7944],[59.4686,18.8052],
+   [59.4705,18.8169],[59.4719,18.8246],[59.4798,18.8291],[59.4814,18.8280]],
+  // Day 3: Finnhamn → Sandhamn (~18 nm) via OSM recommended_track fairways S through outer archipelago
+  [[59.4814,18.828],[59.4743,18.8304],[59.4672,18.8318],[59.4608,18.8318],[59.4551,18.83],
+   [59.4521,18.8279],[59.4454,18.8297],[59.4394,18.8325],[59.4258,18.8354],[59.4109,18.8359],
+   [59.4009,18.8362],[59.3962,18.8363],[59.39,18.8363],[59.3843,18.836],[59.3778,18.8359],
+   [59.372,18.8356],[59.3639,18.8314],[59.3566,18.8259],[59.3466,18.8124],[59.3207,18.7783],
+   [59.3106,18.7648],[59.3055,18.7582],[59.2981,18.752],[59.3108,18.8099],[59.3115,18.8197],
+   [59.3084,18.8331],[59.3048,18.8497],[59.3034,18.8583],[59.3006,18.8726],[59.2983,18.8817],
+   [59.2973,18.8858],[59.2929,18.9044],[59.2908,18.9133],[59.2884,18.9227],[59.2883,18.9203]],
+  // Day 4: Sandhamn → Malma Kvarn (~12 nm) via OSM recommended_track fairways W through channels
+  [[59.2883,18.9203],[59.2884,18.9227],[59.2908,18.9133],[59.2929,18.9044],[59.2973,18.8858],
+   [59.2983,18.8817],[59.3006,18.8726],[59.3034,18.8583],[59.3048,18.8497],[59.3084,18.8331],
+   [59.3115,18.8197],[59.3108,18.8099],[59.2981,18.752],[59.294,18.741],[59.2897,18.7345],
+   [59.2853,18.7279],[59.2804,18.7204],[59.2758,18.7128],[59.2653,18.6951],[59.2491,18.6641],
+   [59.2473,18.6603],[59.2402,18.6459],[59.2545,18.6137]],
+  // Day 5: Malma Kvarn → Utö (~24 nm) via OSM recommended_track fairways through Mysingen
+  [[59.2545,18.6137],[59.2402,18.6459],[59.2304,18.632],[59.2255,18.6244],[59.2204,18.6149],
+   [59.2148,18.6047],[59.2005,18.593],[59.1697,18.5669],[59.1613,18.5598],[59.1583,18.5521],
+   [59.1526,18.5177],[59.1501,18.5135],[59.1239,18.4723],[59.1168,18.4585],[59.114,18.4509],
+   [59.1092,18.4392],[59.1042,18.4276],[59.1009,18.4234],[59.0955,18.4148],[59.0935,18.405],
+   [59.0925,18.399],[59.0894,18.3893],[59.0879,18.3838],[59.086,18.3705],[59.082,18.3541],
+   [59.0782,18.3421],[59.0727,18.3364],[59.0682,18.3291],[59.0562,18.3142],[59.0353,18.2895],
+   [59.0127,18.2608],[58.9988,18.2373],[58.9652,18.3119]],
+  // Day 6: Utö → Dalarö (~13 nm) via OSM recommended_track fairways through Mysingen N
+  [[58.9652,18.3119],[58.9988,18.2373],[59.0127,18.2608],[59.0353,18.2895],[59.0562,18.3142],
+   [59.0682,18.3291],[59.0727,18.3364],[59.0763,18.3393],[59.0825,18.3446],[59.0877,18.3511],
+   [59.0913,18.3564],[59.0977,18.3631],[59.1032,18.3739],[59.108,18.3821],[59.11,18.387],
+   [59.1179,18.3921],[59.1196,18.3979],[59.125,18.406],[59.1298,18.4117],[59.133,18.4044]],
+  // Day 7: Dalarö → Saltsjö Pir (~13 nm) via OSM recommended_track fairways N through Baggensfjärden
+  [[59.133,18.4044],[59.1298,18.4117],[59.1341,18.4225],[59.139,18.434],[59.1431,18.4419],
+   [59.1454,18.4464],[59.1512,18.4533],[59.1556,18.4606],[59.1579,18.4665],[59.1603,18.477],
+   [59.1663,18.4807],[59.1702,18.4746],[59.1731,18.463],[59.1734,18.4536],[59.1736,18.4411],
+   [59.1779,18.4316],[59.1874,18.4275],[59.1948,18.4247],[59.2019,18.4209],[59.2082,18.4118],
+   [59.2172,18.3986],[59.2215,18.3943],[59.232,18.3888],[59.2424,18.3866],[59.2478,18.3872],
+   [59.2559,18.3836],[59.2591,18.3798],[59.2636,18.3732],[59.2678,18.365],[59.2714,18.3562],
+   [59.2738,18.3459],[59.2771,18.3377],[59.2834,18.3265],[59.284,18.312]]
 ];
 
 // Keep an immutable deep-clone of the default routes so users can reset.
@@ -1080,12 +1096,12 @@ var POIS = [
 // Overnight anchoring/mooring for every night
 var ANCHORS = [
   { night:1, name:'Grinda Guest Harbour',   type:'marina',  coords:[59.3450,18.3850], depth:'2-4 m',   bottom:'Sand/Rock',note:'Nice guest harbour. Two restaurants, showers, shops. Framfickan Bistro on the shore.' },
-  { night:2, name:'Finnhamn Guest Harbour',  type:'marina',  coords:[59.4560,18.6900], depth:'2-4 m',   bottom:'Sand/Rock',note:'Finnhamns Cafe & Krog with sea view. Supermarket open in summer. Swim from rocks or sandy beaches.' },
-  { night:3, name:'Sandhamn Marina',         type:'marina',  coords:[59.4050,18.9000], depth:'2-6 m',   bottom:'Sand',     note:'The "Cowes of the North". Restaurants, cafes, shops. Sandy beaches across the island.' },
-  { night:4, name:'Malma Kvarn (SXK)',       type:'marina',  coords:[59.2700,18.7500], depth:'2-4 m',   bottom:'Mud/Sand', note:'SXK guest harbour. 12 guest places at jetty. Inner part well protected from all winds. Small restaurant.' },
-  { night:5, name:'Utö Guest Harbour',       type:'marina',  coords:[59.1000,18.3800], depth:'2-4 m',   bottom:'Sand',     note:'NW side guest harbour. Historic iron mine. Restaurants, shops, bars, showers. Good for kids.' },
-  { night:6, name:'Dalarö Gasthamn',         type:'marina',  coords:[59.0750,18.3450], depth:'2.5-4 m', bottom:'Sand/Rock',note:'Guest harbour, fuel, showers. Historic 17th-century customs house nearby.' },
-  { night:7, name:'Saltsjöpir Marina',       type:'marina',  coords:[59.2300,18.3500], depth:'2-4 m',   bottom:'Sand',     note:'Home port. Brantvägen 3, Floor 3, 133 42 Saltsjöbaden. Base Manager: +46 8 5861 8000. Restaurant, supermarkets nearby.' }
+  { night:2, name:'Finnhamn Guest Harbour',  type:'marina',  coords:[59.4607,18.6792], depth:'2-4 m',   bottom:'Sand/Rock',note:'Finnhamns Cafe & Krog with sea view. Supermarket open in summer. Swim from rocks or sandy beaches.' },
+  { night:3, name:'Sandhamn Marina',         type:'marina',  coords:[59.3639,18.8314], depth:'2-6 m',   bottom:'Sand',     note:'The "Cowes of the North". Restaurants, cafes, shops. Sandy beaches across the island.' },
+  { night:4, name:'Malma Kvarn (SXK)',       type:'marina',  coords:[59.2853,18.7279], depth:'2-4 m',   bottom:'Mud/Sand', note:'SXK guest harbour. 12 guest places at jetty. Inner part well protected from all winds. Small restaurant.' },
+  { night:5, name:'Utö Guest Harbour',       type:'marina',  coords:[59.1092,18.4392], depth:'2-4 m',   bottom:'Sand',     note:'NW side guest harbour. Historic iron mine. Restaurants, shops, bars, showers. Good for kids.' },
+  { night:6, name:'Dalarö Gasthamn',         type:'marina',  coords:[59.0727,18.3364], depth:'2.5-4 m', bottom:'Sand/Rock',note:'Guest harbour, fuel, showers. Historic 17th-century customs house nearby.' },
+  { night:7, name:'Saltsjöpir Marina',       type:'marina',  coords:[59.2019,18.4209], depth:'2-4 m',   bottom:'Sand',     note:'Home port. Brantvägen 3, Floor 3, 133 42 Saltsjöbaden. Base Manager: +46 8 5861 8000. Restaurant, supermarkets nearby.' }
 ];
 
 // Keep immutable deep-clones for anchor reset
