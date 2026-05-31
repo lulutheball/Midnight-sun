@@ -611,13 +611,14 @@
     <table border="1" cellpadding="6" cellspacing="0">
       <thead><tr><th>Day</th><th>Date</th><th>Leg</th><th>Distance</th><th>Bearing</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>Aug 8</td><td>Saltsjö Pir → Grinda</td><td>14 nm</td><td>045° T</td></tr>
-        <tr><td>2</td><td>Aug 9</td><td>Grinda → Finnhamn</td><td>12 nm</td><td>055° T</td></tr>
-        <tr><td>3</td><td>Aug 10</td><td>Finnhamn → Sandhamn</td><td>16 nm</td><td>170° T</td></tr>
-        <tr><td>4</td><td>Aug 11</td><td>Sandhamn → Malma Kvarn</td><td>12 nm</td><td>250° T</td></tr>
-        <tr><td>5</td><td>Aug 12</td><td>Malma Kvarn → Utö</td><td>20 nm</td><td>210° T</td></tr>
-        <tr><td>6</td><td>Aug 13</td><td>Utö → Dalarö</td><td>15 nm</td><td>020° T</td></tr>
-        <tr><td>7</td><td>Aug 14</td><td>Dalarö → Saltsjö Pir (via Baggensstäket)</td><td>15 nm</td><td>320° T</td></tr>
+        <tr><td colspan="5" style="text-align:left;font-style:italic;opacity:.7">Aug 8 (Sat) — Embark at 17:00, sleep aboard at marina</td></tr>
+        <tr><td>1</td><td>Aug 9 (Sun)</td><td>Saltsjö Pir → Grinda</td><td>20.8 nm</td><td>051° T</td></tr>
+        <tr><td>2</td><td>Aug 10 (Mon)</td><td>Grinda → Finnhamn</td><td>11.2 nm</td><td>064° T</td></tr>
+        <tr><td>3</td><td>Aug 11 (Tue)</td><td>Finnhamn → Sandhamn</td><td>14.0 nm</td><td>166° T</td></tr>
+        <tr><td>4</td><td>Aug 12 (Wed)</td><td>Sandhamn → Malma Kvarn</td><td>11.6 nm</td><td>258° T</td></tr>
+        <tr><td>5</td><td>Aug 13 (Thu)</td><td>Malma Kvarn → Utö</td><td>22.3 nm</td><td>208° T</td></tr>
+        <tr><td>6</td><td>Aug 14 (Fri)</td><td>Utö → Dalarö</td><td>11.2 nm</td><td>016° T</td></tr>
+        <tr><td>7</td><td>Aug 15 (Sat)</td><td>Dalarö → Saltsjö Pir (via Baggensstäket)</td><td>16.2 nm</td><td>336° T</td></tr>
       </tbody>
     </table>
 
@@ -775,7 +776,7 @@
             <tbody id="etaBody"></tbody>
           </table>
           <div class="eta-note">
-            In Stockholm Aug 8-15, civil twilight ends ~22:00, returns ~03:30.
+            In Stockholm Aug 9-15, civil twilight ends ~22:00, returns ~03:30.
             Ideal for early-morning departures with long sailing windows.
           </div>
           <div class="sec-title" style="padding:1rem 0 .5rem">Chart References</div>
@@ -824,7 +825,7 @@
             <div class="tide-card"><div class="tc-label">Water temp &middot; Landsort</div><div class="tc-val">…</div><div class="tc-sub">loading…</div></div>
           </div>
 
-          <div class="tide-section-h">Sea-level &amp; moon forecast (Aug 8&ndash;14)</div>
+          <div class="tide-section-h">Sea-level &amp; moon forecast (Aug 9&ndash;15)</div>
           <table class="tide-table" id="tideTable">
             <thead>
               <tr>
@@ -853,7 +854,7 @@
           </table>
 
           <div class="roster-note">
-            Sea-level for Aug 8&ndash;14 is a damped-anomaly forecast (3 months out). Wind only forecasts 7&nbsp;days ahead &mdash; the table will show today&rsquo;s 7-day window until closer to departure. Refresh on/after Aug&nbsp;1 for the trip window.
+            Sea-level for Aug 9&ndash;15 is a damped-anomaly forecast (3 months out). Wind only forecasts 7&nbsp;days ahead &mdash; the table will show today&rsquo;s 7-day window until closer to departure. Refresh on/after Aug&nbsp;1 for the trip window.
           </div>
         </div>
       </div>
@@ -960,19 +961,19 @@ function routeNm(wps){
 // Anchorage coordinates verified as OSM seamark:type=anchorage / mooring / buoy
 // (open-water positions, not on land). Coords source: Overpass API query.
 var STOPS = [
-  { id:0, name:'Saltsjö Pir',   emoji:'STK', coords:[59.2965,18.2640], date:'Aug 8 - Departure',  marina:'Saltsjöpir Marina, Fisksätra',                    notes:'Base: Brantvägen 3, Floor 3 (stairs down), 133 42 Saltsjöbaden. Base Manager: +46 8 5861 8000. Restaurant in marina, supermarkets nearby. Fill up diesel before departure.' },
-  { id:1, name:'Grinda',        emoji:'1',   coords:[59.4148,18.5547], date:'Aug 8 - Night 1',    marina:'Guest harbour, Grinda',                           notes:'Nice guest harbour with 2 restaurants, showers and shops. Framfickan Bistro on the shore. ~14 nm.' },
-  { id:2, name:'Finnhamn',      emoji:'2',   coords:[59.4814,18.8280], date:'Aug 9 - Night 2',    marina:'Guest harbour, Finnhamn',                         notes:'Group of 3 islands (Stora Jolpen, Lilla Jolpen, Idholmen). Restaurant Finnhamns Cafe & Krog with sea view. ~12 nm.' },
-  { id:3, name:'Sandhamn',      emoji:'3',   coords:[59.2883,18.9203], date:'Aug 10 - Night 3',   marina:'Main marina, Sandhamn',                           notes:'The "Cowes of the North". Restaurants, cafes, shops. Sandy beaches on far side of island. ~16 nm.' },
-  { id:4, name:'Malma Kvarn',   emoji:'4',   coords:[59.2545,18.6137], date:'Aug 11 - Night 4',   marina:'Guest harbour, Malma Kvarn (SXK)',                notes:'Small harbour run by Svenska Kryssarklubben. 12 guest places at jetty. Well protected from all winds. ~12 nm.' },
-  { id:5, name:'Utö',           emoji:'5',   coords:[58.9652,18.3119], date:'Aug 12 - Night 5',   marina:'Guest harbour, NW Utö',                           notes:'One of the biggest islands in south Stockholm archipelago. Historic iron mine. Restaurants, shops, bars. ~20 nm.' },
-  { id:6, name:'Dalarö',        emoji:'6',   coords:[59.1330,18.4044], date:'Aug 13 - Night 6',   marina:'Dalarö Gasthamn',                                 notes:'Guest harbour with fuel, showers. Historic 17th-century customs house. ~15 nm from Utö.' },
-  { id:7, name:'Saltsjö Pir',   emoji:'B',   coords:[59.2965,18.2640], date:'Aug 14 - Return',    marina:'Saltsjöpir Marina, Fisksätra',                    notes:'Home port. Return via Baggensstäket strait (max 3 m draft). Fill up diesel at Saltsjöbaden. Base: Brantvägen 3, Floor 3, +46 8 5861 8000.' }
+  { id:0, name:'Saltsjö Pir',   emoji:'STK', coords:[59.2965,18.2640], date:'Aug 8 (Sat) - Embark 17:00', marina:'Saltsjöpir Marina, Fisksätra',               notes:'Check-in from 17:00. Base: Brantvägen 3, Floor 3 (stairs down), 133 42 Saltsjöbaden. Base Manager: +46 8 5861 8000. Pay deposit (€3,500) + end-cleaning (€360) + gas (€65). Restaurant in marina, supermarkets 10 min walk. Sleep aboard Night 0.' },
+  { id:1, name:'Grinda',        emoji:'1',   coords:[59.4148,18.5547], date:'Aug 9 (Sun) - Night 1',     marina:'Guest harbour, Grinda',                      notes:'Nice guest harbour with 2 restaurants, showers and shops. Framfickan Bistro on the shore. ~20.8 nm from base.' },
+  { id:2, name:'Finnhamn',      emoji:'2',   coords:[59.4814,18.8280], date:'Aug 10 (Mon) - Night 2',    marina:'Guest harbour, Finnhamn',                    notes:'Group of 3 islands (Stora Jolpen, Lilla Jolpen, Idholmen). Restaurant Finnhamns Cafe & Krog with sea view. Summer supermarket. ~11.2 nm.' },
+  { id:3, name:'Sandhamn',      emoji:'3',   coords:[59.2883,18.9203], date:'Aug 11 (Tue) - Night 3',    marina:'Main marina, Sandhamn',                      notes:'The "Cowes of the North". Restaurants, cafes, shops. Sandy beaches on far side of island. ~14 nm.' },
+  { id:4, name:'Malma Kvarn',   emoji:'4',   coords:[59.2545,18.6137], date:'Aug 12 (Wed) - Night 4',    marina:'Guest harbour, Malma Kvarn (SXK)',            notes:'Small harbour run by Svenska Kryssarklubben. 12 guest places at jetty. Well protected from all winds. ~11.6 nm.' },
+  { id:5, name:'Utö',           emoji:'5',   coords:[58.9652,18.3119], date:'Aug 13 (Thu) - Night 5',    marina:'Guest harbour, NW Utö',                      notes:'One of the biggest islands in south Stockholm archipelago. Historic iron mine. Restaurants, shops, bars. ~22.3 nm.' },
+  { id:6, name:'Dalarö',        emoji:'6',   coords:[59.1330,18.4044], date:'Aug 14 (Fri) - Night 6',    marina:'Dalarö Gasthamn',                            notes:'Guest harbour with fuel, showers. Historic 17th-century customs house. ~11.2 nm. Empty septic tank here (no pump-out at base!).' },
+  { id:7, name:'Saltsjö Pir',   emoji:'B',   coords:[59.2965,18.2640], date:'Aug 15 (Sat) - Return 09:00', marina:'Saltsjöpir Marina, Fisksätra',             notes:'Return by 09:00. Refuel diesel at Saltsjöbaden sjömack BEFORE return (receipt required, else SEK 2500+VAT). Engine only through Baggensstäket (max 3 m draft). ~16.2 nm.' }
 ];
 
 var STOP_NAMES = ['Saltsjö Pir','Grinda','Finnhamn','Sandhamn','Malma Kvarn','Utö','Dalarö','Saltsjö Pir'];
 var DAY_COLORS = ['#1976D2','#388E3C','#E64A19','#7B1FA2','#C62828','#00838F','#F57C00'];
-var DAY_DATES  = ['Aug 8','Aug 9','Aug 10','Aug 11','Aug 12','Aug 13','Aug 14'];
+var DAY_DATES  = ['Aug 9','Aug 10','Aug 11','Aug 12','Aug 13','Aug 14','Aug 15'];
 
 // Realistic sailing routes following main archipelago fairways
 // Based on Sjöfartsverket (Swedish Maritime Administration) chart channels
@@ -1269,7 +1270,7 @@ function buildRoster(){
 buildRoster();
 
 // ── Tides (SMHI Open Data) ──────────────────────────────────────────────
-// Trip dates: Aug 8 – 15, 2026. Baltic astronomical tide ≈ 5–15 cm (negligible
+// Trip dates: Aug 9 – 15, 2026 (embark Aug 8 evening). Baltic astronomical tide ≈ 5–15 cm (negligible
 // for navigation). Sea-level swings from wind/pressure can reach ±50 cm.
 // SMHI param 6 = Havsvattenstånd. Stations: 2069 (Stockholm), 2507 (Landsort N).
 
@@ -1311,7 +1312,7 @@ function renderTideCard(card, name, data) {
 }
 
 function predictTripTide(date, stockholmRef, landsortRef) {
-  // Predictive estimate for Aug 8-15, 2026 based on:
+  // Predictive estimate for Aug 9-15, 2026 based on:
   // 1) climatology: August mean sea level near Stockholm is ~ -5 cm (RH2000), seasonal range ~ ±10 cm
   // 2) Astronomical tide (Baltic): negligible, ~ ±3 cm semi-diurnal
   // 3) Current observed offset (anomaly) carried forward into the future
