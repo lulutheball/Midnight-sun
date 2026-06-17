@@ -453,6 +453,52 @@
       border-radius:0 .4rem .4rem 0;font-size:.68rem;color:var(--muted);line-height:1.6;
     }
 
+    /* ── Shopping tab ── */
+    .shop-wrap{padding:.6rem .8rem}
+    .shop-cat{margin-bottom:1rem}
+    .shop-cat-header{
+      display:flex;align-items:center;gap:.4rem;
+      padding:.4rem 0;border-bottom:1px solid var(--border);
+      margin-bottom:.4rem;cursor:pointer;user-select:none;
+    }
+    .shop-cat-header h3{
+      margin:0;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--gold);font-weight:600;
+    }
+    .shop-cat-count{font-size:.6rem;color:var(--muted);margin-left:auto}
+    .shop-item{
+      display:flex;align-items:center;gap:.45rem;
+      padding:.32rem .1rem;font-size:.72rem;
+      border-bottom:1px solid rgba(255,255,255,.03);
+    }
+    .shop-item input[type="checkbox"]{
+      accent-color:var(--gold);width:15px;height:15px;cursor:pointer;flex-shrink:0;
+    }
+    .shop-item label{cursor:pointer;flex:1;line-height:1.3}
+    .shop-item.checked label{text-decoration:line-through;opacity:.45}
+    .shop-item .shop-qty{
+      font-size:.62rem;color:var(--muted);white-space:nowrap;min-width:50px;text-align:right;
+    }
+    .shop-add-row{display:flex;gap:.3rem;margin-top:.4rem}
+    .shop-add-row input{
+      flex:1;padding:.35rem .5rem;font-size:.68rem;
+      background:rgba(255,255,255,.06);border:1px solid var(--border);
+      border-radius:.3rem;color:var(--fg);font-family:inherit;
+    }
+    .shop-add-row button{
+      padding:.35rem .6rem;font-size:.68rem;
+      background:var(--gold);color:var(--navy);border:none;
+      border-radius:.3rem;cursor:pointer;font-weight:600;
+    }
+    .shop-actions{
+      display:flex;gap:.4rem;margin-top:.8rem;flex-wrap:wrap;
+    }
+    .shop-actions button{
+      padding:.3rem .6rem;font-size:.62rem;
+      border:1px solid var(--border);border-radius:.3rem;
+      background:rgba(255,255,255,.06);color:var(--fg);cursor:pointer;
+    }
+
     .ref-link{
       display:block;padding:.45rem .7rem;
       border:1px solid var(--border);border-radius:.4rem;
@@ -708,6 +754,7 @@
       <button class="tab" data-tab="places">Places &amp; Anchors</button>
       <button class="tab" data-tab="tides">Tides</button>
       <button class="tab" data-tab="roster">Roster</button>
+      <button class="tab" data-tab="shopping">Shopping</button>
     </div>
 
     <div class="tab-content">
@@ -857,6 +904,11 @@
             Sea-level for Aug 9&ndash;15 is a damped-anomaly forecast (3 months out). Wind only forecasts 7&nbsp;days ahead &mdash; the table will show today&rsquo;s 7-day window until closer to departure. Refresh on/after Aug&nbsp;1 for the trip window.
           </div>
         </div>
+      </div>
+
+      <!-- ── Shopping tab ── -->
+      <div class="tab-pane" id="tab-shopping">
+        <div class="shop-wrap" id="shopWrap"></div>
       </div>
 
       <!-- ── Roster tab ── -->
@@ -1234,6 +1286,176 @@ ANCHORS.forEach(function(anch){
   (function(a){ row.addEventListener('click', function(){ if(map){ map.flyTo(a.coords,13,{duration:1.2}); } }); })(anch);
   placesTabEl.appendChild(row);
 });
+
+// ── Shopping tab ──
+var SHOP_DEFAULTS = {
+  food: [
+    {name:'Pasta (penne, spaghetti)',qty:'2 kg'},
+    {name:'Rice',qty:'1 kg'},
+    {name:'Bread',qty:'4 loaves'},
+    {name:'Butter',qty:'500 g'},
+    {name:'Eggs',qty:'24'},
+    {name:'Cheese (hard + soft)',qty:'800 g'},
+    {name:'Milk',qty:'3 L'},
+    {name:'Yoghurt',qty:'1.5 kg'},
+    {name:'Chicken breast',qty:'2 kg'},
+    {name:'Minced meat',qty:'1.5 kg'},
+    {name:'Salmon fillets',qty:'1 kg'},
+    {name:'Bacon',qty:'400 g'},
+    {name:'Ham / cold cuts',qty:'500 g'},
+    {name:'Tomatoes',qty:'2 kg'},
+    {name:'Cucumber',qty:'3'},
+    {name:'Onions',qty:'1 kg'},
+    {name:'Garlic',qty:'2 heads'},
+    {name:'Potatoes',qty:'2 kg'},
+    {name:'Salad greens',qty:'3 bags'},
+    {name:'Avocados',qty:'6'},
+    {name:'Bananas',qty:'bunch'},
+    {name:'Apples',qty:'1 kg'},
+    {name:'Lemons / limes',qty:'6'},
+    {name:'Berries (fresh)',qty:'500 g'},
+    {name:'Canned tomatoes',qty:'4 cans'},
+    {name:'Olive oil',qty:'500 ml'},
+    {name:'Pasta sauce',qty:'2 jars'},
+    {name:'Soy sauce',qty:'1 bottle'},
+    {name:'Salt & pepper',qty:''},
+    {name:'Spices (paprika, cumin, herbs)',qty:''},
+    {name:'Tortillas / wraps',qty:'2 packs'},
+    {name:'Chips / crisps',qty:'3 bags'},
+    {name:'Nuts / trail mix',qty:'500 g'},
+    {name:'Muesli / cereal',qty:'1 kg'},
+    {name:'Jam',qty:'1 jar'},
+    {name:'Peanut butter',qty:'1 jar'},
+    {name:'Chocolate / cookies',qty:'assorted'}
+  ],
+  beverage: [
+    {name:'Water (still)',qty:'12 L'},
+    {name:'Sparkling water',qty:'6 L'},
+    {name:'Coffee (ground)',qty:'500 g'},
+    {name:'Tea bags',qty:'1 box'},
+    {name:'Orange juice',qty:'3 L'},
+    {name:'Soft drinks / cola',qty:'6 L'},
+    {name:'Beer',qty:'24 cans'},
+    {name:'White wine',qty:'4 bottles'},
+    {name:'Red wine',qty:'2 bottles'},
+    {name:'Rosé',qty:'2 bottles'},
+    {name:'Gin / vodka',qty:'1 bottle'},
+    {name:'Tonic water',qty:'4 bottles'},
+    {name:'Oat milk / alt milk',qty:'2 L'}
+  ],
+  misc: [
+    {name:'Sunscreen SPF 50',qty:'2 bottles'},
+    {name:'Insect repellent',qty:'1'},
+    {name:'Toilet paper (biodegradable!)',qty:'12 rolls'},
+    {name:'Paper towels',qty:'4 rolls'},
+    {name:'Dish soap',qty:'1 bottle'},
+    {name:'Sponges',qty:'3'},
+    {name:'Trash bags',qty:'1 roll'},
+    {name:'Ziplock bags (various)',qty:'2 boxes'},
+    {name:'Aluminium foil',qty:'1 roll'},
+    {name:'Kitchen towels / cloth',qty:'3'},
+    {name:'First aid kit',qty:'1'},
+    {name:'Seasickness tablets',qty:'1 pack'},
+    {name:'Lighter / matches',qty:'2'},
+    {name:'Headlamp / flashlight',qty:'2'},
+    {name:'Phone charger / power bank',qty:''},
+    {name:'Dry bags for electronics',qty:'2'},
+    {name:'Playing cards / games',qty:''},
+    {name:'Snorkel / swim gear',qty:''}
+  ]
+};
+
+var SHOP_CAT_LABELS = {food:'Food',beverage:'Beverage',misc:'Miscellaneous'};
+var SHOP_CAT_ICONS  = {food:'🥬',beverage:'🥤',misc:'🧰'};
+var shopState = null;
+
+function loadShopState(){
+  try {
+    var raw = localStorage.getItem('midnightSun.shopping.v1');
+    if (raw) { shopState = JSON.parse(raw); return; }
+  } catch(e){}
+  shopState = {};
+  Object.keys(SHOP_DEFAULTS).forEach(function(cat){
+    shopState[cat] = SHOP_DEFAULTS[cat].map(function(item){
+      return {name:item.name, qty:item.qty, checked:false};
+    });
+  });
+}
+function saveShopState(){
+  try { localStorage.setItem('midnightSun.shopping.v1', JSON.stringify(shopState)); } catch(e){}
+}
+function buildShopping(){
+  loadShopState();
+  var wrap = document.getElementById('shopWrap');
+  var html = '';
+  Object.keys(SHOP_CAT_LABELS).forEach(function(cat){
+    var items = shopState[cat] || [];
+    var checked = items.filter(function(i){return i.checked;}).length;
+    html += '<div class="shop-cat" data-cat="'+cat+'">';
+    html += '<div class="shop-cat-header"><span>'+SHOP_CAT_ICONS[cat]+'</span><h3>'+SHOP_CAT_LABELS[cat]+'</h3>';
+    html += '<span class="shop-cat-count">'+checked+'/'+items.length+'</span></div>';
+    html += '<div class="shop-cat-items">';
+    items.forEach(function(item,idx){
+      var cls = item.checked ? ' checked' : '';
+      html += '<div class="shop-item'+cls+'" data-cat="'+cat+'" data-idx="'+idx+'">';
+      html += '<input type="checkbox" id="shop-'+cat+'-'+idx+'"'+(item.checked?' checked':'')+' />';
+      html += '<label for="shop-'+cat+'-'+idx+'">'+item.name+'</label>';
+      if (item.qty) html += '<span class="shop-qty">'+item.qty+'</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+    html += '<div class="shop-add-row">';
+    html += '<input type="text" placeholder="Add item…" data-cat="'+cat+'" />';
+    html += '<button data-cat="'+cat+'">+</button>';
+    html += '</div></div>';
+  });
+  html += '<div class="shop-actions">';
+  html += '<button id="shopUncheckAll">Uncheck all</button>';
+  html += '<button id="shopReset">Reset to defaults</button>';
+  html += '</div>';
+  wrap.innerHTML = html;
+
+  wrap.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      var row = cb.closest('.shop-item');
+      var cat = row.dataset.cat, idx = +row.dataset.idx;
+      shopState[cat][idx].checked = cb.checked;
+      row.classList.toggle('checked', cb.checked);
+      saveShopState();
+      var header = row.closest('.shop-cat').querySelector('.shop-cat-count');
+      var items = shopState[cat];
+      header.textContent = items.filter(function(i){return i.checked;}).length+'/'+items.length;
+    });
+  });
+  wrap.querySelectorAll('.shop-add-row button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var cat = btn.dataset.cat;
+      var input = btn.previousElementSibling;
+      var val = input.value.trim();
+      if (!val) return;
+      shopState[cat].push({name:val, qty:'', checked:false});
+      saveShopState();
+      buildShopping();
+    });
+  });
+  wrap.querySelectorAll('.shop-add-row input').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') inp.nextElementSibling.click();
+    });
+  });
+  document.getElementById('shopUncheckAll').addEventListener('click', function(){
+    Object.keys(shopState).forEach(function(cat){
+      shopState[cat].forEach(function(i){ i.checked = false; });
+    });
+    saveShopState(); buildShopping();
+  });
+  document.getElementById('shopReset').addEventListener('click', function(){
+    if (!confirm('Reset shopping list to defaults? Custom items will be removed.')) return;
+    localStorage.removeItem('midnightSun.shopping.v1');
+    shopState = null; buildShopping();
+  });
+}
+buildShopping();
 
 // ── Roster tab ──
 var CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','BB'];
