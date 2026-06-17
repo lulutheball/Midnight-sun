@@ -1238,17 +1238,17 @@ ANCHORS.forEach(function(anch){
 // ── Roster tab ──
 var CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','BB'];
 var DUTIES = ['galley','route','sanitation'];
-// Pre-assigned roster: 3 galley, 2 route, 2 sanitation per day.
-// Each person: 3× galley, 2× route, 2× sanitation across 7 days. Roy = route Day 1.
-// Couples paired 3 days: Eric+Gwin (D1 G, D2 R, D3 S), AA+BB (D1 S, D2 G, D3 R).
+// Randomised roster: 3 galley, 2 route, 2 sanitation per day.
+// Each person: 3× galley, 2× route, 2× sanitation across 7 days.
+// All 21 possible crew pairings share at least one duty together.
 var rosterData = [
-  { galley:['Weiyi','Eric','Gwin'],   route:['Roy','Lulu'],    sanitation:['AA','BB'] },     // Day 1 — couples paired
-  { galley:['Roy','AA','BB'],          route:['Eric','Gwin'],   sanitation:['Weiyi','Lulu'] },// Day 2 — couples paired
-  { galley:['Lulu','Weiyi','Roy'],     route:['AA','BB'],       sanitation:['Eric','Gwin'] }, // Day 3 — couples paired
-  { galley:['Gwin','AA','Lulu'],       route:['Roy','Weiyi'],   sanitation:['Eric','BB'] },   // Day 4
-  { galley:['Eric','BB','Weiyi'],      route:['Gwin','Lulu'],   sanitation:['Roy','AA'] },    // Day 5
-  { galley:['Gwin','Eric','AA'],       route:['Weiyi','BB'],    sanitation:['Roy','Lulu'] },  // Day 6
-  { galley:['Roy','BB','Lulu'],        route:['Eric','AA'],     sanitation:['Weiyi','Gwin'] } // Day 7
+  { galley:['Roy','Gwin','Lulu'],    route:['Weiyi','BB'],    sanitation:['Eric','AA'] },    // Day 1
+  { galley:['Weiyi','Gwin','BB'],    route:['Roy','AA'],      sanitation:['Eric','Lulu'] },  // Day 2
+  { galley:['Weiyi','Lulu','AA'],    route:['Roy','Eric'],    sanitation:['Gwin','BB'] },    // Day 3
+  { galley:['Roy','AA','BB'],        route:['Weiyi','Eric'],  sanitation:['Gwin','Lulu'] },  // Day 4
+  { galley:['Roy','Weiyi','Eric'],   route:['Gwin','Lulu'],   sanitation:['AA','BB'] },      // Day 5
+  { galley:['Eric','Lulu','BB'],     route:['Gwin','AA'],     sanitation:['Roy','Weiyi'] },  // Day 6
+  { galley:['Gwin','Eric','AA'],     route:['Lulu','BB'],     sanitation:['Roy','Weiyi'] }   // Day 7
 ];
 
 function buildRoster(){
