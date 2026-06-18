@@ -499,6 +499,73 @@
       background:rgba(255,255,255,.06);color:var(--fg);cursor:pointer;
     }
 
+    /* ── Expenses tab ── */
+    .exp-wrap{padding:.6rem .8rem}
+    .exp-summary{
+      display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem;
+    }
+    .exp-summary-card{
+      flex:1;min-width:100px;padding:.5rem .6rem;
+      background:rgba(255,255,255,.05);border-radius:.4rem;
+      border:1px solid var(--border);text-align:center;
+    }
+    .exp-summary-card .exp-val{font-size:1rem;font-weight:700;color:var(--gold)}
+    .exp-summary-card .exp-lbl{font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+    .exp-form{
+      display:grid;grid-template-columns:1fr 1fr;gap:.35rem;
+      margin-bottom:.8rem;padding:.6rem;
+      background:rgba(255,255,255,.04);border-radius:.4rem;border:1px solid var(--border);
+    }
+    .exp-form .exp-full{grid-column:1/-1}
+    .exp-form input,.exp-form select{
+      padding:.38rem .5rem;font-size:.7rem;
+      background:rgba(255,255,255,.07);border:1px solid var(--border);
+      border-radius:.3rem;color:var(--fg);font-family:inherit;width:100%;box-sizing:border-box;
+    }
+    .exp-form select{appearance:auto}
+    .exp-form button{
+      padding:.4rem .7rem;font-size:.7rem;font-weight:600;
+      background:var(--gold);color:var(--navy);border:none;
+      border-radius:.3rem;cursor:pointer;
+    }
+    .exp-list{margin-bottom:.6rem}
+    .exp-row{
+      display:grid;grid-template-columns:auto 1fr auto auto;gap:.4rem;
+      align-items:center;padding:.4rem .3rem;
+      border-bottom:1px solid rgba(255,255,255,.05);font-size:.72rem;
+    }
+    .exp-row:hover{background:rgba(255,255,255,.04)}
+    .exp-row .exp-date{font-size:.6rem;color:var(--muted);white-space:nowrap}
+    .exp-row .exp-desc{line-height:1.3}
+    .exp-row .exp-desc small{display:block;font-size:.6rem;color:var(--muted)}
+    .exp-row .exp-amt{font-weight:600;white-space:nowrap;text-align:right}
+    .exp-row .exp-del{
+      background:none;border:none;color:var(--muted);cursor:pointer;
+      font-size:.8rem;padding:0 .3rem;opacity:.5;
+    }
+    .exp-row .exp-del:hover{opacity:1;color:#e57373}
+    .exp-balances{
+      margin-top:.6rem;padding:.5rem .6rem;
+      background:rgba(255,255,255,.04);border-radius:.4rem;border:1px solid var(--border);
+    }
+    .exp-balances h4{
+      margin:0 0 .4rem;font-size:.62rem;text-transform:uppercase;
+      letter-spacing:.1em;color:var(--muted);font-weight:normal;
+    }
+    .exp-bal-row{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:.25rem 0;font-size:.7rem;border-bottom:1px solid rgba(255,255,255,.03);
+    }
+    .exp-bal-row:last-child{border-bottom:none}
+    .exp-bal-row .exp-bal-name{flex:1}
+    .exp-bal-row .exp-bal-paid{color:var(--muted);font-size:.62rem;min-width:65px;text-align:right}
+    .exp-bal-row .exp-bal-owes{min-width:75px;text-align:right;font-weight:600}
+    .exp-bal-pos{color:#81c784}
+    .exp-bal-neg{color:#e57373}
+    .exp-sync{font-size:.6rem;color:var(--muted);text-align:center;margin-top:.5rem}
+    .exp-sync.connected{color:#81c784}
+    .exp-sync.offline{color:#e57373}
+
     .ref-link{
       display:block;padding:.45rem .7rem;
       border:1px solid var(--border);border-radius:.4rem;
@@ -755,6 +822,7 @@
       <button class="tab" data-tab="tides">Tides</button>
       <button class="tab" data-tab="roster">Roster</button>
       <button class="tab" data-tab="shopping">Shopping</button>
+      <button class="tab" data-tab="expenses">Expenses</button>
     </div>
 
     <div class="tab-content">
@@ -906,6 +974,31 @@
         </div>
       </div>
 
+      <!-- ── Expenses tab ── -->
+      <div class="tab-pane" id="tab-expenses">
+        <div class="exp-wrap">
+          <div class="exp-summary" id="expSummary"></div>
+          <div class="exp-form">
+            <input type="text" id="expDesc" placeholder="What for?" class="exp-full" />
+            <input type="number" id="expAmt" placeholder="Amount (€)" step="0.01" min="0" />
+            <select id="expPayer"></select>
+            <select id="expCat">
+              <option value="food">Food</option>
+              <option value="transport">Transport</option>
+              <option value="marina">Marina</option>
+              <option value="fuel">Fuel</option>
+              <option value="activity">Activity</option>
+              <option value="drinks">Drinks</option>
+              <option value="other">Other</option>
+            </select>
+            <button id="expAdd" class="exp-full">Add Expense</button>
+          </div>
+          <div class="exp-list" id="expList"></div>
+          <div class="exp-balances" id="expBalances"></div>
+          <div class="exp-sync" id="expSync">Connecting...</div>
+        </div>
+      </div>
+
       <!-- ── Shopping tab ── -->
       <div class="tab-pane" id="tab-shopping">
         <div class="shop-wrap" id="shopWrap"></div>
@@ -976,6 +1069,8 @@
   <p>© 2026 Midnight Sun crew · Data: OpenStreetMap, OpenSeaMap, ESRI, SMHI, Open-Meteo.</p>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // ── Navigation math ──────────────────────────────────────────────
@@ -1286,6 +1381,179 @@ ANCHORS.forEach(function(anch){
   (function(a){ row.addEventListener('click', function(){ if(map){ map.flyTo(a.coords,13,{duration:1.2}); } }); })(anch);
   placesTabEl.appendChild(row);
 });
+
+// ── Expenses tab (Firebase Realtime Database) ──
+var EXPENSE_CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','BB'];
+var EXP_CAT_ICONS = {food:'🍕',transport:'🚕',marina:'⚓',fuel:'⛽',activity:'🏄',drinks:'🍺',other:'📦'};
+var expDb = null;
+var expRef = null;
+var expenses = [];
+
+// Firebase config — replace with your project's config
+var FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyDRqGfL65xu_ldxCsV_PhJvlInOTPZ1NfQ',
+  authDomain: 'midnight-sun-cac3f.firebaseapp.com',
+  databaseURL: 'https://midnight-sun-cac3f-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'midnight-sun-cac3f',
+  storageBucket: 'midnight-sun-cac3f.firebasestorage.app',
+  messagingSenderId: '499167392287',
+  appId: '1:499167392287:web:404bd044ac45e2dbfe1b2a'
+};
+
+function expInitFirebase() {
+  var sync = document.getElementById('expSync');
+  if (!FIREBASE_CONFIG.databaseURL) {
+    sync.textContent = 'Firebase not configured — using local storage only';
+    sync.className = 'exp-sync offline';
+    expLoadLocal();
+    expRender();
+    return;
+  }
+  try {
+    var app = firebase.initializeApp(FIREBASE_CONFIG, 'expenses');
+    expDb = firebase.database(app);
+    expRef = expDb.ref('expenses');
+    expRef.on('value', function(snap) {
+      var data = snap.val();
+      expenses = [];
+      if (data) {
+        Object.keys(data).forEach(function(k) {
+          var e = data[k];
+          e.id = k;
+          expenses.push(e);
+        });
+      }
+      expenses.sort(function(a, b) { return (b.ts || 0) - (a.ts || 0); });
+      expRender();
+      sync.textContent = 'Synced with crew · ' + new Date().toLocaleTimeString();
+      sync.className = 'exp-sync connected';
+    }, function() {
+      sync.textContent = 'Offline — changes saved locally';
+      sync.className = 'exp-sync offline';
+      expLoadLocal();
+      expRender();
+    });
+  } catch (e) {
+    sync.textContent = 'Firebase error — using local storage';
+    sync.className = 'exp-sync offline';
+    expLoadLocal();
+    expRender();
+  }
+}
+
+function expLoadLocal() {
+  try {
+    var raw = localStorage.getItem('midnightSun.expenses.v1');
+    if (raw) expenses = JSON.parse(raw);
+  } catch (e) { expenses = []; }
+}
+function expSaveLocal() {
+  try { localStorage.setItem('midnightSun.expenses.v1', JSON.stringify(expenses)); } catch (e) {}
+}
+
+function expAddExpense() {
+  var desc = document.getElementById('expDesc').value.trim();
+  var amt = parseFloat(document.getElementById('expAmt').value);
+  var payer = document.getElementById('expPayer').value;
+  var cat = document.getElementById('expCat').value;
+  if (!desc || !amt || amt <= 0) return;
+  var entry = {
+    desc: desc, amt: amt, payer: payer, cat: cat,
+    ts: Date.now(),
+    date: new Date().toISOString().slice(0, 10)
+  };
+  if (expRef) {
+    expRef.push(entry);
+  } else {
+    entry.id = 'local_' + Date.now();
+    expenses.unshift(entry);
+    expSaveLocal();
+    expRender();
+  }
+  document.getElementById('expDesc').value = '';
+  document.getElementById('expAmt').value = '';
+}
+
+function expDeleteExpense(id) {
+  if (!confirm('Delete this expense?')) return;
+  if (expRef && id.indexOf('local_') !== 0) {
+    expRef.child(id).remove();
+  } else {
+    expenses = expenses.filter(function(e) { return e.id !== id; });
+    expSaveLocal();
+    expRender();
+  }
+}
+
+function expRender() {
+  var perPerson = EXPENSE_CREW.length || 1;
+  var total = 0;
+  var paid = {};
+  EXPENSE_CREW.forEach(function(c) { paid[c] = 0; });
+  expenses.forEach(function(e) {
+    total += e.amt;
+    if (paid[e.payer] !== undefined) paid[e.payer] += e.amt;
+  });
+  var share = total / perPerson;
+
+  // Summary
+  var sumEl = document.getElementById('expSummary');
+  sumEl.innerHTML =
+    '<div class="exp-summary-card"><div class="exp-val">€' + total.toFixed(2) + '</div><div class="exp-lbl">Total</div></div>' +
+    '<div class="exp-summary-card"><div class="exp-val">' + expenses.length + '</div><div class="exp-lbl">Items</div></div>' +
+    '<div class="exp-summary-card"><div class="exp-val">€' + share.toFixed(2) + '</div><div class="exp-lbl">Per person</div></div>';
+
+  // Expense list
+  var listEl = document.getElementById('expList');
+  var html = '';
+  expenses.forEach(function(e) {
+    var icon = EXP_CAT_ICONS[e.cat] || '📦';
+    html += '<div class="exp-row">' +
+      '<span class="exp-date">' + (e.date || '') + '</span>' +
+      '<span class="exp-desc">' + icon + ' ' + e.desc + '<small>Paid by ' + e.payer + '</small></span>' +
+      '<span class="exp-amt">€' + e.amt.toFixed(2) + '</span>' +
+      '<button class="exp-del" data-id="' + e.id + '" title="Delete">✕</button>' +
+      '</div>';
+  });
+  if (!expenses.length) html = '<div style="text-align:center;color:var(--muted);padding:1.5rem;font-size:.72rem">No expenses yet</div>';
+  listEl.innerHTML = html;
+
+  listEl.querySelectorAll('.exp-del').forEach(function(btn) {
+    btn.addEventListener('click', function() { expDeleteExpense(btn.dataset.id); });
+  });
+
+  // Balance settlement
+  var balEl = document.getElementById('expBalances');
+  var rows = '';
+  EXPENSE_CREW.forEach(function(c) {
+    var balance = paid[c] - share;
+    var cls = balance >= 0 ? 'exp-bal-pos' : 'exp-bal-neg';
+    var sign = balance >= 0 ? '+' : '';
+    rows += '<div class="exp-bal-row">' +
+      '<span class="exp-bal-name">' + c + '</span>' +
+      '<span class="exp-bal-paid">paid €' + paid[c].toFixed(2) + '</span>' +
+      '<span class="exp-bal-owes ' + cls + '">' + sign + '€' + balance.toFixed(2) + '</span>' +
+      '</div>';
+  });
+  balEl.innerHTML = '<h4>Balance (+ = owed back, − = owes)</h4>' + rows;
+}
+
+// Populate payer dropdown
+(function() {
+  var sel = document.getElementById('expPayer');
+  EXPENSE_CREW.forEach(function(c) {
+    var opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
+})();
+
+document.getElementById('expAdd').addEventListener('click', expAddExpense);
+document.getElementById('expDesc').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') expAddExpense();
+});
+
+expInitFirebase();
 
 // ── Shopping tab ──
 var SHOP_DEFAULTS = {
