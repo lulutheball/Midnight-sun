@@ -565,6 +565,17 @@
     .exp-sync{font-size:.6rem;color:var(--muted);text-align:center;margin-top:.5rem}
     .exp-sync.connected{color:#81c784}
     .exp-sync.offline{color:#e57373}
+    .exp-split-row{display:flex;flex-direction:column;gap:.3rem}
+    .exp-split-label{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+    .exp-split-checks{display:flex;flex-wrap:wrap;gap:.25rem}
+    .exp-split-checks label{
+      display:flex;align-items:center;gap:.25rem;
+      padding:.2rem .45rem;border-radius:99px;font-size:.65rem;
+      border:1px solid var(--border);cursor:pointer;user-select:none;
+      background:rgba(255,255,255,.04);
+    }
+    .exp-split-checks label.checked{border-color:var(--gold);background:rgba(212,175,55,.15);color:var(--gold)}
+    .exp-split-checks input[type="checkbox"]{display:none}
 
     .ref-link{
       display:block;padding:.45rem .7rem;
@@ -991,6 +1002,10 @@
               <option value="drinks">Drinks</option>
               <option value="other">Other</option>
             </select>
+            <div class="exp-full exp-split-row">
+              <span class="exp-split-label">Split among:</span>
+              <div class="exp-split-checks" id="expSplitChecks"></div>
+            </div>
             <button id="expAdd" class="exp-full">Add Expense</button>
           </div>
           <div class="exp-list" id="expList"></div>
@@ -1451,14 +1466,24 @@ function expSaveLocal() {
   try { localStorage.setItem('midnightSun.expenses.v1', JSON.stringify(expenses)); } catch (e) {}
 }
 
+function expGetSplitMembers() {
+  var checks = document.querySelectorAll('#expSplitChecks input[type="checkbox"]');
+  var members = [];
+  checks.forEach(function(cb) { if (cb.checked) members.push(cb.value); });
+  return members;
+}
+
 function expAddExpense() {
   var desc = document.getElementById('expDesc').value.trim();
   var amt = parseFloat(document.getElementById('expAmt').value);
   var payer = document.getElementById('expPayer').value;
   var cat = document.getElementById('expCat').value;
+  var split = expGetSplitMembers();
   if (!desc || !amt || amt <= 0) return;
+  if (split.length === 0) split = EXPENSE_CREW.slice();
   var entry = {
     desc: desc, amt: amt, payer: payer, cat: cat,
+    split: split,
     ts: Date.now(),
     date: new Date().toISOString().slice(0, 10)
   };
@@ -1472,6 +1497,9 @@ function expAddExpense() {
   }
   document.getElementById('expDesc').value = '';
   document.getElementById('expAmt').value = '';
+  document.querySelectorAll('#expSplitChecks input[type="checkbox"]').forEach(function(cb) {
+    cb.checked = true; cb.parentElement.className = 'checked';
+  });
 }
 
 function expDeleteExpense(id) {
@@ -1486,31 +1514,36 @@ function expDeleteExpense(id) {
 }
 
 function expRender() {
-  var perPerson = EXPENSE_CREW.length || 1;
   var total = 0;
   var paid = {};
-  EXPENSE_CREW.forEach(function(c) { paid[c] = 0; });
+  var owes = {};
+  EXPENSE_CREW.forEach(function(c) { paid[c] = 0; owes[c] = 0; });
   expenses.forEach(function(e) {
     total += e.amt;
     if (paid[e.payer] !== undefined) paid[e.payer] += e.amt;
+    var split = e.split && e.split.length ? e.split : EXPENSE_CREW;
+    var perHead = e.amt / split.length;
+    split.forEach(function(c) { if (owes[c] !== undefined) owes[c] += perHead; });
   });
-  var share = total / perPerson;
 
   // Summary
+  var avgShare = EXPENSE_CREW.length ? total / EXPENSE_CREW.length : 0;
   var sumEl = document.getElementById('expSummary');
   sumEl.innerHTML =
     '<div class="exp-summary-card"><div class="exp-val">€' + total.toFixed(2) + '</div><div class="exp-lbl">Total</div></div>' +
     '<div class="exp-summary-card"><div class="exp-val">' + expenses.length + '</div><div class="exp-lbl">Items</div></div>' +
-    '<div class="exp-summary-card"><div class="exp-val">€' + share.toFixed(2) + '</div><div class="exp-lbl">Per person</div></div>';
+    '<div class="exp-summary-card"><div class="exp-val">€' + avgShare.toFixed(2) + '</div><div class="exp-lbl">Avg / person</div></div>';
 
   // Expense list
   var listEl = document.getElementById('expList');
   var html = '';
   expenses.forEach(function(e) {
     var icon = EXP_CAT_ICONS[e.cat] || '📦';
+    var split = e.split && e.split.length ? e.split : EXPENSE_CREW;
+    var splitNote = split.length < EXPENSE_CREW.length ? ' · split ' + split.length + '/' + EXPENSE_CREW.length : '';
     html += '<div class="exp-row">' +
       '<span class="exp-date">' + (e.date || '') + '</span>' +
-      '<span class="exp-desc">' + icon + ' ' + e.desc + '<small>Paid by ' + e.payer + '</small></span>' +
+      '<span class="exp-desc">' + icon + ' ' + e.desc + '<small>Paid by ' + e.payer + splitNote + '</small></span>' +
       '<span class="exp-amt">€' + e.amt.toFixed(2) + '</span>' +
       '<button class="exp-del" data-id="' + e.id + '" title="Delete">✕</button>' +
       '</div>';
@@ -1526,7 +1559,7 @@ function expRender() {
   var balEl = document.getElementById('expBalances');
   var rows = '';
   EXPENSE_CREW.forEach(function(c) {
-    var balance = paid[c] - share;
+    var balance = paid[c] - owes[c];
     var cls = balance >= 0 ? 'exp-bal-pos' : 'exp-bal-neg';
     var sign = balance >= 0 ? '+' : '';
     rows += '<div class="exp-bal-row">' +
@@ -1538,13 +1571,30 @@ function expRender() {
   balEl.innerHTML = '<h4>Balance (+ = owed back, − = owes)</h4>' + rows;
 }
 
-// Populate payer dropdown
+// Populate payer dropdown and split checkboxes
 (function() {
   var sel = document.getElementById('expPayer');
+  var checks = document.getElementById('expSplitChecks');
   EXPENSE_CREW.forEach(function(c) {
     var opt = document.createElement('option');
     opt.value = c; opt.textContent = c;
     sel.appendChild(opt);
+
+    var lbl = document.createElement('label');
+    lbl.className = 'checked';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.value = c; cb.checked = true;
+    lbl.appendChild(cb);
+    lbl.appendChild(document.createTextNode(c));
+    lbl.addEventListener('click', function(ev) {
+      if (ev.target === cb) return;
+      cb.checked = !cb.checked;
+      lbl.className = cb.checked ? 'checked' : '';
+    });
+    cb.addEventListener('change', function() {
+      lbl.className = cb.checked ? 'checked' : '';
+    });
+    checks.appendChild(lbl);
   });
 })();
 
