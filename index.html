@@ -1559,7 +1559,7 @@ function expRender() {
   expenses.forEach(function(e) {
     var icon = EXP_CAT_ICONS[e.cat] || '📦';
     var split = e.split && e.split.length ? e.split : EXPENSE_CREW;
-    var splitNote = split.length < EXPENSE_CREW.length ? ' · split ' + split.length + '/' + EXPENSE_CREW.length : '';
+    var splitNote = split.length >= EXPENSE_CREW.length ? ' · all' : ' · ' + split.join(', ');
     html += '<div class="exp-row">' +
       '<span class="exp-date">' + (e.date || '') + '</span>' +
       '<span class="exp-desc">' + icon + ' ' + e.desc + '<small>Paid by ' + e.payer + splitNote + '</small></span>' +
