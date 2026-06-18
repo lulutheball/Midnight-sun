@@ -475,6 +475,11 @@
     .travel-option strong{font-size:.72rem;color:var(--text)}
     .travel-option p{font-size:.65rem;color:var(--muted);margin:.15rem 0 0;line-height:1.4}
     .travel-option em{color:var(--gold);font-style:normal;font-weight:600}
+    .travel-tip{
+      font-size:.68rem;color:var(--text);line-height:1.5;
+      background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);
+      border-radius:.5rem;padding:.5rem .7rem;margin-bottom:.8rem;
+    }
 
     /* ── Shopping tab ── */
     .shop-wrap{padding:.6rem .8rem}
@@ -1068,20 +1073,24 @@
         <div class="travel-wrap">
           <h3>Travel to Saltsjö Pir Marina</h3>
 
+          <div class="travel-tip">⏱ Check-in is <strong>17:00 on Sat 8 Aug</strong> — aim to arrive at Central Station by <strong>15:30</strong> to catch a 15:40–16:00 bus to Fisksätra.</div>
+
           <div class="travel-section">
             <h4>✈️ From Arlanda International Airport</h4>
             <div class="travel-option">
               <span class="travel-icon">🚄</span>
               <div>
                 <strong>Arlanda Express</strong>
-                <p>Train to Stockholm Central Station — <em>18 minutes</em></p>
+                <p>Train direct to Stockholm Central Station — <em>18 minutes</em></p>
+                <p>Runs daily <em>05:05–00:35</em> · every <em>15 min</em> peak / <em>30 min</em> off-peak · <a href="https://www.arlandaexpress.com" target="_blank" style="color:var(--gold)">arlandaexpress.com</a></p>
               </div>
             </div>
             <div class="travel-option">
               <span class="travel-icon">🚌</span>
               <div>
-                <strong>Airport Bus</strong>
-                <p>Bus to Stockholm Central Station — <em>~40 minutes</em></p>
+                <strong>Flygbussarna Airport Bus</strong>
+                <p>Bus to Stockholm City Terminal (adjacent to Central Station) — <em>~45 minutes</em></p>
+                <p>Runs daily <em>04:15–01:15</em> · every <em>10–15 min</em> peak / <em>30 min</em> late night · <a href="https://www.flygbussarna.se" target="_blank" style="color:var(--gold)">flygbussarna.se</a></p>
               </div>
             </div>
           </div>
@@ -1091,8 +1100,9 @@
             <div class="travel-option">
               <span class="travel-icon">🚌</span>
               <div>
-                <strong>Bus 497 to Fisksätra</strong>
-                <p>Get off at <strong>Ostronvägen</strong>, then walk 5 minutes to marina</p>
+                <strong>Bus 497 → Fisksätra</strong>
+                <p>Alight at <strong>Ostronvägen</strong>, then walk ~5 minutes to marina</p>
+                <p>Runs daily approx <em>06:00–23:00</em> · every <em>30 min</em> · journey ~45 min · check exact times at <a href="https://sl.se" target="_blank" style="color:var(--gold)">sl.se</a></p>
               </div>
             </div>
           </div>
@@ -1749,12 +1759,10 @@ var SHOP_DEFAULTS = {
     {name:'Sparkling water',qty:'6 L'},
     {name:'Coffee (ground)',qty:'500 g'},
     {name:'Tea bags',qty:'1 box'},
-    {name:'Orange juice',qty:'3 L'},
     {name:'Soft drinks / cola',qty:'6 L'},
     {name:'Beer',qty:'24 cans'},
     {name:'White wine',qty:'4 bottles'},
     {name:'Red wine',qty:'2 bottles'},
-    {name:'Rosé',qty:'2 bottles'},
     {name:'Gin / vodka',qty:'1 bottle'},
     {name:'Tonic water',qty:'4 bottles'},
     {name:'Oat milk / alt milk',qty:'2 L'}
@@ -1773,11 +1781,8 @@ var SHOP_DEFAULTS = {
     {name:'First aid kit',qty:'1'},
     {name:'Seasickness tablets',qty:'1 pack'},
     {name:'Lighter / matches',qty:'2'},
-    {name:'Headlamp / flashlight',qty:'2'},
-    {name:'Phone charger / power bank',qty:''},
     {name:'Dry bags for electronics',qty:'2'},
     {name:'Playing cards / games',qty:''},
-    {name:'Snorkel / swim gear',qty:''},
     {name:'Hand sanitiser',qty:'2'}
   ]
 };
