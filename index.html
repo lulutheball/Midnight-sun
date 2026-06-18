@@ -786,7 +786,7 @@
     <table border="1" cellpadding="6" cellspacing="0">
       <thead><tr><th>Day</th><th>Date</th><th>Leg</th><th>Distance</th><th>Bearing</th></tr></thead>
       <tbody>
-        <tr><td>0</td><td>Aug 8 (Sat)</td><td>Saltsjö Pir → Baggensfjärden (Baggensstäket)</td><td>~5 nm</td><td>350° T</td></tr>
+        <tr><td>0</td><td>Aug 8 (Sat)</td><td>Saltsjö Pir → Baggensfjärden (Baggensstäket) · <em>Motor only</em></td><td>~5 nm</td><td>350° T</td></tr>
         <tr><td>1</td><td>Aug 9 (Sun)</td><td>Baggensfjärden → Grinda</td><td>~15 nm</td><td>051° T</td></tr>
         <tr><td>2</td><td>Aug 10 (Mon)</td><td>Grinda → Finnhamn</td><td>11.2 nm</td><td>064° T</td></tr>
         <tr><td>3</td><td>Aug 11 (Tue)</td><td>Finnhamn → Sandhamn</td><td>14.0 nm</td><td>166° T</td></tr>
@@ -841,7 +841,7 @@
       full route editor with save / export / clear / reset.
     </p>
     <ul>
-      <li>Day 0: Saltsjö Pir → Baggensfjärden (~5 nm) evening sail through Baggensstäket</li>
+      <li>Day 0: Saltsjö Pir → Baggensfjärden (~5 nm) motor only through Baggensstäket</li>
       <li>Day 1: Baggensfjärden → Grinda (~15 nm)</li>
       <li>Day 2: Grinda → Finnhamn (~11.2 nm)</li>
       <li>Day 3: Finnhamn → Sandhamn (~14 nm)</li>
@@ -2158,14 +2158,14 @@ var DUTIES = ['galley','route','sanitation'];
 // Each person: 3× galley, 2× route, 2× sanitation across 7 days.
 // All 21 possible crew pairings share at least one duty together.
 var rosterData = [
-  { galley:['All hands'],             route:['All hands'],     sanitation:['All hands'] },    // Day 0 (evening only)
-  { galley:['Roy','Gwin','Lulu'],    route:['Weiyi','Ting'],    sanitation:['Eric','AA'] },    // Day 1
-  { galley:['Weiyi','Gwin','Ting'],    route:['Roy','AA'],      sanitation:['Eric','Lulu'] },  // Day 2
-  { galley:['Weiyi','Lulu','AA'],    route:['Roy','Eric'],    sanitation:['Gwin','Ting'] },    // Day 3
-  { galley:['Roy','AA','Ting'],        route:['Weiyi','Eric'],  sanitation:['Gwin','Lulu'] },  // Day 4
-  { galley:['Roy','Weiyi','Eric'],   route:['Gwin','Lulu'],   sanitation:['AA','Ting'] },      // Day 5
-  { galley:['Eric','Lulu','Ting'],     route:['Gwin','AA'],     sanitation:['Roy','Weiyi'] },  // Day 6
-  { galley:['Gwin','Eric','AA'],     route:['Lulu','Ting'],     sanitation:['Roy','Weiyi'] }   // Day 7
+  { galley:['All hands'],               route:['All hands'],   sanitation:['All hands'] },      // Day 0 (evening only)
+  { galley:['Eric','AA','Ting'],         route:['Roy','Weiyi'], sanitation:['Lulu','Gwin'] },    // Day 1
+  { galley:['Roy','Eric','AA'],          route:['Weiyi','Gwin'],sanitation:['Ting','Lulu'] },    // Day 2
+  { galley:['Weiyi','Lulu','Ting'],      route:['Gwin','Eric'], sanitation:['Roy','AA'] },       // Day 3
+  { galley:['Weiyi','AA','Ting'],        route:['Eric','Lulu'], sanitation:['Gwin','Roy'] },     // Day 4
+  { galley:['Roy','Weiyi','Gwin'],       route:['Lulu','AA'],   sanitation:['Eric','Ting'] },    // Day 5
+  { galley:['Roy','Gwin','Lulu'],        route:['AA','Ting'],   sanitation:['Weiyi','Eric'] },   // Day 6
+  { galley:['Gwin','Eric','Lulu'],       route:['Ting','Roy'],  sanitation:['AA','Weiyi'] }      // Day 7
 ];
 
 function buildRoster(){
