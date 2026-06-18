@@ -1696,7 +1696,8 @@ var SHOP_DEFAULTS = {
     {name:'Phone charger / power bank',qty:''},
     {name:'Dry bags for electronics',qty:'2'},
     {name:'Playing cards / games',qty:''},
-    {name:'Snorkel / swim gear',qty:''}
+    {name:'Snorkel / swim gear',qty:''},
+    {name:'Hand sanitiser',qty:'2'}
   ]
 };
 
@@ -1816,33 +1817,20 @@ var PACK_DEFAULTS = {
     {name:'Power bank',qty:'1'},
     {name:'Water bottle',qty:'1'},
     {name:'Day backpack',qty:'1'},
-    {name:'Snorkel & mask',qty:''},
-    {name:'Binoculars',qty:''},
-    {name:'Pocket knife / multi-tool',qty:'1'},
-    {name:'Earplugs (shared cabin)',qty:'1 pair'},
     {name:'Sleep mask',qty:'1'}
   ],
   toiletries: [
     {name:'Sunscreen SPF 50+',qty:'1'},
-    {name:'After-sun / aloe',qty:'1'},
     {name:'Insect repellent',qty:'1'},
     {name:'Toothbrush & toothpaste',qty:''},
-    {name:'Deodorant',qty:'1'},
     {name:'Lip balm (SPF)',qty:'1'},
     {name:'Medications / prescriptions',qty:''},
     {name:'Seasickness tablets',qty:''},
     {name:'Hand sanitiser',qty:'1'}
-  ],
-  documents: [
-    {name:'Passport / ID',qty:''},
-    {name:'Travel insurance docs',qty:''},
-    {name:'Boarding info / tickets',qty:''},
-    {name:'Cash (SEK) & card',qty:''},
-    {name:'Emergency contacts list',qty:''}
   ]
 };
-var PACK_CAT_LABELS = {clothing:'Clothing',gear:'Gear & Tech',toiletries:'Toiletries & Health',documents:'Documents & Money'};
-var PACK_CAT_ICONS  = {clothing:'👕',gear:'🔦',toiletries:'🧴',documents:'📋'};
+var PACK_CAT_LABELS = {clothing:'Clothing',gear:'Gear & Tech',toiletries:'Toiletries & Health'};
+var PACK_CAT_ICONS  = {clothing:'👕',gear:'🔦',toiletries:'🧴'};
 var packState = null;
 
 function loadPackState(){
