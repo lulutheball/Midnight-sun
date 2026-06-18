@@ -460,6 +460,22 @@
       border-radius:0 .4rem .4rem 0;font-size:.68rem;color:var(--muted);line-height:1.6;
     }
 
+    /* ── Travel tab ── */
+    .travel-wrap{padding:.6rem .8rem}
+    .travel-wrap h3{font-size:.85rem;color:var(--gold);margin:0 0 .8rem;letter-spacing:.05em}
+    .travel-section{margin-bottom:1rem}
+    .travel-section h4{font-size:.7rem;color:var(--text);margin:0 0 .5rem;letter-spacing:.05em}
+    .travel-option{
+      display:flex;gap:.6rem;align-items:flex-start;
+      padding:.5rem .6rem;margin-bottom:.4rem;
+      border:1px solid var(--border);border-radius:.5rem;
+      background:rgba(255,255,255,.03);
+    }
+    .travel-icon{font-size:1.1rem;flex-shrink:0;margin-top:.1rem}
+    .travel-option strong{font-size:.72rem;color:var(--text)}
+    .travel-option p{font-size:.65rem;color:var(--muted);margin:.15rem 0 0;line-height:1.4}
+    .travel-option em{color:var(--gold);font-style:normal;font-weight:600}
+
     /* ── Shopping tab ── */
     .shop-wrap{padding:.6rem .8rem}
     .shop-cat{margin-bottom:1rem}
@@ -841,6 +857,7 @@
         <button class="tab" data-tab="tides">Tides</button>
       </div>
       <div class="tab-group" data-label="Preparation">
+        <button class="tab" data-tab="travel">Travel</button>
         <button class="tab" data-tab="shopping">Shopping</button>
         <button class="tab" data-tab="packing">Packing</button>
       </div>
@@ -1030,6 +1047,53 @@
       </div>
 
       <!-- ── Shopping tab ── -->
+      <!-- ── Travel tab ── -->
+      <div class="tab-pane" id="tab-travel">
+        <div class="travel-wrap">
+          <h3>Travel to Saltsjö Pir Marina</h3>
+
+          <div class="travel-section">
+            <h4>✈️ From Arlanda International Airport</h4>
+            <div class="travel-option">
+              <span class="travel-icon">🚄</span>
+              <div>
+                <strong>Arlanda Express</strong>
+                <p>Train to Stockholm Central Station — <em>18 minutes</em></p>
+              </div>
+            </div>
+            <div class="travel-option">
+              <span class="travel-icon">🚌</span>
+              <div>
+                <strong>Airport Bus</strong>
+                <p>Bus to Stockholm Central Station — <em>~40 minutes</em></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="travel-section">
+            <h4>🚉 From Stockholm Central Station</h4>
+            <div class="travel-option">
+              <span class="travel-icon">🚌</span>
+              <div>
+                <strong>Bus 497 to Fisksätra</strong>
+                <p>Get off at <strong>Ostronvägen</strong>, then walk 5 minutes to marina</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="travel-section">
+            <h4>🚗 By Car from South</h4>
+            <div class="travel-option">
+              <span class="travel-icon">🛣️</span>
+              <div>
+                <strong>Via E6/E20 → Södra Länken → Saltsjöbadsleden</strong>
+                <p>Drive E6/E20 north to trafikplats Nyboda → Södra Länken (75) to trafikplats Skvaltan → Saltsjöbadsleden until Fisksätra. Follow signs to Saltsjö Pir Marina.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="tab-pane" id="tab-shopping">
         <div class="shop-wrap" id="shopWrap"></div>
       </div>
