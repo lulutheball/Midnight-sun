@@ -814,6 +814,7 @@
       </div>
       <div class="trip-dates">
         <span class="date-chip">⛵ Aug 8 – 15, 2026</span>
+        <span class="date-chip">🔑 Sat 8 Aug 17:00 → Sat 15 Aug 09:00</span>
         <span class="date-chip">☀️ 18 hrs daylight</span>
       </div>
     </header>
@@ -1398,7 +1399,7 @@ ANCHORS.forEach(function(anch){
 });
 
 // ── Expenses tab (Firebase Realtime Database) ──
-var EXPENSE_CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','BB'];
+var EXPENSE_CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','Ting'];
 var EXP_CAT_ICONS = {food:'🍕',transport:'🚕',marina:'⚓',fuel:'⛽',activity:'🏄',drinks:'🍺',other:'📦'};
 var expDb = null;
 var expRef = null;
@@ -1776,19 +1777,19 @@ function buildShopping(){
 buildShopping();
 
 // ── Roster tab ──
-var CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','BB'];
+var CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','Ting'];
 var DUTIES = ['galley','route','sanitation'];
 // Randomised roster: 3 galley, 2 route, 2 sanitation per day.
 // Each person: 3× galley, 2× route, 2× sanitation across 7 days.
 // All 21 possible crew pairings share at least one duty together.
 var rosterData = [
-  { galley:['Roy','Gwin','Lulu'],    route:['Weiyi','BB'],    sanitation:['Eric','AA'] },    // Day 1
-  { galley:['Weiyi','Gwin','BB'],    route:['Roy','AA'],      sanitation:['Eric','Lulu'] },  // Day 2
-  { galley:['Weiyi','Lulu','AA'],    route:['Roy','Eric'],    sanitation:['Gwin','BB'] },    // Day 3
-  { galley:['Roy','AA','BB'],        route:['Weiyi','Eric'],  sanitation:['Gwin','Lulu'] },  // Day 4
-  { galley:['Roy','Weiyi','Eric'],   route:['Gwin','Lulu'],   sanitation:['AA','BB'] },      // Day 5
-  { galley:['Eric','Lulu','BB'],     route:['Gwin','AA'],     sanitation:['Roy','Weiyi'] },  // Day 6
-  { galley:['Gwin','Eric','AA'],     route:['Lulu','BB'],     sanitation:['Roy','Weiyi'] }   // Day 7
+  { galley:['Roy','Gwin','Lulu'],    route:['Weiyi','Ting'],    sanitation:['Eric','AA'] },    // Day 1
+  { galley:['Weiyi','Gwin','Ting'],    route:['Roy','AA'],      sanitation:['Eric','Lulu'] },  // Day 2
+  { galley:['Weiyi','Lulu','AA'],    route:['Roy','Eric'],    sanitation:['Gwin','Ting'] },    // Day 3
+  { galley:['Roy','AA','Ting'],        route:['Weiyi','Eric'],  sanitation:['Gwin','Lulu'] },  // Day 4
+  { galley:['Roy','Weiyi','Eric'],   route:['Gwin','Lulu'],   sanitation:['AA','Ting'] },      // Day 5
+  { galley:['Eric','Lulu','Ting'],     route:['Gwin','AA'],     sanitation:['Roy','Weiyi'] },  // Day 6
+  { galley:['Gwin','Eric','AA'],     route:['Lulu','Ting'],     sanitation:['Roy','Weiyi'] }   // Day 7
 ];
 
 function buildRoster(){
