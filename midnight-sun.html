@@ -588,6 +588,13 @@
       font-size:.8rem;padding:0 .3rem;opacity:.5;
     }
     .exp-row .exp-del:hover{opacity:1;color:#e57373}
+    .exp-row.exp-deleted{opacity:.45;text-decoration:line-through}
+    .exp-row.exp-deleted .exp-desc small{text-decoration:none}
+    .exp-row .exp-restore{
+      background:none;border:none;color:var(--muted);cursor:pointer;
+      font-size:.8rem;padding:0 .3rem;opacity:.5;
+    }
+    .exp-row .exp-restore:hover{opacity:1;color:#81c784}
     .exp-balances{
       margin-top:.6rem;padding:.5rem .6rem;
       background:rgba(255,255,255,.04);border-radius:.4rem;border:1px solid var(--border);
@@ -884,6 +891,7 @@
         <button class="tab" data-tab="packing">Packing</button>
       </div>
       <div class="tab-group" data-label="">
+        <button class="tab" data-tab="info">Info</button>
         <button class="tab" data-tab="roster">Roster</button>
         <button class="tab" data-tab="expenses">Expenses</button>
       </div>
@@ -1129,6 +1137,37 @@
       <!-- ── Packing tab ── -->
       <div class="tab-pane" id="tab-packing">
         <div class="shop-wrap" id="packWrap"></div>
+      </div>
+
+      <!-- ── Info tab ── -->
+      <div class="tab-pane" id="tab-info">
+        <div style="max-width:480px;margin:0 auto;padding:.5rem 0">
+          <h3 style="color:var(--gold);margin:0 0 .8rem;font-size:.95rem">⛵ Charter Details</h3>
+          <table style="width:100%;border-collapse:collapse;font-size:.82rem;line-height:1.6">
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Charter</td><td>Yachtcharter Crew</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Yacht</td><td>Bavaria Cruiser 46</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Add-ons</td><td>Dinghy, SUP</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Period</td><td>Sat 8 Aug 17:00 → Sat 15 Aug 09:00</td></tr>
+          </table>
+
+          <h3 style="color:var(--gold);margin:1.2rem 0 .8rem;font-size:.95rem">📍 Marina</h3>
+          <table style="width:100%;border-collapse:collapse;font-size:.82rem;line-height:1.6">
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Name</td><td>Saltsjö Pir Marina</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Address</td><td>Brantvägen 3, Floor 3 – stairs down<br>133 42 Saltsjöbaden</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Base Manager</td><td><a href="tel:+4685861800" style="color:var(--gold)">+46 8 5861 8000</a></td></tr>
+          </table>
+
+          <h3 style="color:var(--gold);margin:1.2rem 0 .8rem;font-size:.95rem">👥 Crew</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:.4rem;font-size:.82rem">
+            <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Roy</span>
+            <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Weiyi</span>
+            <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Gwin</span>
+            <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Lulu</span>
+            <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Ting</span>
+            <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Eric</span>
+            <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">AA</span>
+          </div>
+        </div>
       </div>
 
       <!-- ── Roster tab ── -->
@@ -1620,11 +1659,24 @@ function expAddExpense() {
 }
 
 function expDeleteExpense(id) {
-  if (!confirm('Delete this expense?')) return;
+  if (!confirm('Mark this expense as deleted?')) return;
+  var ex = expenses.filter(function(e){ return e.id === id; })[0];
+  if (!ex) return;
+  ex.deleted = true;
   if (expRef && id.indexOf('local_') !== 0) {
-    expRef.child(id).remove();
+    expRef.child(id).update({ deleted: true });
   } else {
-    expenses = expenses.filter(function(e) { return e.id !== id; });
+    expSaveLocal();
+    expRender();
+  }
+}
+function expRestoreExpense(id) {
+  var ex = expenses.filter(function(e){ return e.id === id; })[0];
+  if (!ex) return;
+  delete ex.deleted;
+  if (expRef && id.indexOf('local_') !== 0) {
+    expRef.child(id).update({ deleted: null });
+  } else {
     expSaveLocal();
     expRender();
   }
@@ -1635,7 +1687,8 @@ function expRender() {
   var paid = {};
   var owes = {};
   EXPENSE_CREW.forEach(function(c) { paid[c] = 0; owes[c] = 0; });
-  expenses.forEach(function(e) {
+  var activeExpenses = expenses.filter(function(e){ return !e.deleted; });
+  activeExpenses.forEach(function(e) {
     total += e.amt;
     if (paid[e.payer] !== undefined) paid[e.payer] += e.amt;
     var split = e.split && e.split.length ? e.split : EXPENSE_CREW;
@@ -1648,7 +1701,7 @@ function expRender() {
   var sumEl = document.getElementById('expSummary');
   sumEl.innerHTML =
     '<div class="exp-summary-card"><div class="exp-val">€' + total.toFixed(2) + '</div><div class="exp-lbl">Total</div></div>' +
-    '<div class="exp-summary-card"><div class="exp-val">' + expenses.length + '</div><div class="exp-lbl">Items</div></div>' +
+    '<div class="exp-summary-card"><div class="exp-val">' + activeExpenses.length + '</div><div class="exp-lbl">Items</div></div>' +
     '<div class="exp-summary-card"><div class="exp-val">€' + avgShare.toFixed(2) + '</div><div class="exp-lbl">Avg / person</div></div>';
 
   // Expense list
@@ -1658,11 +1711,14 @@ function expRender() {
     var icon = EXP_CAT_ICONS[e.cat] || '📦';
     var split = e.split && e.split.length ? e.split : EXPENSE_CREW;
     var splitNote = split.length >= EXPENSE_CREW.length ? ' · all' : ' · ' + split.join(', ');
-    html += '<div class="exp-row">' +
+    var del = e.deleted;
+    html += '<div class="exp-row' + (del ? ' exp-deleted' : '') + '">' +
       '<span class="exp-date">' + (e.date || '') + '</span>' +
       '<span class="exp-desc">' + icon + ' ' + e.desc + '<small>Paid by ' + e.payer + splitNote + '</small></span>' +
       '<span class="exp-amt">€' + e.amt.toFixed(2) + '</span>' +
-      '<button class="exp-del" data-id="' + e.id + '" title="Delete">✕</button>' +
+      (del
+        ? '<button class="exp-restore" data-id="' + e.id + '" title="Restore">↩</button>'
+        : '<button class="exp-del" data-id="' + e.id + '" title="Delete">✕</button>') +
       '</div>';
   });
   if (!expenses.length) html = '<div style="text-align:center;color:var(--muted);padding:1.5rem;font-size:.72rem">No expenses yet</div>';
@@ -1670,6 +1726,9 @@ function expRender() {
 
   listEl.querySelectorAll('.exp-del').forEach(function(btn) {
     btn.addEventListener('click', function() { expDeleteExpense(btn.dataset.id); });
+  });
+  listEl.querySelectorAll('.exp-restore').forEach(function(btn) {
+    btn.addEventListener('click', function() { expRestoreExpense(btn.dataset.id); });
   });
 
   // Balance settlement
@@ -1985,7 +2044,8 @@ var PACK_DEFAULTS = {
     {name:'Power bank',qty:'1'},
     {name:'Water bottle',qty:'1'},
     {name:'Day backpack',qty:'1'},
-    {name:'Sleep mask',qty:'1'}
+    {name:'Sleep mask',qty:'1'},
+    {name:'Download Skippo Sweden — Navigation App',qty:'',url:'https://play.google.com/store/apps/details?id=com.eniro.nauticalar'}
   ],
   toiletries: [
     {name:'Sunscreen SPF 50+',qty:'1'},
@@ -2009,7 +2069,9 @@ function loadPackState(){
   packState = {};
   Object.keys(PACK_DEFAULTS).forEach(function(cat){
     packState[cat] = PACK_DEFAULTS[cat].map(function(item){
-      return {name:item.name, qty:item.qty, checked:false};
+      var o = {name:item.name, qty:item.qty, checked:false};
+      if (item.url) o.url = item.url;
+      return o;
     });
   });
 }
@@ -2031,7 +2093,7 @@ function buildPacking(){
       var cls = item.checked ? ' checked' : '';
       html += '<div class="shop-item'+cls+'" data-cat="'+cat+'" data-idx="'+idx+'">';
       html += '<input type="checkbox" id="pack-'+cat+'-'+idx+'"'+(item.checked?' checked':'')+' />';
-      html += '<label for="pack-'+cat+'-'+idx+'">'+item.name+'</label>';
+      html += '<label for="pack-'+cat+'-'+idx+'">'+(item.url ? '<a href="'+item.url+'" target="_blank" style="color:var(--gold)">'+item.name+'</a>' : item.name)+'</label>';
       if (item.qty) html += '<span class="shop-qty">'+item.qty+'</span>';
       html += '</div>';
     });
