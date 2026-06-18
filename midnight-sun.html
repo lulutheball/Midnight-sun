@@ -1587,11 +1587,6 @@ function expRender() {
     cb.type = 'checkbox'; cb.value = c; cb.checked = true;
     lbl.appendChild(cb);
     lbl.appendChild(document.createTextNode(c));
-    lbl.addEventListener('click', function(ev) {
-      if (ev.target === cb) return;
-      cb.checked = !cb.checked;
-      lbl.className = cb.checked ? 'checked' : '';
-    });
     cb.addEventListener('change', function() {
       lbl.className = cb.checked ? 'checked' : '';
     });
