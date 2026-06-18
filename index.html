@@ -1006,6 +1006,7 @@
           <div class="exp-form">
             <input type="text" id="expDesc" placeholder="What for?" class="exp-full" />
             <input type="number" id="expAmt" placeholder="Amount (€)" step="0.01" min="0" />
+            <input type="date" id="expDate" />
             <select id="expPayer"></select>
             <select id="expCat">
               <option value="food">Food</option>
@@ -1497,6 +1498,7 @@ function expAddExpense() {
   var amt = parseFloat(document.getElementById('expAmt').value);
   var payer = document.getElementById('expPayer').value;
   var cat = document.getElementById('expCat').value;
+  var expDate = document.getElementById('expDate').value;
   var split = expGetSplitMembers();
   if (!desc || !amt || amt <= 0) return;
   if (split.length === 0) split = EXPENSE_CREW.slice();
@@ -1504,7 +1506,7 @@ function expAddExpense() {
     desc: desc, amt: amt, payer: payer, cat: cat,
     split: split,
     ts: Date.now(),
-    date: new Date().toISOString().slice(0, 10)
+    date: expDate || new Date().toISOString().slice(0, 10)
   };
   if (expRef) {
     expRef.push(entry);
@@ -1610,6 +1612,7 @@ function expRender() {
     });
     checks.appendChild(lbl);
   });
+  document.getElementById('expDate').value = new Date().toISOString().slice(0, 10);
 })();
 
 document.getElementById('expAdd').addEventListener('click', expAddExpense);
