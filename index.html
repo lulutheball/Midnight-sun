@@ -1157,6 +1157,35 @@
             <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Base Manager</td><td><a href="tel:+4685861800" style="color:var(--gold)">+46 8 5861 8000</a></td></tr>
           </table>
 
+          <h3 style="color:var(--gold);margin:1.2rem 0 .8rem;font-size:.95rem">⚙️ Boat Specs</h3>
+          <table style="width:100%;border-collapse:collapse;font-size:.82rem;line-height:1.6">
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Length</td><td>14.24 m</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Beam</td><td>4.35 m</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Draft</td><td>1.73 m</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Cabins / Berths</td><td>4 cabins · 8+1 berths · 3 heads</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Water tank</td><td>360 L</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Fuel tank</td><td>210 L</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Sail area</td><td>108 m² · furling genoa</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Built</td><td>2022</td></tr>
+          </table>
+
+          <h3 style="color:var(--gold);margin:1.2rem 0 .8rem;font-size:.95rem">🛒 Extras (booked)</h3>
+          <table style="width:100%;border-collapse:collapse;font-size:.82rem;line-height:1.6">
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Dinghy</td><td>€145 / week</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">SUP</td><td>€95 / week</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Bed set</td><td>€45 / person (linen + towels)</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Cooking gas</td><td>€65 / week <span style="color:var(--muted);font-size:.75rem">(obligatory)</span></td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Cleaning</td><td>€360 / 4-cabin <span style="color:var(--muted);font-size:.75rem">(obligatory)</span></td></tr>
+          </table>
+
+          <h3 style="color:var(--gold);margin:1.2rem 0 .8rem;font-size:.95rem">🍺 Optional add-ons</h3>
+          <table style="width:100%;border-collapse:collapse;font-size:.82rem;line-height:1.6">
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Beer</td><td>€52 · 24× Åbro 33cl 5.2%</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Wine</td><td>€55 · 3L box, red or white</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">BBQ grill</td><td>€45 incl. charcoal</td></tr>
+            <tr><td style="color:var(--muted);padding:.35rem .6rem .35rem 0;white-space:nowrap;vertical-align:top">Early boarding</td><td>€190 (access from 13:00)</td></tr>
+          </table>
+
           <h3 style="color:var(--gold);margin:1.2rem 0 .8rem;font-size:.95rem">👥 Crew</h3>
           <div style="display:flex;flex-wrap:wrap;gap:.4rem;font-size:.82rem">
             <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Roy</span>
@@ -1165,7 +1194,7 @@
             <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Lulu</span>
             <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Ting</span>
             <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Eric</span>
-            <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">AA</span>
+            <span style="background:rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px">Tim</span>
           </div>
         </div>
       </div>
@@ -1553,7 +1582,7 @@ ANCHORS.forEach(function(anch){
 });
 
 // ── Expenses tab (Firebase Realtime Database) ──
-var EXPENSE_CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','Ting'];
+var EXPENSE_CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','Tim','Ting'];
 var EXP_CAT_ICONS = {food:'🍕',transport:'🚕',marina:'⚓',fuel:'⛽',activity:'🏄',drinks:'🍺',other:'📦'};
 var expDb = null;
 var expRef = null;
@@ -2152,20 +2181,20 @@ function buildPacking(){
 buildPacking();
 
 // ── Roster tab ──
-var CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','AA','Ting'];
+var CREW = ['Roy','Weiyi','Gwin','Eric','Lulu','Tim','Ting'];
 var DUTIES = ['galley','route','sanitation'];
 // Randomised roster: 3 galley, 2 route, 2 sanitation per day.
 // Each person: 3× galley, 2× route, 2× sanitation across 7 days.
 // All 21 possible crew pairings share at least one duty together.
 var rosterData = [
   { galley:['All hands'],               route:['All hands'],   sanitation:['All hands'] },      // Day 0 (evening only)
-  { galley:['Eric','AA','Ting'],         route:['Roy','Weiyi'], sanitation:['Lulu','Gwin'] },    // Day 1
-  { galley:['Roy','Eric','AA'],          route:['Weiyi','Gwin'],sanitation:['Ting','Lulu'] },    // Day 2
-  { galley:['Weiyi','Lulu','Ting'],      route:['Gwin','Eric'], sanitation:['Roy','AA'] },       // Day 3
-  { galley:['Weiyi','AA','Ting'],        route:['Eric','Lulu'], sanitation:['Gwin','Roy'] },     // Day 4
-  { galley:['Roy','Weiyi','Gwin'],       route:['Lulu','AA'],   sanitation:['Eric','Ting'] },    // Day 5
-  { galley:['Roy','Gwin','Lulu'],        route:['AA','Ting'],   sanitation:['Weiyi','Eric'] },   // Day 6
-  { galley:['Gwin','Eric','Lulu'],       route:['Ting','Roy'],  sanitation:['AA','Weiyi'] }      // Day 7
+  { galley:['Eric','Tim','Ting'],         route:['Roy','Weiyi'], sanitation:['Lulu','Gwin'] },    // Day 1
+  { galley:['Roy','Eric','Tim'],          route:['Weiyi','Gwin'],sanitation:['Ting','Lulu'] },    // Day 2
+  { galley:['Weiyi','Lulu','Ting'],      route:['Gwin','Eric'], sanitation:['Roy','Tim'] },       // Day 3
+  { galley:['Weiyi','Tim','Ting'],        route:['Eric','Lulu'], sanitation:['Gwin','Roy'] },     // Day 4
+  { galley:['Roy','Weiyi','Gwin'],       route:['Lulu','Tim'],   sanitation:['Eric','Ting'] },    // Day 5
+  { galley:['Roy','Gwin','Lulu'],        route:['Tim','Ting'],   sanitation:['Weiyi','Eric'] },   // Day 6
+  { galley:['Gwin','Eric','Lulu'],       route:['Ting','Roy'],  sanitation:['Tim','Weiyi'] }      // Day 7
 ];
 
 function buildRoster(){
