@@ -2199,13 +2199,13 @@ var DUTIES = ['galley','route','sanitation'];
 // All 21 possible crew pairings share at least one duty together.
 var rosterData = [
   { galley:['All hands'],               route:['All hands'],   sanitation:['All hands'] },      // Day 0 (evening only)
-  { galley:['Eric','Tim','Ting'],         route:['Roy','Weiyi'], sanitation:['Lulu','Gwin'] },    // Day 1
-  { galley:['Roy','Eric','Tim'],          route:['Weiyi','Gwin'],sanitation:['Ting','Lulu'] },    // Day 2
-  { galley:['Weiyi','Lulu','Ting'],      route:['Gwin','Eric'], sanitation:['Roy','Tim'] },       // Day 3
-  { galley:['Weiyi','Tim','Ting'],        route:['Eric','Lulu'], sanitation:['Gwin','Roy'] },     // Day 4
-  { galley:['Roy','Weiyi'],              route:['Gwin','Lulu'],  sanitation:['Eric','Tim'] },     // Day 5 (6 crew — Ting departed)
-  { galley:['Eric','Tim'],               route:['Roy','Lulu'],   sanitation:['Weiyi','Gwin'] },   // Day 6
-  { galley:['Gwin','Eric'],              route:['Tim','Weiyi'],  sanitation:['Roy','Lulu'] }      // Day 7
+  { galley:['Roy','Gwin','Lulu'],        route:['Eric','Ting'], sanitation:['Weiyi','Tim'] },    // Day 1
+  { galley:['Weiyi','Tim','Ting'],       route:['Roy','Lulu'],  sanitation:['Eric','Gwin'] },    // Day 2
+  { galley:['Eric','Lulu','Ting'],       route:['Gwin','Tim'],  sanitation:['Roy','Weiyi'] },    // Day 3
+  { galley:['Roy','Weiyi','Gwin'],       route:['Tim','Eric'],  sanitation:['Lulu','Ting'] },    // Day 4
+  { galley:['Eric','Tim'],               route:['Roy','Gwin'],  sanitation:['Weiyi','Lulu'] },   // Day 5 (6 crew — Ting departed)
+  { galley:['Lulu','Gwin'],             route:['Weiyi','Tim'],  sanitation:['Roy','Eric'] },     // Day 6
+  { galley:['Roy','Weiyi'],             route:['Eric','Lulu'],  sanitation:['Tim','Gwin'] }      // Day 7
 ];
 
 function buildRoster(){
