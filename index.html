@@ -187,6 +187,8 @@
       transition:background .15s;
     }
     .resize-handle:hover,.resize-handle.active{background:var(--gold);}
+    .mobile-drag-handle{display:none}
+    .app.map-hidden .sidebar{width:100%!important;height:100vh!important;max-width:100%}
 
     /* ── Header ── */
     .s-hdr{
@@ -257,6 +259,10 @@
     .tab-content{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.12) transparent}
     .tab-pane{display:none;padding:.6rem 0}
     .tab-pane.active{display:block}
+
+    /* ── Route variant selector ── */
+    .route-var-btn{transition:all .2s}
+    .route-var-btn.active{background:var(--gold)!important;color:#0b1f36!important;border-color:var(--gold)!important;font-weight:bold}
 
     /* ── Route tab ── */
     .route-wrap{padding:0 .8rem}
@@ -763,8 +769,52 @@
 
     @media(max-width:700px){
       .app{flex-direction:column}
-      .sidebar{width:100%;height:45vh}
-      #map{height:55vh}
+      .sidebar{width:100%!important;height:50vh;max-width:100%}
+      #map{height:50vh}
+      .resize-handle{display:none}
+      .s-hdr{padding:.8rem 1rem .6rem}
+      .trip-name{font-size:1.2rem}
+      .trip-sub{font-size:.58rem}
+      .compass-badge{width:30px;height:30px;font-size:1rem}
+      .trip-dates{margin-top:.4rem;gap:.5rem;font-size:.7rem}
+      .date-chip{font-size:.62rem;padding:.15rem .5rem}
+      .stats{flex-wrap:nowrap}
+      .stat{padding:.45rem .2rem}
+      .stat-v{font-size:1.05rem}
+      .stat-l{font-size:.48rem}
+      .tabs{gap:0}
+      .tab-group::before{font-size:.38rem}
+      .tab{padding:.55rem .15rem .35rem;font-size:.52rem;letter-spacing:.08em}
+      .route-wrap{padding:0 .5rem}
+      .day-card{padding:.45rem .5rem;gap:.4rem;margin-bottom:.2rem}
+      .dc-label{font-size:.7rem}
+      .dc-meta{font-size:.55rem}
+      .dc-nm{font-size:.7rem}
+      .dc-brg{font-size:.55rem}
+      .route-ctrls{padding:.3rem .5rem .15rem;gap:.3rem}
+      .route-ctrls button{padding:.3rem .15rem;font-size:.58rem}
+      .route-note{margin:.2rem .5rem .3rem;padding:.35rem .5rem;font-size:.58rem}
+      .leaflet-control-zoom{transform:scale(.85);transform-origin:top left}
+      .info-table th,.info-table td{padding:.3rem .4rem;font-size:.6rem}
+      .roster-table th,.roster-table td{padding:.3rem .35rem;font-size:.6rem}
+      .exp-card{padding:.4rem .5rem}
+      .map-legend{padding:.35rem .5rem}
+      .legend-title{font-size:.48rem;margin-bottom:.2rem}
+      .legend-row{font-size:.55rem;gap:.3rem;margin-bottom:.12rem}
+      .legend-line{width:16px;height:2px}
+      .leaflet-control-quicknav{max-width:55vw}
+      .mobile-drag-handle{
+        display:block;height:20px;background:var(--navy2);
+        border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+        cursor:row-resize;flex-shrink:0;position:relative;z-index:500;
+        touch-action:none;
+      }
+      .mobile-drag-handle::after{
+        content:'';position:absolute;left:50%;top:50%;
+        transform:translate(-50%,-50%);
+        width:36px;height:4px;border-radius:2px;
+        background:rgba(255,255,255,.3);
+      }
     }
   </style>
 </head>
@@ -901,6 +951,10 @@
 
       <!-- ── Route tab ── -->
       <div class="tab-pane active" id="tab-route">
+        <div class="route-variant-selector" style="display:flex;gap:.4rem;padding:.5rem .8rem .2rem">
+          <button class="rc-btn route-var-btn active" data-variant="A" onclick="switchRouteVariant('A')" style="flex:1">A: via Sauna/Gällnö</button>
+          <button class="rc-btn route-var-btn" data-variant="B" onclick="switchRouteVariant('B')" style="flex:1">B: via Finnhamn</button>
+        </div>
         <div class="route-ctrls">
           <button class="rc-btn" onclick="showAll()">Show All</button>
           <button class="rc-btn" onclick="hideAll()">Hide All</button>
@@ -1225,8 +1279,11 @@
     </div>
   </aside>
 
-  <!-- ══ RESIZE HANDLE ══ -->
+  <!-- ══ RESIZE HANDLE (desktop) ══ -->
   <div class="resize-handle" id="resizeHandle" title="Drag to resize sidebar"></div>
+
+  <!-- ══ MOBILE DRAG HANDLE ══ -->
+  <div class="mobile-drag-handle" id="mobileDragHandle"></div>
 
   <!-- ══ MAP ══ -->
   <main id="map" role="application" aria-label="Interactive sailing chart of the Stockholm archipelago">
@@ -1382,6 +1439,56 @@ var ROUTES = [
 // Keep an immutable deep-clone of the default routes so users can reset.
 var DEFAULT_ROUTES = ROUTES.map(function(r){ return r.map(function(p){ return [p[0],p[1]]; }); });
 
+// ── Route variants (A = via Sauna/Gällnö, B = via Finnhamn) ──
+var ROUTE_VARIANTS = {
+  A: {
+    stop3: { id:3, name:'Gällnö (Sauna)', emoji:'2', coords:[59.3989,18.6755], date:'Aug 10 (Mon) - Night 2',
+             marina:'Anchorage, N of Gällnö', notes:'Overnight near the Archipelago Floating Sauna, north of Gällnö island. Book sauna session in advance. Relaxed short sailing day from Grinda (~9 nm through channels).' },
+    stopName3: 'Gällnö (Sauna)',
+    route2: // Day 2: Grinda → Gällnö/Sauna — main fairway (same as default Day 2), then S to sauna
+      [[59.4148,18.5547],[59.4183,18.5416],[59.4215,18.5525],[59.4203,18.5661],[59.4298,18.586],
+       [59.4399,18.5835],[59.4377,18.5924],[59.4415,18.6039],[59.4493,18.632],[59.4546,18.6432],
+       [59.4585,18.6574],[59.4603,18.6689],
+       [59.4550,18.6850],[59.4450,18.6900],[59.4350,18.6880],
+       [59.4250,18.6830],[59.4150,18.6790],[59.4050,18.6770],[59.3989,18.6755]],
+    route3: // Day 3: Gällnö/Sauna → Sandhamn — N to main fairway, E to Finnhamn junction, SE to N-S fairway, S to Sandhamn
+      [[59.3989,18.6755],[59.4050,18.6770],[59.4150,18.6790],[59.4250,18.6830],
+       [59.4350,18.6880],[59.4450,18.6900],[59.4550,18.6850],
+       [59.4603,18.6689],[59.4613,18.6834],[59.4626,18.6937],[59.4642,18.6995],
+       [59.4654,18.709],[59.4652,18.7156],[59.4648,18.7263],[59.4649,18.7383],[59.4643,18.7517],
+       [59.4637,18.76],[59.463,18.7742],[59.4644,18.7842],[59.4667,18.7944],
+       [59.4686,18.8052],[59.4705,18.8169],[59.4719,18.8246],[59.476,18.8297],
+       [59.4751,18.8306],[59.4672,18.8318],[59.4623,18.8309],[59.4551,18.83],
+       [59.4521,18.8279],[59.4454,18.8297],[59.4394,18.8325],
+       [59.4258,18.8354],[59.4109,18.8359],[59.4009,18.8362],
+       [59.3962,18.8363],[59.39,18.8363],[59.3843,18.836],[59.378,18.8334],
+       [59.3714,18.8333],[59.3639,18.8314],[59.3591,18.8288],
+       [59.3566,18.8259],[59.3481,18.821],[59.3388,18.8141],
+       [59.3313,18.8168],[59.3246,18.811],[59.3188,18.8083],[59.3123,18.8144],[59.3097,18.8258],
+       [59.3084,18.8331],[59.3048,18.8497],[59.3034,18.8583],[59.3004,18.8711],[59.2983,18.8817],
+       [59.2955,18.892],[59.2929,18.9044],[59.2908,18.9133],[59.2896,18.917],[59.2883,18.9203]],
+    anchor2: { night:2, name:'Gällnö Anchorage (Sauna)', type:'anchor', coords:[59.3989,18.6755], depth:'3-5 m', bottom:'Sand/Mud', note:'Anchor north of Gällnö near the floating sauna. Book sauna session in advance.' }
+  },
+  B: {
+    stop3: { id:3, name:'Finnhamn', emoji:'2', coords:[59.4814,18.8280], date:'Aug 10 (Mon) - Night 2',
+             marina:'Guest harbour, Finnhamn', notes:'Group of 3 islands (Stora Jolpen, Lilla Jolpen, Idholmen). Restaurant Finnhamns Cafe & Krog with sea view. Summer supermarket. ~11.2 nm.' },
+    stopName3: 'Finnhamn',
+    route2: null, // use DEFAULT_ROUTES[2]
+    route3: null, // use DEFAULT_ROUTES[3]
+    anchor2: { night:2, name:'Finnhamn Guest Harbour', type:'marina', coords:[59.4814,18.8280], depth:'2-4 m', bottom:'Sand/Rock', note:'Multiple small harbours on the island group. Restaurant and summer shop available.' }
+  }
+};
+var currentVariant = 'A';
+
+// Apply initial variant A (stops and routes only — ANCHORS set after its definition)
+(function(){
+  var v = ROUTE_VARIANTS.A;
+  STOPS[3] = v.stop3;
+  STOP_NAMES[3] = v.stopName3;
+  ROUTES[2] = v.route2;
+  ROUTES[3] = v.route3;
+})();
+
 // Try to restore user-edited routes from localStorage.
 (function loadUserRoutes(){
   try {
@@ -1436,6 +1543,24 @@ var POIS = [
     notes: 'SXK guest harbour on Ornö. Lunch stop on Day 4 before continuing to Dalarö. Small restaurant, 12 guest places at jetty, well protected from all winds.',
     url: 'https://www.sxk.se',
     anchor: { coords:[59.2545,18.6137], depth:'2-4 m', bottom:'Mud/Sand', note:'Malma Kvarn SXK guest harbour. Depart early afternoon for Dalarö (~12.7 nm).' }
+  },
+  {
+    id: 'fredriksborg-fortress',
+    name: 'Fredriksborg Fortress',
+    coords: [59.4004, 18.4426],
+    day: 1,
+    notes: 'Historic fortress on the Day 1 route (Baggensfjärden → Grinda). Worth a stop or sail-by to admire from the water.',
+    url: 'https://www.google.com/maps/place/Fredriksborg+Fortress/',
+    anchor: { coords:[59.4010,18.4440], depth:'3-6 m', bottom:'Rock/Sand', note:'Anchor near the fortress. Short dinghy ride to shore for a visit.' }
+  },
+  {
+    id: 'archipelago-sauna',
+    name: 'Archipelago Sauna',
+    coords: [59.3989, 18.6755],
+    day: 1,
+    notes: 'A floating sauna adventure in the archipelago. Near Grinda — visit on Day 1 afternoon or Day 2 morning before heading to Finnhamn.',
+    url: 'https://www.google.com/maps/place/Archipelago+Sauna/',
+    anchor: { coords:[59.3989,18.6755], depth:'3-5 m', bottom:'Sand/Mud', note:'Floating sauna — moor alongside or anchor nearby.' }
   }
 ];
 
@@ -1450,6 +1575,9 @@ var ANCHORS = [
   { night:6, name:'Saltsjöbaden Hotellviken', type:'marina',  coords:[59.283,18.310],   depth:'2-4 m',   bottom:'Sand/Rock',note:'Overnight near Saltsjöbaden sjömack. Refuel and pump-out on Day 7 morning before return.' },
   { night:7, name:'Saltsjöpir Marina',       type:'marina',  coords:[59.2965,18.264],  depth:'2-4 m',   bottom:'Sand',     note:'Home port. Brantvägen 3, Floor 3, 133 42 Saltsjöbaden. Base Manager: +46 8 5861 8000. Restaurant, supermarkets nearby.' }
 ];
+
+// Apply initial variant A anchor
+ANCHORS[2] = ROUTE_VARIANTS.A.anchor2;
 
 // Keep immutable deep-clones for anchor reset
 var DEFAULT_POI_ANCHORS = POIS.map(function(p){ return [p.anchor.coords[0], p.anchor.coords[1]]; });
@@ -1506,11 +1634,7 @@ LEGS.forEach(function(leg){
     +'<div class="dc-brg">'+leg.brg+'&deg;T</div>'
     +'</div>';
   (function(d,l){
-    el.addEventListener('click', function(){
-      legState[l.day].visible = !legState[l.day].visible;
-      el.classList.toggle('off', !legState[l.day].visible);
-      render();
-    });
+    el.addEventListener('click', function(){ toggleDay(l.day); });
   })(el, leg);
   dayCardsEl.appendChild(el);
 });
@@ -2429,12 +2553,37 @@ function loadTides() {
 var tidesLoaded=false;
 
 // ── Tab switching ──
+var NAV_TABS = ['route','waypoints','eta','places','tides'];
+function updateMapVisibility(tabName){
+  var needsMap = NAV_TABS.indexOf(tabName) !== -1;
+  var mapEl = document.getElementById('map');
+  var handle = document.getElementById('resizeHandle');
+  var mHandle = document.getElementById('mobileDragHandle');
+  var sidebar = document.querySelector('.sidebar');
+  var app = document.querySelector('.app');
+  if (needsMap) {
+    app.classList.remove('map-hidden');
+    mapEl.style.display = '';
+    if (handle) handle.style.display = '';
+    if (mHandle) mHandle.style.display = '';
+    sidebar.style.width = '';
+    sidebar.style.height = '';
+    mapEl.style.height = '';
+    if (window.map) setTimeout(function(){ window.map.invalidateSize(); }, 50);
+  } else {
+    app.classList.add('map-hidden');
+    mapEl.style.display = 'none';
+    if (handle) handle.style.display = 'none';
+    if (mHandle) mHandle.style.display = 'none';
+  }
+}
 document.querySelectorAll('.tab').forEach(function(tab){
   tab.addEventListener('click', function(){
     document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
     document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
     tab.classList.add('active');
     document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+    updateMapVisibility(tab.dataset.tab);
     if (tab.dataset.tab === 'tides' && !tidesLoaded) {
       tidesLoaded = true;
       loadTides();
@@ -2466,6 +2615,120 @@ function render(){
     }
   });
   STOPS.forEach(function(s,i){ if(vis[i] && markerObj[i]) map._markerGrp.addLayer(markerObj[i]); });
+}
+
+function toggleDay(day){
+  legState[day].visible = !legState[day].visible;
+  var card = document.querySelector('.day-card[data-day="'+day+'"]');
+  if (card) card.classList.toggle('off', !legState[day].visible);
+  render();
+}
+
+function switchRouteVariant(v){
+  if (v === currentVariant) return;
+  currentVariant = v;
+  var vd = ROUTE_VARIANTS[v];
+
+  // Update selector buttons
+  document.querySelectorAll('.route-var-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.variant === v);
+  });
+
+  // Swap stop, routes, anchor for Day 2-3
+  STOPS[3] = vd.stop3;
+  STOP_NAMES[3] = vd.stopName3;
+  ROUTES[2] = vd.route2 || DEFAULT_ROUTES[2].map(function(p){ return [p[0],p[1]]; });
+  ROUTES[3] = vd.route3 || DEFAULT_ROUTES[3].map(function(p){ return [p[0],p[1]]; });
+  ANCHORS[2] = vd.anchor2;
+
+  // Rebuild LEGS for days 2 and 3
+  [2,3].forEach(function(i){
+    var wps = ROUTES[i];
+    LEGS[i].waypoints = wps;
+    LEGS[i].nm = routeNm(wps);
+    LEGS[i].brg = Math.round(trueBearing(wps[0][0],wps[0][1],wps[wps.length-1][0],wps[wps.length-1][1]));
+    LEGS[i].label = STOP_NAMES[i]+' to '+STOP_NAMES[i+1];
+  });
+
+  // Update totals
+  var total = Math.round(LEGS.reduce(function(s,l){ return s+l.nm; },0)*10)/10;
+  document.getElementById('totalNm').textContent = total;
+  document.getElementById('avgNm').textContent = Math.round(total/8*10)/10;
+
+  // Rebuild day cards
+  var dayCardsEl = document.getElementById('dayCards');
+  dayCardsEl.innerHTML = '';
+  LEGS.forEach(function(leg){
+    var el = document.createElement('div');
+    el.className = 'day-card';
+    el.dataset.day = leg.day;
+    el.innerHTML =
+      '<div class="dc-dot" style="background:'+leg.color+'"></div>'
+      +'<div class="dc-body">'
+      +'<div class="dc-label">'+leg.label+'</div>'
+      +'<div class="dc-meta">Day '+leg.day+' &middot; '+leg.date+'</div>'
+      +'</div>'
+      +'<div class="dc-right">'
+      +'<div class="dc-nm">'+leg.nm+' nm</div>'
+      +'<div class="dc-brg">'+leg.brg+'&deg;T</div>'
+      +'</div>';
+    el.addEventListener('click', function(){ toggleDay(leg.day); });
+    dayCardsEl.appendChild(el);
+  });
+
+  // Rebuild map layers
+  if (map) {
+    // Remove old route lines and arrows
+    [2,3].forEach(function(i){
+      var s = legState[i];
+      if (s.line) map._routeGrp.removeLayer(s.line);
+      if (s.arrowMark) map._arrowGrp.removeLayer(s.arrowMark);
+      // Create new polyline
+      s.line = L.polyline(LEGS[i].waypoints, {
+        color: LEGS[i].color, weight: 4, opacity: 0.90,
+        dashArray: '10 5', lineJoin: 'round', lineCap: 'round'
+      });
+      // New arrow
+      var mi = Math.floor(LEGS[i].waypoints.length / 2);
+      var mp = LEGS[i].waypoints[mi];
+      var mb = Math.round(trueBearing(LEGS[i].waypoints[mi-1][0],LEGS[i].waypoints[mi-1][1],mp[0],mp[1]));
+      s.arrowMark = L.marker(mp, {
+        icon: L.divIcon({
+          className:'',
+          html:'<svg width="22" height="22" viewBox="0 0 22 22" style="transform:rotate('+mb+'deg);filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))"><polygon points="11,1 20,20 11,14 2,20" fill="'+LEGS[i].color+'" stroke="white" stroke-width="1.5"/></svg>',
+          iconSize:[22,22], iconAnchor:[11,11]
+        }),
+        interactive:false, zIndexOffset:-100
+      });
+    });
+
+    // Update stop 3 marker
+    if (markerObj[3]) map._markerGrp.removeLayer(markerObj[3]);
+    var stop = STOPS[3];
+    var clr = LEGS[1].color;
+    var arrLeg = LEGS[2];
+    var navHtml = '<div class="pop-nav"><span>Brg <b>'+arrLeg.brg+'&deg;T</b></span><span><b>'+arrLeg.nm+' nm</b></span></div>';
+    var coords = toDM(stop.coords[0],true)+'<br>'+toDM(stop.coords[1],false);
+    markerObj[3] = L.marker(stop.coords, {
+      icon: L.divIcon({
+        className:'',
+        html:'<div style="width:38px;height:38px;border-radius:50%;background:'+clr+';border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;color:#fff;box-shadow:0 3px 12px rgba(0,0,0,.45);cursor:pointer;">3</div>',
+        iconSize:[38,38], iconAnchor:[19,19], popupAnchor:[0,-23]
+      })
+    }).bindPopup(
+      '<div class="pop">'
+      +'<div class="pop-hdr"><div class="pop-name">'+stop.name+'</div><div class="pop-date">'+stop.date+'</div></div>'
+      +'<div class="pop-body">'
+      +'<div class="pop-coords">'+coords+'</div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9875;</span><span class="pop-val">'+stop.marina+'</span></div>'
+      +'<div class="pop-row"><span class="pop-icon">&#9998;</span><span class="pop-val">'+stop.notes+'</span></div>'
+      +navHtml
+      +'</div></div>',
+      { maxWidth:280 }
+    );
+
+    render();
+  }
 }
 
 function showAll(){
@@ -3346,6 +3609,54 @@ window.showToast = function(html, ms){
     var saved = localStorage.getItem('midnightSun.sidebarWidth');
     if (saved) { sidebar.style.width = saved; if (window.map) window.map.invalidateSize(); }
   } catch(e){}
+})();
+
+// Mobile vertical drag handle
+(function(){
+  var mh = document.getElementById('mobileDragHandle');
+  var sidebar = document.querySelector('.sidebar');
+  var mapEl = document.getElementById('map');
+  if (!mh || !sidebar || !mapEl) return;
+
+  var dragging = false, startY, startH;
+
+  mh.addEventListener('touchstart', onDown, {passive:false});
+  mh.addEventListener('mousedown', onDown);
+
+  function onDown(e){
+    e.preventDefault();
+    dragging = true;
+    startY = e.touches ? e.touches[0].clientY : e.clientY;
+    startH = sidebar.offsetHeight;
+    document.body.style.userSelect = 'none';
+    document.addEventListener('touchmove', onMove, {passive:false});
+    document.addEventListener('touchend', onUp);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  }
+
+  function onMove(e){
+    if (!dragging) return;
+    e.preventDefault();
+    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    var vh = window.innerHeight;
+    var newH = startH + (clientY - startY);
+    newH = Math.max(vh * 0.15, Math.min(vh * 0.85, newH));
+    var mapH = vh - newH - 20;
+    sidebar.style.height = newH + 'px';
+    mapEl.style.height = mapH + 'px';
+    if (window.map) window.map.invalidateSize();
+  }
+
+  function onUp(){
+    dragging = false;
+    document.body.style.userSelect = '';
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onUp);
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    if (window.map) window.map.invalidateSize();
+  }
 })();
 
 </script>
