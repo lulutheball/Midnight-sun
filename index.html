@@ -2787,6 +2787,13 @@ try {
     { attribution:'&copy; <a href="https://www.openseamap.org">OpenSeaMap</a>', opacity:0.85, maxZoom:18 }
   ).addTo(map);
 
+  // Esri World Navigation Charts — real nautical chart with depth soundings (works at z≤10)
+  var navChart = L.tileLayer(
+    'https://services.arcgisonline.com/arcgis/rest/services/Specialty/World_Navigation_Charts/MapServer/tile/{z}/{y}/{x}',
+    { attribution:'Esri World Navigation Charts', opacity:0.7, maxZoom:11, minZoom:6, errorTileUrl:'' }
+  );
+  navChart.on('tileerror', function(e){ if(e.tile) e.tile.style.display='none'; });
+
   map._routeGrp  = L.layerGroup().addTo(map);
   map._arrowGrp  = L.layerGroup().addTo(map);
   map._markerGrp = L.layerGroup().addTo(map);
@@ -2795,7 +2802,7 @@ try {
 
   L.control.layers(
     { 'ESRI Ocean (nautical)': esriOcean, 'OpenStreetMap': osmLayer },
-    { 'Chart marks (OpenSeaMap)': seaLayer, 'Ocean labels (ESRI)': esriRef, 'POI visits': map._poiGrp, 'Overnight anchors': map._anchGrp },
+    { 'Chart marks (OpenSeaMap)': seaLayer, 'Navigation chart + depths (zoom out)': navChart, 'Ocean labels (ESRI)': esriRef, 'POI visits': map._poiGrp, 'Overnight anchors': map._anchGrp },
     { position:'topright' }
   ).addTo(map);
 
